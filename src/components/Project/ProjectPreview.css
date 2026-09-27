@@ -1,0 +1,57 @@
+.project-preview {
+	--padding: 10px;
+	--border-radius: 20px;
+	min-width: 0;
+	border: var(--accent-color) 2px solid;
+	padding: var(--padding);
+	border-radius: var(--border-radius);
+}
+
+.project-preview__media {
+	width: 100%;
+	aspect-ratio: 16 / 10;
+	overflow: hidden;
+	background: #eee;
+	border-radius: calc(var(--border-radius) - var(--padding));
+}
+
+.project-preview__media img,
+.project-preview__media video {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.project-preview__content {
+	padding-top: 1rem;
+}
+
+.project-preview__content h2 {
+	margin: 0 0 0.5rem;
+}
+
+.project-preview__content p {
+	margin: 0 0 1rem;
+}
+
+.project-preview__disciplines {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+.project-preview__disciplines li {
+	padding: 0.25rem 0.6rem;
+	border: 1px solid currentColor;
+	border-radius: 999px;
+}
+
+@media (max-width: 700px) {
+	.project-grid {
+		grid-template-columns: 1fr;
+	}
+}

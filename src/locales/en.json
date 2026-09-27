@@ -1,0 +1,27 @@
+{
+  "nav": {
+    "home": "Home",
+    "docs": "Documentation",
+    "portfolio": "Portfolio",
+    "social": "Community"
+  },
+  "home": {
+    "title": "Get started",
+    "edit": "Edit",
+    "save_test": "and save to test",
+    "counter": "Count is {{count}}"
+  },
+  "docs": {
+    "title": "Documentation",
+    "subtitle": "Your questions, answered",
+    "explore_vite": "Explore Vite",
+    "learn_more": "Learn more"
+  },
+  "social": {
+    "title": "Connect with us",
+    "subtitle": "Join the Vite community"
+  },
+  "footer": {
+    "text": "All content owned by Grid Studio."
+  }
+}
