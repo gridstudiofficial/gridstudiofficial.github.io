@@ -9,16 +9,16 @@ export default function Navbar() {
 	return (
 		<nav className="nav-bar">
 			<div className="nav-bar-buttons">
-				<NavLink to="/" end className={({ isActive }) => (isActive ? 'active-link' : '')}>
+				<NavLink to="/" end className={({ isActive }) => (isActive ? 'active-link' : '')} viewTransition>
 					{t('nav.home')}
 				</NavLink>
-				<NavLink to="/docs" className={({ isActive }) => (isActive ? 'active-link' : '')}>
+				<NavLink to="/docs" className={({ isActive }) => (isActive ? 'active-link' : '')} viewTransition>
 					{t('nav.docs')}
 				</NavLink>
-				<NavLink to="/portfolio" className={({ isActive }) => (isActive ? 'active-link' : '')}>
+				<NavLink to="/portfolio" className={({ isActive }) => (isActive ? 'active-link' : '')} viewTransition>
 					{t('nav.portfolio')}
 				</NavLink>
-				<NavLink to="/social" className={({ isActive }) => (isActive ? 'active-link' : '')}>
+				<NavLink to="/social" className={({ isActive }) => (isActive ? 'active-link' : '')} viewTransition>
 					{t('nav.social')}
 				</NavLink>
 			</div>

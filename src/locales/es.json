@@ -23,5 +23,9 @@
   },
   "footer": {
     "text": "Todo el contenido pertenece a Grid Studio."
+  },
+  "markdown": {
+    "loading": "Cargando documento...",
+    "error": "No se pudo encontrar el documento en {{path}}"
   }
 }

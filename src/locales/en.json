@@ -23,5 +23,9 @@
   },
   "footer": {
     "text": "All content owned by Grid Studio."
+  },
+  "markdown": {
+    "loading": "Loading document...",
+    "error": "Could not find document at {{path}}"
   }
 }

@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import MarkdownRenderer from "../components/MarkdownRenderer/MarkdownRenderer.jsx";
 
 export default function Docs() {
 	const { t } = useTranslation();
@@ -13,6 +14,7 @@ export default function Docs() {
 			<p>
 				The next segment contains an updated version of our <b>Game Design Document</b>.
 			</p>
+			<MarkdownRenderer fileName={"./gdd/GDD.md"}/>
 		</div>
 	);
 }

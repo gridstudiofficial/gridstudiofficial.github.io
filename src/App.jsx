@@ -1,30 +1,40 @@
-import {HashRouter, Routes, Route} from 'react-router-dom';
+import {createHashRouter, Outlet, RouterProvider} from 'react-router-dom';
 import Home from './pages/Home.jsx';
 import Docs from './pages/Docs.jsx';
 import SocialPage from './pages/SocialPage.jsx';
+import Portfolio from './pages/Portfolio.jsx';
 import Navbar from './components/Navbar/Navbar.jsx';
+import Footer from './components/Footer/Footer.jsx';
 import './App.css';
-import Footer from "./components/Footer/Footer.jsx";
-import Portfolio from "./pages/Portfolio.jsx";
 
-function App() {
+function Layout() {
 	return (
-		<HashRouter>
+		<>
 			<header className="app-header">
 				<Navbar/>
 			</header>
-
 			<main>
-				<Routes>
-					<Route path="/" element={<Home/>}/>
-					<Route path="/docs" element={<Docs/>}/>
-					<Route path="/social" element={<SocialPage/>}/>
-					<Route path="/portfolio" element={<Portfolio/>}/>
-				</Routes>
+				<Outlet/>
 			</main>
 			<Footer/>
-		</HashRouter>
+		</>
 	);
+}
+
+const router = createHashRouter([
+	{
+		element: <Layout/>,
+		children: [
+			{path: '/', element: <Home/>},
+			{path: '/docs', element: <Docs/>},
+			{path: '/social', element: <SocialPage/>},
+			{path: '/portfolio', element: <Portfolio/>},
+		],
+	},
+]);
+
+function App() {
+	return <RouterProvider router={router}/>;
 }
 
 export default App;
