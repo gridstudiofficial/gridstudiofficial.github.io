@@ -1,8 +1,8 @@
 .person-preview {
-	--padding: 10px;
+	--padding: 14px;
 	--border-radius: 20px;
 	min-width: 0;
-	border: var(--accent-color) 2px solid;
+	border: var(--accent-color) var(--border-width) solid;
 	padding: var(--padding);
 	border-radius: var(--border-radius);
 	max-width: 300px;
@@ -30,14 +30,10 @@
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;
-}
 
-.person-preview__content h2 {
-	margin: 0 0 0.5rem;
-}
-
-.person-preview__content p {
-	margin: 0 0 1rem;
+	h2, p {
+		margin: 0;
+	}
 }
 
 .person-name {
@@ -57,7 +53,7 @@
 
 .person-preview__disciplines li {
 	padding: 0.25rem 0.6rem;
-	border: 1px solid currentColor;
+	border: 2px solid currentColor;
 	border-radius: 999px;
 }
 
