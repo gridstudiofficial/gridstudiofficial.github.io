@@ -48,6 +48,18 @@ export function ProjectPreview({project}) {
 						))}
 					</ul>
 				)}
+				{project.link && (
+					<div className="project-preview__links">
+						<a
+							className="link"
+							href={project.link.url}
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							{project.link.text}
+						</a>
+					</div>
+				)}
 			</div>
 		</article>
 	);

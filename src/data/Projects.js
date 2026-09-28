@@ -16,5 +16,11 @@ export const projects = [
 		people: [
 			diego
 		]
+		],
+		link: {
+			url: "https://diegourjc1.github.io/mips32_editor_00/",
+			text: "Project web page"
+		}
+	}),
 	})
 ]

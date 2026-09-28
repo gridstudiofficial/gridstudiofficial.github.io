@@ -57,6 +57,37 @@
 	border-radius: 999px;
 }
 
+.project-preview__links {
+	a {
+		position: relative;
+		color: var(--accent-color);
+		text-decoration: none;
+		transition: color 0.2s ease;
+	}
+
+	a::after {
+		content: '';
+		position: absolute;
+		left: 0;
+		bottom: -2px;
+		width: 100%;
+		height: 1.5px;
+		background-color: var(--accent-color);
+		transform: scaleX(0);
+		transform-origin: right;
+		transition: transform 0.25s ease;
+	}
+
+	a:hover {
+		color: #ffffff;
+	}
+
+	a:hover::after {
+		transform: scaleX(1);
+		transform-origin: left;
+	}
+}
+
 @media (max-width: 700px) {
 	.person-grid {
 		grid-template-columns: 1fr;

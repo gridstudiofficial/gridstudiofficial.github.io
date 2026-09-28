@@ -51,6 +51,20 @@
 	border-radius: 999px;
 }
 
+.project-preview__people a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.project-preview__people li {
+	transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.project-preview__people li:hover {
+	border-color: var(--accent-color);
+	color: var(--accent-color);
+}
+
 @media (max-width: 700px) {
 	.project-grid {
 		grid-template-columns: 1fr;
