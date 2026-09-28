@@ -64,30 +64,11 @@ Es un juego 2D con vista _top-down_.
 El jugador puede avanzar por una serie de niveles que enseñan a jugar y demuestran diversas mecánicas y situaciones de
 juego.
 
-## Ciclo de juego
+### Público objetivo
 
-```mermaid
-flowchart TB
-    START(["Inicio de ronda"]) --> B["Reducir fatiga de las unidades"]
-    B --> C{"¿Alguna unidad<br>tiene fatiga = 0?"}
-    C -- No --> B
-    C -- Sí --> D["Jugador activo elige<br>una unidad disponible"]
-    D --> WHAT_ACTION?{"¿Qué acción realiza?"}
-    WHAT_ACTION? --> ATTACK["Atacar"] & MOVE["Moverse"] & OTHER["Otros"] & WAIT["Esperar / Nada"] --> SOLVE_ACTION["Resolver acción"]
-    SOLVE_ACTION --> OTHER_ACTION?{"¿Puede hacer<br>otra acción?"}
-    OTHER_ACTION? -- No --> GAIN_FATIGUE["La unidad vuelve a ganar fatiga"]
-    OTHER_ACTION? -- Si --> WHAT_ACTION?
-    GAIN_FATIGUE --> L{"¿Se cumple una<br>condición de victoria?"}
-    L -- Sí --> M{"¿Hay varios<br>jugadores ganadores?"}
-    M -- No --> N(["Victoria del jugador"])
-    M -- Sí --> O(["Victoria compartida / Empate"])
-    L -- No --> P{"¿Quedan unidades<br>con fatiga = 0?"}
-    P -- Sí --> D
-    P -- No --> Q["Final de ronda"]
-    Q --> R["Aplicar efectos de fin de ronda"]
-    R --> S["Avanzar al siguiente jugador"]
-    S --> B
-```
+Jugadores que han jugado videojuegos anteriormente, pero no sean ávidos consumidores (jugadores casuales).
+
+Adultos y jóvenes.
 
 ## Diagrama de navegación de usuario
 
@@ -199,11 +180,91 @@ flowchart TB
 
 > Para una mejor lectura, copia y pega el código `mermaid` en [esta web](https://mermaid.live/).
 
+## Mecánicas
+
+### Ciclo de juego
+
+Ciclo de juego de un jugador en un turno.
+
+```mermaid
+flowchart TB
+    START(["Inicio de ronda"]) --> B["Reducir fatiga de las unidades"]
+    B --> C{"¿Alguna unidad<br>tiene fatiga = 0?"}
+    C -- No --> B
+    C -- Sí --> D["Jugador activo elige<br>una unidad disponible"]
+    D --> WHAT_ACTION?{"¿Qué acción realiza?"}
+    WHAT_ACTION? --> ATTACK["Atacar"] & MOVE["Moverse"] & OTHER["Otros"] & WAIT["Esperar / Nada"] --> SOLVE_ACTION["Resolver acción"]
+    SOLVE_ACTION --> OTHER_ACTION?{"¿Puede hacer<br>otra acción?"}
+    OTHER_ACTION? -- No --> GAIN_FATIGUE["La unidad vuelve a<br>ganar fatiga"]
+    OTHER_ACTION? -- Si --> WHAT_ACTION?
+    GAIN_FATIGUE --> L{"¿Se cumple una<br>condición de victoria?"}
+    L -- Sí --> M{"¿Hay varios<br>jugadores ganadores?"}
+    M -- No --> N(["Victoria del jugador"])
+    M -- Sí --> O(["Victoria compartida / Empate"])
+    L -- No --> P{"¿Quedan unidades<br>con fatiga = 0?"}
+    P -- Sí --> D
+    P -- No --> Q["Final de ronda"]
+    Q --> R["Aplicar efectos de fin de ronda"]
+    R --> S["Avanzar al siguiente jugador"]
+    S --> B
+```
+
+### Fatiga
+
+Todas las entidades capaces de actuar se rigen por el sistema de fatiga. Cuando una entidad tiene fatiga 0 puede actuar.
+Tanto las `unidades` como las `propiedades` se rigen por este sistema. Tras una acción, se le añadirá fatiga a la
+entidad que actuó.
+
+Caso de uso extremo: Si se quiere que un volcán erupcione de vez en cuando, este debe ser una `propiedad` que forma su
+propio `equipo`. Se encola en la lista de entidades con fatiga y su IA de juego realiza la acción de erupción cada vez
+que
+tiene la oportunidad. Esta acción le puede añadir una cantidad de fatiga aleatória en un rango.
+
+### Movimiento por resistencia
+
+Las `unidades` tienen una capacidad de movimiento numérica. Las `tiles` tienen una capacidad de resistencia numérica.
+Una unidad avanza menos casillas con más resistencia (ej. una montaña) que una con poca (ej. una carretera).
+
+### Orientación de unidad
+
+> <span style=color:red>Esta mecánica está en duda. Debe probarse y discutirse más a fondo</span>
+
+El jugador decide a qué dirección (Arriba, Abajo, Derecha, Izquierda), mira una `unidad` cuando termina su turno.
+
+Girar una unidad consume su recurso de capacidad de movimiento.
+
+Una unidad puede tener restricción de ataque. Véase, un tanque que solo puede atacar hacia las casillas que mira.
+
+La visibilidad de una unidad puede corresponder con la dirección que mira. Véase, un tanque que solo puede mirar una
+casilla en todas direcciones y dos más hacia su frente.
+
+### Niebla de guerra
+
+Una `tile` puede o no ser visible. Las unidades y propiedades de un jugador aportan visibilidad. Las unidades o color
+del propietario de una propiedad no son visibles si no se tienen unidades que tengan visibilidad en esos `tiles`.
+
 ## Elementos de juego
+
+El juego se rige por `partidas`. Un nivel es una partida.
 
 ### Partida
 
 Una partida está compuesta por un `mapa`, `equipos`, `reglas` y al menos una `condición de victoria`.
+
+### Equipo
+
+Una `partida` debe tener al menos un equipo. Un equipo está compuesto por al menos un `Jugador`.
+
+Este esquema permite crear partidas en las que varios jugadores hacen equipo.
+
+En la lógica del juego, si se quiere tener un grupo de mónstruos ajenos hostiles al resto de equipos, estos forman su
+propio equipo y son controlados por un `jugador de IA`.
+
+### Jugador
+
+Un `Jugador` siempre es miembro de un `equipo`. Puede ser humano o IA.
+
+Un usuario interactúa con el juego a través de esta clase.
 
 ### Unidad
 
@@ -428,11 +489,11 @@ classDiagram
 
 Un `mapa` está compuesto de `tiles` y contiene todas las `entidades` (`unidades` y `propiedades`).
 
-Una `partida` tiene un mapa de juego. Todos los mapas son rectangulares.
+Una `partida` tiene un mapa de juego. Todos los mapas son una cuadrícula rectangular.
 
 #### Tile
 
-Una `tile` se compone de na `base` y adicionalmente puede tener `terreno` y `propiedad`.
+Una `tile` se compone de la `base` y adicionalmente puede tener `terreno` y `propiedad`.
 
 ```mermaid
 flowchart TD
@@ -478,7 +539,7 @@ su equipo.
 | Niebla de guerra             | Si                                                                                                         | No                                                                                |
 | Niebla de guerra compartida  | Si<br>La visibilidad de un equipo es común a todos sus miembros.                                           | No                                                                                |
 | Atravesar unidades aliadas   | Si<br>Las unidades pueden caminar a través de casillas ocupadas por unidades de ese jugador.               | No                                                                                |
-| Atravesar unidades de equipo | Si<br>Las ynidades pueden caminar a través de casillas ocupadas por unidades de otros miembros del equipo. | No                                                                                |
+| Atravesar unidades de equipo | Si<br>Las unidades pueden caminar a través de casillas ocupadas por unidades de otros miembros del equipo. | No                                                                                |
 | Fondos iniciales             | Por defecto                                                                                                | Personalizados<br>Común a todos los jugadores o específicos por equipo o jugador. |
 
 #### Condición de victoria
@@ -509,13 +570,15 @@ Condición OR de victoria `Equipo 1`:
 
 * Controlar cierta `propiedad`: Cuartel General `Jugador IA 2`.
 * Eliminar todas las unidades del `Equipo 2`.
-  Condiciones OR de victoria `Equipo 2`:
+
+Condiciones OR de victoria `Equipo 2`:
+
 * Controlar cierta `propiedad`: Cuartel General `Jugador Humano 1`.
 * Llevar a cierta `unidad` a una cierta `tile`.
 
 # Monetización
 
-Uso de modelo _Shareware_/_Try Before You Buy_ igual que **DOOM** en su lanzamiento original.
+Uso de modelo _Shareware_ / _Try Before You Buy_ igual que **DOOM** en su lanzamiento original.
 
 Versión limitada del juego que permite jugar ciertos niveles iniciales. Las partidas personalizadas tienen limitaciones,
 pero no impiden que puedan jugar hasta dos personas con pass and play. No es posible crear mapas ni importar o exportar
