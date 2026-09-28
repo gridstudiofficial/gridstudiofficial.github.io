@@ -1,0 +1,122 @@
+/* TOC Sidebar */
+.toc-sidebar {
+	width: 280px;
+	flex-shrink: 0;
+	position: sticky;
+	top: 90px;
+	background: #27292b;
+	border-radius: 8px;
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+	padding: 16px;
+	max-height: calc(100vh - 120px);
+	overflow-y: auto;
+	animation: fadeInToc 0.25s ease;
+}
+
+@keyframes fadeInToc {
+	from {
+		opacity: 0;
+		transform: translateX(10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+.toc-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+	padding-bottom: 8px;
+	margin-bottom: 12px;
+}
+
+.toc-title {
+	font-weight: 600;
+	font-size: 1.05em;
+	color: #ffffff;
+}
+
+.toc-close-btn,
+.toc-toggle-floating {
+	background: rgba(255, 255, 255, 0.08);
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	color: var(--font-color);
+	border-radius: 4px;
+	cursor: pointer;
+	padding: 4px 8px;
+	font-size: 0.9em;
+	transition: background 0.2s ease, color 0.2s ease;
+}
+
+.toc-close-btn:hover,
+.toc-toggle-floating:hover {
+	background: var(--accent-color);
+	color: #ffffff;
+}
+
+.toc-toggle-floating {
+	position: fixed;
+	top: 130px;
+	right: 24px;
+	z-index: 100;
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 8px 12px;
+	background: #27292b;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.toc-nav ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.toc-nav li {
+	margin: 6px 0;
+	font-size: 0.9em;
+	line-height: 1.4;
+	border-left: 2px solid transparent;
+	padding-left: 6px;
+	transition: border-color 0.2s ease;
+}
+
+.toc-nav li.active {
+	border-left-color: var(--accent-color);
+}
+
+.toc-nav li.active a {
+	color: var(--accent-color);
+	font-weight: 600;
+}
+
+.toc-nav a {
+	color: #a0a5b0;
+	text-decoration: none;
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	transition: color 0.2s ease;
+}
+
+.toc-nav a:hover {
+	color: #ffffff;
+}
+
+@media (max-width: 1024px) {
+	.toc-sidebar {
+		position: static;
+		width: 100%;
+		max-height: none;
+		margin-bottom: 24px;
+	}
+	.toc-toggle-floating {
+		position: static;
+		margin-bottom: 16px;
+	}
+}

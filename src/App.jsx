@@ -5,6 +5,7 @@ import Social from './pages/Social.jsx';
 import Portfolio from './pages/Portfolio.jsx';
 import Navbar from './components/Navbar/Navbar.jsx';
 import Footer from './components/Footer/Footer.jsx';
+import PageLayout from './components/PageLayout/PageLayout.jsx';
 import './App.css';
 
 function Layout() {
@@ -14,7 +15,9 @@ function Layout() {
 				<Navbar/>
 			</header>
 			<main>
-				<Outlet/>
+				<PageLayout>
+					<Outlet/>
+				</PageLayout>
 			</main>
 			<Footer/>
 		</>

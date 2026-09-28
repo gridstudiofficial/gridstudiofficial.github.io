@@ -1,0 +1,21 @@
+.page-layout-container {
+	display: flex;
+	gap: 32px;
+	max-width: 1400px;
+	margin: 0 auto;
+	padding: 24px;
+	position: relative;
+	align-items: flex-start;
+}
+
+.page-content-wrapper {
+	flex: 1;
+	min-width: 0;
+	transition: max-width 0.3s ease;
+}
+
+@media (max-width: 1024px) {
+	.page-layout-container {
+		flex-direction: column;
+	}
+}
