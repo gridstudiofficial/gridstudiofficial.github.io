@@ -15,12 +15,27 @@ export const projects = [
 		],
 		people: [
 			diego
-		]
 		],
 		link: {
 			url: "https://diegourjc1.github.io/mips32_editor_00/",
 			text: "Project web page"
 		}
 	}),
+
+	new Project({
+		name: "Please, buy these",
+		media: "/projects/please_buy_these-preview.gif",
+		description: "A game where what you say is determined by your bullet hell skills.",
+		disciplines: [
+			Discipline.CSHARP,
+			Discipline.UNITY
+		],
+		people: [
+			diego
+		],
+		link: {
+			url: "https://manupoons.itch.io/please-buy-these",
+			text: "Project web page"
+		}
 	})
 ]
