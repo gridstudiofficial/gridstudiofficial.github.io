@@ -10,9 +10,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "i18next": "^26.4.2",
+    "i18next-browser-languagedetector": "^8.2.1",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
-    "react-router-dom": "^7.18.4"
+    "react-i18next": "^17.0.15",
+    "react-markdown": "^10.1.0",
+    "react-markdown-mermaid": "^0.0.3",
+    "react-router-dom": "^7.18.4",
+    "rehype-raw": "^7.0.0",
+    "remark-gfm": "^4.0.1"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

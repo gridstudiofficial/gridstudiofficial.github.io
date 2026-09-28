@@ -1,0 +1,36 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "docs": "Documentación",
+    "portfolio": "Portfolio",
+    "social": "Comunidad"
+  },
+  "home": {
+    "title": "Empezar",
+    "edit": "Edita",
+    "save_test": "y guarda para probar",
+    "counter": "El contador es {{count}}"
+  },
+  "docs": {
+    "title": "Documentación",
+    "subtitle": "Tus preguntas, respondidas",
+    "explore_vite": "Explora Vite",
+    "learn_more": "Aprende más"
+  },
+  "social": {
+    "title": "Conéctate con nosotros",
+    "subtitle": "Únete a la comunidad de Vite"
+  },
+  "footer": {
+    "text": "Todo el contenido pertenece a Grid Studio."
+  },
+  "toc": {
+    "toc": "Índice de Contenidos",
+    "hide_index": "Ocultar Índice",
+    "show_index": "Mostrar Índice"
+  },
+  "markdown": {
+    "loading": "Cargando documento...",
+    "error": "No se pudo encontrar el documento en {{path}}"
+  }
+}

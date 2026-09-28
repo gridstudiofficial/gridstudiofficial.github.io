@@ -1,0 +1,258 @@
+/* TOC Sidebar */
+.toc-sidebar {
+	--toc-width: 240px;
+	--toc-mobile-width: min(260px, calc(100vw - 32px));
+
+	--toc-border-color: rgba(255, 255, 255, 0.08);
+	--toc-border-light: rgba(255, 255, 255, 0.1);
+
+	--toc-text-color: rgba(255, 255, 255, 0.54);
+	--toc-title-color: rgba(255, 255, 255, 0.58);
+
+	--toc-button-background: rgb(35 35 35);
+	--toc-mobile-background: #27292b;
+
+	--toc-scrollbar-color: rgba(255, 255, 255, 0.18);
+	--toc-scrollbar-hover: rgba(255, 255, 255, 0.32);
+
+	--toc-radius: 4px;
+	--toc-mobile-radius: 8px;
+
+	--toc-shadow: 0 8px 28px rgba(0, 0, 0, 0.4);
+
+	--toc-transition: 0.2s ease;
+	--toc-animation: 0.25s ease;
+
+}
+
+.toc-sidebar {
+	width: var(--toc-width);
+	flex-shrink: 0;
+
+	position: sticky;
+	top: 90px;
+
+	background: transparent;
+
+	border-left: 1px solid var(--toc-border-color);
+	border-radius: 0;
+
+	box-shadow: none;
+
+	padding: 8px 0 8px 18px;
+
+	max-height: calc(100vh - 120px);
+	overflow-y: auto;
+
+	animation: fadeInToc var(--toc-animation);
+
+	/* Firefox */
+	scrollbar-width: thin;
+	scrollbar-color: var(--toc-scrollbar-color) transparent;
+
+	/* Chrome / Edge / Safari */
+
+	&::-webkit-scrollbar {
+		width: 5px;
+	}
+
+	&::-webkit-scrollbar-track {
+		background: transparent;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background: var(--toc-scrollbar-color);
+		border-radius: 10px;
+	}
+
+	&::-webkit-scrollbar-thumb:hover {
+		background: var(--toc-scrollbar-hover);
+	}
+
+	.toc-nav ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	li {
+		margin: 6px 0;
+
+		font-size: 0.9em;
+		line-height: 1.4;
+
+		border-left: 2px solid transparent;
+		padding-left: 8px;
+
+		transition: border-color var(--toc-transition);
+	}
+
+	li.active {
+		border-left-color: var(--accent-color);
+	}
+
+	li.active a {
+		color: var(--accent-color);
+		font-weight: 600;
+	}
+
+	a {
+		display: block;
+
+		color: var(--toc-text-color);
+		text-decoration: none;
+
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+
+		transition: color var(--toc-transition);
+	}
+
+	a:hover {
+		color: #ffffff;
+	}
+}
+
+
+/* =========================
+   TOC Animation
+   ========================= */
+
+@keyframes fadeInToc {
+	from {
+		opacity: 0;
+		transform: translateX(10px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+
+/* =========================
+   TOC Header
+   ========================= */
+
+.toc-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	border-bottom: 1px solid var(--toc-border-color);
+
+	padding-bottom: 10px;
+	margin-bottom: 12px;
+}
+
+.toc-title {
+	font-weight: 600;
+	font-size: 0.78em;
+
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+
+	color: var(--toc-title-color);
+}
+
+
+/* =========================
+   TOC Buttons
+   ========================= */
+
+.toc-close-btn,
+.toc-toggle-floating {
+	background: var(--toc-button-background);
+
+	border: 1px solid var(--toc-border-light);
+	border-radius: var(--toc-radius);
+
+	color: var(--font-color);
+
+	cursor: pointer;
+
+	padding: 4px 8px;
+	font-size: 0.9em;
+
+	transition: background var(--toc-transition),
+	color var(--toc-transition);
+}
+
+.toc-close-btn:hover,
+.toc-toggle-floating:hover {
+	background: var(--accent-color);
+	color: #ffffff;
+}
+
+
+/* =========================
+   Floating TOC Toggle
+   ========================= */
+
+.toc-toggle-floating {
+	position: fixed;
+
+	top: 130px;
+	right: max(
+			24px,
+			calc((100vw - 1500px) / 2 + 24px)
+	);
+
+	z-index: 1201;
+
+	display: flex;
+	align-items: center;
+	gap: 6px;
+
+	padding: 8px 12px;
+
+	border-color: var(--toc-border-light);
+
+	box-shadow: none;
+}
+
+
+/* =========================
+   Mobile
+   ========================= */
+
+@media (max-width: 1024px) {
+	.toc-sidebar {
+		position: fixed;
+
+		z-index: 1200;
+
+		top: 80px;
+		right: 16px;
+		bottom: calc(80px + env(safe-area-inset-bottom));
+
+		width: var(--toc-mobile-width);
+
+		border: 1px solid var(--toc-border-light);
+
+		background: var(--toc-mobile-background);
+
+		border-radius: var(--toc-mobile-radius);
+
+		padding: 16px;
+
+		max-height: none;
+		margin: 0;
+
+		box-shadow: var(--toc-shadow);
+	}
+
+	.toc-toggle-floating {
+		position: fixed;
+
+		top: calc(170px + env(safe-area-inset-top));
+		right: 16px;
+		bottom: auto;
+
+		z-index: 1201;
+
+		margin: 0;
+	}
+}
