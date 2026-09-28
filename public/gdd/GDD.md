@@ -372,45 +372,79 @@ Una `tile` se compone de na `base` y adicionalmente puede tener `terreno` y `pro
 ```mermaid
 flowchart TD
     TILE["TILE"]
-
     TILE --> BASE["Base<br/>Siempre presente"]
     TILE -.-> TERRAIN["Terreno<br/>Opcional"]
     TILE -.-> PROPERTY["Propiedad<br/>Opcional"]
-
     PROPERTY --> NORMAL["Propiedad normal"]
     PROPERTY --> PATH["Propiedad de camino"]
-
     PATH --> TYPE["Tipo de camino"]
     PATH --> DIRECTION["Dirección / conexiones"]
-
     TYPE --> ROAD["Carretera"]
     TYPE --> RAIL["Rail"]
     TYPE --> BRIDGE["Puente"]
     TYPE --> OTHER["..."]
-
     DIRECTION --> SPRITE["Sprite según dirección"]
-    
     SPRITE --> S1["Norte"]
     SPRITE --> S2["Sur"]
     SPRITE --> S3["Este"]
     SPRITE --> S4["Oeste"]
     SPRITE --> S5["Curva / conexiones"]
     SPRITE --> S6["Cruce / múltiples conexiones"]
-
-    style TILE fill:#4f46e5,color:#fff,stroke:#312e81
-    style BASE fill:#94a3b8,color:#fff,stroke:#64748b
-    style TERRAIN fill:#65a30d,color:#fff,stroke:#3f6212
-    style PROPERTY fill:#d97706,color:#fff,stroke:#92400e
-    style NORMAL fill:#f59e0b,color:#fff
-    style PATH fill:#dc2626,color:#fff
-    style TYPE fill:#ef4444,color:#fff
-    style DIRECTION fill:#ef4444,color:#fff
-    style SPRITE fill:#7c3aed,color:#fff
+    style TILE fill: #4f46e5, color: #fff, stroke: #312e81
+    style BASE fill: #94a3b8, color: #fff, stroke: #64748b
+    style TERRAIN fill: #65a30d, color: #fff, stroke: #3f6212
+    style PROPERTY fill: #d97706, color: #fff, stroke: #92400e
+    style NORMAL fill: #f59e0b, color: #fff
+    style PATH fill: #dc2626, color: #fff
+    style TYPE fill: #ef4444, color: #fff
+    style DIRECTION fill: #ef4444, color: #fff
+    style SPRITE fill: #7c3aed, color: #fff
 ```
 
 ### Reglas de juego
 
+Una `partida` tiene `reglas de juego`. Estas especifican ciertos comportamientos de la partida.
+
+Algunas de las reglas de juego tienen que ver con la _niebla de guerra_ y las interacciones de un jugador con otros de
+su equipo.
+
+| Regla                        | Opción 1                                                                                                   | Opción 2                                                                          |
+|------------------------------|------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------|
+| Niebla de guerra             | Si                                                                                                         | No                                                                                |
+| Niebla de guerra compartida  | Si<br>La visibilidad de un equipo es común a todos sus miembros.                                           | No                                                                                |
+| Atravesar unidades aliadas   | Si<br>Las unidades pueden caminar a través de casillas ocupadas por unidades de ese jugador.               | No                                                                                |
+| Atravesar unidades de equipo | Si<br>Las ynidades pueden caminar a través de casillas ocupadas por unidades de otros miembros del equipo. | No                                                                                |
+| Fondos iniciales             | Por defecto                                                                                                | Personalizados<br>Común a todos los jugadores o específicos por equipo o jugador. |
+
 #### Condición de victoria
+
+Una partida necesita al menos una `condición de victoria`.
+
+Las condiciones de victoria pueden seguir reglas booleanas `AND` y `OR`. Una partida puede tener varias condiciones de
+victoria.
+
+Las condiciones de victoria pueden ser comunes a todos los `equipos` y `jugadores` o diferentes.
+
+Ejemplos de condiciones de victoria:
+
+* Eliminar todas las unidades del `equipo [NOMBRE DE EQUIPO]`.
+* Eliminar todas las unidades del `jugador [NOMBRE DE JUGADOR]`.
+* Controlar cierta `propiedad`.
+* Tener más de `n` unidades.
+* No tener menos de `n` unidades.
+* Llevar a cierta `unidad` a una cierta `tile`.
+* Realizar `otra/s condición/es de victoria` antes de `n turnos/tiempo`.
+
+El sistema permite realizar condiciones de victoria asimétricas como estas:
+* Equipo 1 (Jugador Humano 1)
+* Equipo 2 (Jugador IA 2)
+
+Condición OR de victoria `Equipo 1`:
+* Controlar cierta `propiedad`: Cuartel General `Jugador IA 2`.
+* Eliminar todas las unidades del `Equipo 2`.
+Condiciones OR de victoria `Equipo 2`:
+* Controlar cierta `propiedad`: Cuartel General `Jugador Humano 1`.
+* Llevar a cierta `unidad` a una cierta `tile`.
 
 # Monetización
 
