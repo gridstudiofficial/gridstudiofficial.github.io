@@ -37,5 +37,24 @@ export const projects = [
 			url: "https://manupoons.itch.io/please-buy-these",
 			text: "Project web page"
 		}
+	}),
+
+	new Project({
+		name: "Cuoco Cooked",
+		media: "/projects/cuoco_cooked-preview.png",
+		description: "Website with a set of custom tools in React to make a wiki like Game Design Document for a concept game. Cuoco Cooked is a concept 2D fighting game.",
+		disciplines: [
+			Discipline.HTML,
+			Discipline.CSS,
+			Discipline.JS,
+			Discipline.REACT
+		],
+		people: [
+			diego
+		],
+		link: {
+			url: "https://diegourjc1.github.io/Cuoco_Coocked_GDD/",
+			text: "Project web page"
+		}
 	})
 ]
