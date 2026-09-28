@@ -47,6 +47,18 @@
 	overflow: visible !important;
 }
 
+/* Mermaid emits SVGs with intrinsic dimensions. Keep them tied to the
+ * markdown column so they shrink when the TOC takes space. */
+.markdown-renderer .react-markdown-mermaid,
+.markdown-renderer .react-markdown-mermaid svg {
+	max-width: 100%;
+}
+
+.markdown-renderer .react-markdown-mermaid svg {
+	width: 100%;
+	height: auto;
+}
+
 .markdown-renderer .react-markdown-mermaid.undefined {
 	text-align: center;
 }
