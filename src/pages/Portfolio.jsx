@@ -1,14 +1,14 @@
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 import {ProjectGrid} from "../components/Project/ProjectGrid.jsx";
 import {projects} from "../data/Projects.js";
 
 export default function Portfolio() {
-	const { t } = useTranslation();
+	const {t} = useTranslation();
 
 	return (
 		<div id="portfolio">
 			<h1>Portfolio</h1>
-			<ProjectGrid projects={projects} />
+			<ProjectGrid projects={projects}/>
 		</div>
 	);
 }

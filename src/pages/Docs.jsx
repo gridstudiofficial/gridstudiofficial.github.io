@@ -1,8 +1,8 @@
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 import MarkdownRenderer from "../components/MarkdownRenderer/MarkdownRenderer.jsx";
 
 export default function Docs() {
-	const { t } = useTranslation();
+	const {t} = useTranslation();
 
 	return (
 		<div id="docs">
