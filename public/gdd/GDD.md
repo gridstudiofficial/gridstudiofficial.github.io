@@ -212,6 +212,71 @@ Una `unidad` es una entidad controlable por un `jugador` en el `mapa`.
 Un `jugador` puede tener `unidades`. Un jugador puede comenzar con unidades en el tablero si lo determina la partida o
 puede crearlas en `fábricas`.
 
+Diagrama de clase preliminar de `Unit`.
+
+```mermaid
+classDiagram
+    class Unit {
+        <<abstract>>
+        +string Id
+        +Player? Owner
+        +UnitDefinition Definition
+        +int CurrentHP
+        +int Fatigue
+        +UnitStatus Status
+        +IMovementProfile Movement
+        +List~IWeapon~ Weapons
+        +Vector2Int Position*(solo lectura)
+        +GetAvailableActions(GameState) List~IAction~
+        +TakeDamage(int, GameState, Unit?)
+        +Heal(int, GameState)
+        +GetComponent~T~() T
+        +RemoveComponent~T~()
+        #OnActivationStart()
+        #OnActivationEnd()
+    }
+    class Infantry
+    class Mech
+    class Vehicle {
+        <<abstract>>
+    }
+    class Tank
+    class APC
+    class Artillery
+    class AntiAir
+    class Aircraft {
+        <<abstract>>
+    }
+    class Fighter
+    class Helicopter
+    class Glider
+    class Ship {
+        <<abstract>>
+    }
+    class Battleship
+    class Lander
+    class Submarine
+
+    Unit <|-- Infantry
+    Unit <|-- Mech
+    Unit <|-- Vehicle
+    Unit <|-- Aircraft
+    Unit <|-- Ship
+    Vehicle <|-- Tank
+    Vehicle <|-- APC
+    Vehicle <|-- Artillery
+    Vehicle <|-- AntiAir
+    Aircraft <|-- Fighter
+    Aircraft <|-- Helicopter
+    Aircraft <|-- Glider
+    Ship <|-- Battleship
+    Ship <|-- Lander
+    Ship <|-- Submarine
+    Unit --> "1" IMovementProfile
+    Unit --> "0..*" IWeapon
+    Unit --> "0..*" IUnitComponent
+```
+
 ### Propiedad
 
 Una `propiedad` es una construcción desplegada en un `mapa`. Esta puede pertenecer o no a un `jugador`.
