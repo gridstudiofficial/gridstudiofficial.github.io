@@ -436,17 +436,33 @@ Ejemplos de condiciones de victoria:
 * Realizar `otra/s condición/es de victoria` antes de `n turnos/tiempo`.
 
 El sistema permite realizar condiciones de victoria asimétricas como estas:
+
 * Equipo 1 (Jugador Humano 1)
 * Equipo 2 (Jugador IA 2)
 
 Condición OR de victoria `Equipo 1`:
+
 * Controlar cierta `propiedad`: Cuartel General `Jugador IA 2`.
 * Eliminar todas las unidades del `Equipo 2`.
-Condiciones OR de victoria `Equipo 2`:
+  Condiciones OR de victoria `Equipo 2`:
 * Controlar cierta `propiedad`: Cuartel General `Jugador Humano 1`.
 * Llevar a cierta `unidad` a una cierta `tile`.
 
 # Monetización
+
+Uso de modelo _Shareware_/_Try Before You Buy_ igual que **DOOM** en su lanzamiento original.
+
+Versión limitada del juego que permite jugar ciertos niveles iniciales. Las partidas personalizadas tienen limitaciones,
+pero no impiden que puedan jugar hasta dos personas con pass and play. No es posible crear mapas ni importar o exportar
+partidas.
+
+Pago único para acceso completo a todas las características del juego.
+
+Se abre la posibilidad a expandir el juego con expansiones que se compongan de nuevos sets de niveles.
+
+El objetivo es que la mayor cantidad de usuarios prueben el juego y, con las funciones pass and play, puedan jugar con
+otras personas sin que tengan que instalar el juego. Los niveles iniciales deben enseñar al primero a jugar para poder
+explicar brevemente al segundo.
 
 # Recursos del documento
 
