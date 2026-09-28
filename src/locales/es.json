@@ -24,6 +24,11 @@
   "footer": {
     "text": "Todo el contenido pertenece a Grid Studio."
   },
+  "toc": {
+    "toc": "Índice de Contenidos",
+    "hide_index": "Ocultar Índice",
+    "show_index": "Mostrar Índice"
+  },
   "markdown": {
     "loading": "Cargando documento...",
     "error": "No se pudo encontrar el documento en {{path}}"

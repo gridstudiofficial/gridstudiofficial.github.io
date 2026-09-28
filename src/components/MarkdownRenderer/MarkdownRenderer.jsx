@@ -2,9 +2,17 @@ import {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import rehypeRaw from 'rehype-raw'; // 1. Importar el plugin
+import rehypeRaw from 'rehype-raw';
 import {MermaidBlock, rehypeMermaid} from 'react-markdown-mermaid';
 import './MarkdownRenderer.css';
+import {slugify} from "../TableOfContents/slugify.js";
+
+const extractText = (children) => {
+	if (typeof children === 'string') return children;
+	if (Array.isArray(children)) return children.map(extractText).join('');
+	if (children && children.props && children.props.children) return extractText(children.props.children);
+	return '';
+};
 
 export default function MarkdownRenderer({fileName}) {
 	const {t} = useTranslation();
@@ -50,7 +58,7 @@ export default function MarkdownRenderer({fileName}) {
 			<ReactMarkdown
 				remarkPlugins={[remarkGfm]}
 				rehypePlugins={[
-					rehypeRaw, // 2. Agregar rehypeRaw aquí arriba
+					rehypeRaw,
 					[
 						rehypeMermaid,
 						{
@@ -68,7 +76,6 @@ export default function MarkdownRenderer({fileName}) {
 									tertiaryColor: '#1f2023',
 									fontFamily: "'Noto Sans Variable', Arial, sans-serif",
 									fontSize: '1em',
-
 									cScale0: '#646cff',
 									cScale1: '#4c9f70',
 									cScale2: '#c97b3d',
@@ -90,7 +97,29 @@ export default function MarkdownRenderer({fileName}) {
 						},
 					],
 				]}
-				components={{MermaidBlock}}
+				components={{
+					MermaidBlock,
+					h1: ({children, ...props}) => {
+						const text = extractText(children);
+						const id = slugify(text);
+						return <h1 id={id} {...props}>{children}</h1>;
+					},
+					h2: ({children, ...props}) => {
+						const text = extractText(children);
+						const id = slugify(text);
+						return <h2 id={id} {...props}>{children}</h2>;
+					},
+					h3: ({children, ...props}) => {
+						const text = extractText(children);
+						const id = slugify(text);
+						return <h3 id={id} {...props}>{children}</h3>;
+					},
+					h4: ({children, ...props}) => {
+						const text = extractText(children);
+						const id = slugify(text);
+						return <h4 id={id} {...props}>{children}</h4>;
+					},
+				}}
 			>
 				{markdownText}
 			</ReactMarkdown>
