@@ -1,11 +1,9 @@
 import "./PersonPreview.css";
 import SocialLink from "../SocialLink/SocialLink.jsx";
 
-;
-
 export function PersonPreview({person}) {
 	return (
-		<div className="person-preview">
+		<div className="person-preview" id={person.id}>
 			<div className="person-preview__media">
 				<img
 					src={person.image}

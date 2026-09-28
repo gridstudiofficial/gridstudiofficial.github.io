@@ -1,3 +1,4 @@
+import {Link} from 'react-router-dom';
 import "./ProjectPreview.css";
 
 export function ProjectPreview({project}) {
@@ -37,10 +38,12 @@ export function ProjectPreview({project}) {
 					</ul>
 				)}
 				{project.people.length > 0 && (
-					<ul className="project-preview__disciplines">
+					<ul className="project-preview__people">
 						{project.people.map((person) => (
-							<li key={person.name}>
-								{person.name}
+							<li key={person.id || person.name}>
+								<Link to={`/social#${person.id}`}>
+									{person.name}
+								</Link>
 							</li>
 						))}
 					</ul>

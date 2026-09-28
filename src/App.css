@@ -2,6 +2,8 @@
 	--font-family: 'Noto Sans Variable', Helvetica, sans-serif;
 	--font-color: #eaeaea;
 	--background-color: #191a1c;
+
+	--border-width: 4px;
 }
 
 html, body {

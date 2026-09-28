@@ -1,7 +1,7 @@
 import {createHashRouter, Outlet, RouterProvider} from 'react-router-dom';
 import Home from './pages/Home.jsx';
 import Docs from './pages/Docs.jsx';
-import SocialPage from './pages/SocialPage.jsx';
+import Social from './pages/Social.jsx';
 import Portfolio from './pages/Portfolio.jsx';
 import Navbar from './components/Navbar/Navbar.jsx';
 import Footer from './components/Footer/Footer.jsx';
@@ -27,7 +27,7 @@ const router = createHashRouter([
 		children: [
 			{path: '/', element: <Home/>},
 			{path: '/docs', element: <Docs/>},
-			{path: '/social', element: <SocialPage/>},
+			{path: '/social', element: <Social/>},
 			{path: '/portfolio', element: <Portfolio/>},
 		],
 	},

@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import {PeopleGrid} from "../components/People/PeopleGrid.jsx";
 import {people} from "../data/People.js";
 
-export default function SocialPage() {
+export default function Social() {
 	const { t } = useTranslation();
 
 	return (

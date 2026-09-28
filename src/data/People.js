@@ -2,6 +2,7 @@ import {Person} from "../components/People/Person.js";
 import {Discipline} from "../components/Project/Discipline.js";
 
 export let diego = new Person({
+	id: "diego",
 	name: "Diego",
 	image: "people/diego.jpg",
 	disciplines: [

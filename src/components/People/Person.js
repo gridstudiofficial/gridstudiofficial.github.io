@@ -1,5 +1,6 @@
 export class Person {
-	constructor({name, image, disciplines = [], links = []}) {
+	constructor({id, name, image, disciplines = [], links = []}) {
+		this.id = id || name.toLowerCase().replace(/\s+/g, '-');
 		this.name = name;
 		this.image = image;
 		this.disciplines = disciplines;
