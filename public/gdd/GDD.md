@@ -56,8 +56,10 @@ gitGraph
 
 ## Descripción general
 
-Grid Tactics es un juego de estrategia en cuadrícula donde el o los jugadores se enfrentan a otros o al entorno para
-cumplir uno o vários objetivos. Se rige por un sistema de _fatiga_ que determina la próxima entidad en actuar.
+Grid Tactics es un juego de estrategia en cuadrícula donde el o los jugadores se enfrentan a otros equipos o al entorno
+para cumplir uno o vários objetivos. Se rige por un sistema de _fatiga_ que determina la próxima entidad en actuar.
+
+Es un juego 2D con vista _top-down_.
 
 El jugador puede avanzar por una serie de niveles que enseñan a jugar y demuestran diversas mecánicas y situaciones de
 juego.
@@ -66,18 +68,16 @@ juego.
 
 ```mermaid
 flowchart TB
-    A(["Inicio de ronda"]) --> B["Reducir fatiga de las unidades"]
+    START(["Inicio de ronda"]) --> B["Reducir fatiga de las unidades"]
     B --> C{"¿Alguna unidad<br>tiene fatiga = 0?"}
     C -- No --> B
     C -- Sí --> D["Jugador activo elige<br>una unidad disponible"]
-    D --> E{"¿Qué acción realiza?"}
-    E --> F["Atacar"] & G["Moverse"] & H["Otros"] & I["Esperar / Nada"]
-    F --> J["Resolver acción"]
-    G --> J
-    H --> J
-    I --> J
-    J --> K["La unidad vuelve a ganar fatiga"]
-    K --> L{"¿Se cumple una<br>condición de victoria?"}
+    D --> WHAT_ACTION?{"¿Qué acción realiza?"}
+    WHAT_ACTION? --> ATTACK["Atacar"] & MOVE["Moverse"] & OTHER["Otros"] & WAIT["Esperar / Nada"] --> SOLVE_ACTION["Resolver acción"]
+    SOLVE_ACTION --> OTHER_ACTION?{"¿Puede hacer<br>otra acción?"}
+    OTHER_ACTION? -- No --> GAIN_FATIGUE["La unidad vuelve a ganar fatiga"]
+    OTHER_ACTION? -- Si --> WHAT_ACTION?
+    GAIN_FATIGUE --> L{"¿Se cumple una<br>condición de victoria?"}
     L -- Sí --> M{"¿Hay varios<br>jugadores ganadores?"}
     M -- No --> N(["Victoria del jugador"])
     M -- Sí --> O(["Victoria compartida / Empate"])
@@ -88,6 +88,7 @@ flowchart TB
     R --> S["Avanzar al siguiente jugador"]
     S --> B
 ```
+
 ## Diagrama de navegación de usuario
 
 ```mermaid
@@ -196,7 +197,220 @@ flowchart TB
     DEFEAT --> EXIT
 ```
 
+> Para una mejor lectura, copia y pega el código `mermaid` en [esta web](https://mermaid.live/).
+
 ## Elementos de juego
+
+### Partida
+
+Una partida está compuesta por un `mapa`, `equipos`, `reglas` y al menos una `condición de victoria`.
+
+### Unidad
+
+Una `unidad` es una entidad controlable por un `jugador` en el `mapa`.
+
+Un `jugador` puede tener `unidades`. Un jugador puede comenzar con unidades en el tablero si lo determina la partida o
+puede crearlas en `fábricas`.
+
+### Propiedad
+
+Una `propiedad` es una construcción desplegada en un `mapa`. Esta puede pertenecer o no a un `jugador`.
+
+#### Fábrica
+
+Una `fábrica` es una entidad en el `mapa`.
+
+Un `jugador` puede ser dueño de una `fábrica`. El jugador que la controle, puede crear unidades.
+
+Al igual que una `unidad`, una `fábrica` se pone en la cola de fatiga para actual.
+
+```mermaid
+classDiagram
+    class ICapturable {
+        <<interface>>
+        +ReduceCaptureProgress(amount, capturer)
+        +CompleteCapture(newOwner, state)
+    }
+
+    class ISchedulable {
+        <<interface>>
+    }
+
+    class IPropertyComponent {
+        <<interface>>
+    }
+
+    class Property {
+        +string Id
+        +Player Owner
+        +Vector2Int Position
+        +int Fatigue
+        +PropertyDefinition Definition
+        +int CaptureProgress
+        +int MaxCaptureProgress
+        +GetComponent~T~()
+        +AddComponent(component)
+        +ReduceCaptureProgress(amount, capturer)
+        +CompleteCapture(newOwner, state)
+    }
+
+    class PropertyDefinition {
+        +string Id
+        +int MaxCaptureProgress
+        +int IdleProductionFatigue
+        +int ProductionTickFatigue
+    }
+
+    class ProductionBay {
+        +IProductionFilter Filter
+        +IBuildTimeStrategy TimeStrategy
+        +ProductionOrder CurrentOrder
+        -Queue~UnitDefinition~ _pending
+        +CanBuild(def)
+        +StartOrder(def)
+        +Enqueue(def)
+        +Advance(state, property)
+    }
+
+    class ProductionOrder {
+        <<record>>
+        +UnitDefinition Definition
+        +int TurnsRemaining
+    }
+
+    class IProductionFilter {
+        <<interface>>
+        +Allows(def)
+    }
+
+    class CategoryProductionFilter {
+        -HashSet~UnitCategory~ _allowed
+        +Allows(def)
+    }
+
+    class WhitelistProductionFilter {
+        -HashSet~string~ _ids
+        +Allows(def)
+    }
+
+    class IBuildTimeStrategy {
+        <<interface>>
+        +GetBuildTime(def)
+    }
+
+    class DefaultBuildTimeStrategy {
+        +GetBuildTime(def)
+    }
+
+    class OverrideBuildTimeStrategy {
+        -Dictionary~string,int~ _overrides
+        -IBuildTimeStrategy _fallback
+        +GetBuildTime(def)
+    }
+
+    class UnitDefinition {
+        +string Id
+        +UnitCategory Category
+        +int MaxHP
+        +int Cost
+        +int BuildTime
+        +int FuelCapacity
+    }
+
+    class UnitCategory {
+        <<enumeration>>
+        LightVehicle
+        HeavyVehicle
+        Naval
+        Infantry
+        Artillery
+    }
+
+    class Unit {
+        +Vector2Int Position
+    }
+
+    class Scheduler {
+        +Register(schedulable)
+        +ActivateNext()
+    }
+
+    class Player
+
+    ICapturable <|.. Property
+    ISchedulable <|.. Property
+    Property *-- PropertyDefinition
+    Property o-- IPropertyComponent
+    IPropertyComponent <|.. ProductionBay
+    ProductionBay *-- ProductionOrder
+    ProductionBay --> IProductionFilter
+    ProductionBay --> IBuildTimeStrategy
+    ProductionOrder --> UnitDefinition
+    IProductionFilter <|.. CategoryProductionFilter
+    IProductionFilter <|.. WhitelistProductionFilter
+    IBuildTimeStrategy <|.. DefaultBuildTimeStrategy
+    IBuildTimeStrategy <|.. OverrideBuildTimeStrategy
+    OverrideBuildTimeStrategy --> IBuildTimeStrategy
+    UnitDefinition --> UnitCategory
+    Board o-- Property
+    Board o-- Unit
+    Scheduler --> ISchedulable
+    Property --> Player
+
+```
+
+### Mapa
+
+Un `mapa` está compuesto de `tiles` y contiene todas las `entidades` (`unidades` y `propiedades`).
+
+Una `partida` tiene un mapa de juego. Todos los mapas son rectangulares.
+
+#### Tile
+
+Una `tile` se compone de na `base` y adicionalmente puede tener `terreno` y `propiedad`.
+
+```mermaid
+flowchart TD
+    TILE["TILE"]
+
+    TILE --> BASE["Base<br/>Siempre presente"]
+    TILE -.-> TERRAIN["Terreno<br/>Opcional"]
+    TILE -.-> PROPERTY["Propiedad<br/>Opcional"]
+
+    PROPERTY --> NORMAL["Propiedad normal"]
+    PROPERTY --> PATH["Propiedad de camino"]
+
+    PATH --> TYPE["Tipo de camino"]
+    PATH --> DIRECTION["Dirección / conexiones"]
+
+    TYPE --> ROAD["Carretera"]
+    TYPE --> RAIL["Rail"]
+    TYPE --> BRIDGE["Puente"]
+    TYPE --> OTHER["..."]
+
+    DIRECTION --> SPRITE["Sprite según dirección"]
+    
+    SPRITE --> S1["Norte"]
+    SPRITE --> S2["Sur"]
+    SPRITE --> S3["Este"]
+    SPRITE --> S4["Oeste"]
+    SPRITE --> S5["Curva / conexiones"]
+    SPRITE --> S6["Cruce / múltiples conexiones"]
+
+    style TILE fill:#4f46e5,color:#fff,stroke:#312e81
+    style BASE fill:#94a3b8,color:#fff,stroke:#64748b
+    style TERRAIN fill:#65a30d,color:#fff,stroke:#3f6212
+    style PROPERTY fill:#d97706,color:#fff,stroke:#92400e
+    style NORMAL fill:#f59e0b,color:#fff
+    style PATH fill:#dc2626,color:#fff
+    style TYPE fill:#ef4444,color:#fff
+    style DIRECTION fill:#ef4444,color:#fff
+    style SPRITE fill:#7c3aed,color:#fff
+```
+
+### Reglas de juego
+
+#### Condición de victoria
 
 # Monetización
 
