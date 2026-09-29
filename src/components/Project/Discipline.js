@@ -7,5 +7,10 @@ export const Discipline = Object.freeze({
 	UNITY: "Unity",
 	JAVA: "Java",
 	CSHARP: "CSHARP",
-	C: "C"
+	C: "C",
+	ART2D: "2D Art",
+	ART3D: "3D Art",
+	AUTODESK3DSMAX: "3dsmax",
+	AUTODESKMAYA: "Maya",
+	ANIMATION2D: "2D Animation",
 });
