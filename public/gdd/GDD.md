@@ -70,6 +70,39 @@ Jugadores que han jugado videojuegos anteriormente, pero no sean ávidos consumi
 
 Adultos y jóvenes.
 
+## Arte
+
+El juego es 2D con pixel art a baja resolución (16px de ancho, orientativo).
+
+Vista superior como los juegos de Game Boy Advance _Pokemon Esmeralda_ o _Advance Wars_.
+
+## Estéticas y contexto de juego
+
+El jugador y sus rivales encarnan corporaciones cuyo objetivo es la explotación de recursos.
+
+No existe un estado tradicional. Las corporaciones son las potencias soberanas gracias a su enorme capital y potencia
+militar. Las batallas militares sustituyen a la competencia de mercado convencional. La **_guerra corporativa_** es
+literal.
+
+> Propuesta de título de juego siguiendo esta narrativa:
+> * Corp Wars
+> * Corp Conflict
+> * Capital & Steel
+
+La explotación de recursos y control de rutas comerciales estratégicas es el motivador principal del conflicto.
+
+Además de las corporaciones, existen grupos de mercenarios independientes. Ciertos niveles pueden contar con distintos
+equipos formados por mercenarios independientes. Narrativamente, en futuros niveles estos pueden hacer equipo con
+corporaciones rivales o el usuario para mostrar su falta de fidelidad a un bando.
+
+Otras entidades posibles son vida salvaje o monstruos mutantes. La guerra corporativa resulta en el uso de energía y
+armas nucleares que alteran el entorno.
+
+### Papel del usuario
+
+El usuario toma el papel de líder de su propia empresa/grupo mercenario y lucha por sus propios intereses aliándose con
+aquellos grupos que comparten un objetivo común.
+
 ## Diagrama de navegación de usuario
 
 ```mermaid
@@ -251,29 +284,23 @@ Los distintos elementos siguen la siguiente relación
 
 ```mermaid
 erDiagram
-    MATCH ||--|| GAME_RULES : has
-    MATCH ||--|{ VICTORY_CONDITION : has
-    MATCH ||--|| MAP : has
-    MATCH ||--|{ TEAM : has
-
-    TEAM ||--|{ PLAYER : has
-
-    PLAYER |o--o{ UNIT : owns
-    PLAYER |o--o{ PROPERTY : owns
-
-    MAP ||--o{ UNIT : contains
-    MAP ||--o{ PROPERTY : contains
-    MAP ||--|{ TILE : "is made of"
-
-    TILE ||--|| BASE : has
-    TILE ||--o| TERRAIN : "may have"
-    TILE ||--o| PROPERTY : "may have"
-
-    PROPERTY ||--o| FACTORY : "can be"
-
-    VICTORY_CONDITION }o--o{ TEAM : "applies to"
-    VICTORY_CONDITION }o--o{ PLAYER : "applies to"
-    VICTORY_CONDITION |o--o{ VICTORY_CONDITION : "composed of (AND/OR)"
+    MATCH ||--|| GAME_RULES: has
+    MATCH ||--|{ VICTORY_CONDITION: has
+    MATCH ||--|| MAP: has
+    MATCH ||--|{ TEAM: has
+    TEAM ||--|{ PLAYER: has
+    PLAYER |o--o{ UNIT: owns
+    PLAYER |o--o{ PROPERTY: owns
+    MAP ||--o{ UNIT: contains
+    MAP ||--o{ PROPERTY: contains
+    MAP ||--|{ TILE: "is made of"
+    TILE ||--|| BASE: has
+    TILE ||--o| TERRAIN: "may have"
+    TILE ||--o| PROPERTY: "may have"
+    PROPERTY ||--o| FACTORY: "can be"
+    VICTORY_CONDITION }o--o{ TEAM: "applies to"
+    VICTORY_CONDITION }o--o{ PLAYER: "applies to"
+    VICTORY_CONDITION |o--o{ VICTORY_CONDITION: "composed of (AND/OR)"
 ```
 
 ### Partida
@@ -603,7 +630,7 @@ Condiciones OR de victoria `Equipo 2`:
 * Controlar cierta `propiedad`: Cuartel General `Jugador Humano 1`.
 * Llevar a cierta `unidad` a una cierta `tile`.
 
-# Monetización
+## Monetización
 
 Uso de modelo _Shareware_ / _Try Before You Buy_ igual que **DOOM** en su lanzamiento original.
 
