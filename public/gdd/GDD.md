@@ -247,6 +247,35 @@ del propietario de una propiedad no son visibles si no se tienen unidades que te
 
 El juego se rige por `partidas`. Un nivel es una partida.
 
+Los distintos elementos siguen la siguiente relación
+
+```mermaid
+erDiagram
+    MATCH ||--|| GAME_RULES : has
+    MATCH ||--|{ VICTORY_CONDITION : has
+    MATCH ||--|| MAP : has
+    MATCH ||--|{ TEAM : has
+
+    TEAM ||--|{ PLAYER : has
+
+    PLAYER |o--o{ UNIT : owns
+    PLAYER |o--o{ PROPERTY : owns
+
+    MAP ||--o{ UNIT : contains
+    MAP ||--o{ PROPERTY : contains
+    MAP ||--|{ TILE : "is made of"
+
+    TILE ||--|| BASE : has
+    TILE ||--o| TERRAIN : "may have"
+    TILE ||--o| PROPERTY : "may have"
+
+    PROPERTY ||--o| FACTORY : "can be"
+
+    VICTORY_CONDITION }o--o{ TEAM : "applies to"
+    VICTORY_CONDITION }o--o{ PLAYER : "applies to"
+    VICTORY_CONDITION |o--o{ VICTORY_CONDITION : "composed of (AND/OR)"
+```
+
 ### Partida
 
 Una partida está compuesta por un `mapa`, `equipos`, `reglas` y al menos una `condición de victoria`.
@@ -501,8 +530,7 @@ flowchart TD
     TILE --> BASE["Base<br/>Siempre presente"]
     TILE -.-> TERRAIN["Terreno<br/>Opcional"]
     TILE -.-> PROPERTY["Propiedad<br/>Opcional"]
-    PROPERTY --> NORMAL["Propiedad normal"]
-    PROPERTY --> PATH["Propiedad de camino"]
+    TILE -.-> PATH["Propiedad de camino"]
     PATH --> TYPE["Tipo de camino"]
     PATH --> DIRECTION["Dirección / conexiones"]
     TYPE --> ROAD["Carretera"]
@@ -520,7 +548,6 @@ flowchart TD
     style BASE fill: #94a3b8, color: #fff, stroke: #64748b
     style TERRAIN fill: #65a30d, color: #fff, stroke: #3f6212
     style PROPERTY fill: #d97706, color: #fff, stroke: #92400e
-    style NORMAL fill: #f59e0b, color: #fff
     style PATH fill: #dc2626, color: #fff
     style TYPE fill: #ef4444, color: #fff
     style DIRECTION fill: #ef4444, color: #fff
