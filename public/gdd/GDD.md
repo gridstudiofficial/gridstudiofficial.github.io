@@ -70,6 +70,49 @@ Jugadores que han jugado videojuegos anteriormente, pero no sean ávidos consumi
 
 Adultos y jóvenes.
 
+## Objetivo del producto
+
+### MVP
+
+El **Producto Mínimo Viable** debe permitir al usuario jugar una `partida`. La escena partida de Unity debe poder
+recibir los
+datos indispensables de una partida e iniciarla. Los elementos indispensables de una partida son:
+
+* `Mapa`.
+* `Reglas de juego`.
+* `Condición de victoria`.
+* `Equipos` con sus respectivos `jugadores`.
+
+### MMP
+
+El **Producto Mínimo Comercializable** debe contener:
+
+* Una lista de niveles jugables que enseñen al usuario a jugar.
+* Todas las herramientas de interfaz y navegación necesarias para jugar una partida y seleccionar un nivel. Esto incluye
+  los ajustes del juego y elementos de accesibilidad.
+
+### MAP
+
+El **Producto Mínimo Asombroso** debe permitir lo siguiente:
+
+* `Pass and Play` en un solo dispositivo.
+* Creador de `partidas personalizadas`.
+* Creador de `mapas`.
+* Exportar e `importar partidas` con o sin guardado.
+* Exportar e `importar mapas`.
+
+## Especificaciones técnicas
+
+El juego utiliza el motor de juego Unity.
+
+* Idioma primario inglés con el uso
+  del [Package Localization](https://docs.unity3d.com/Packages/com.unity.localization@2.0/manual/index.html) y se
+  extiende al castellano en las fases finales de desarrollo.
+* La interacción se hace a través del
+  nuevo [Package Input System](https://docs.unity3d.com/Packages/com.unity.inputsystem@1.20/manual/index.html) the Unity
+  para simplificar la interacción con ratón y pantalla táctil.
+* El sistema de carpetas de Unity es semántico.
+
 ## Arte
 
 El juego es 2D con pixel art a baja resolución (16px de ancho, orientativo).
