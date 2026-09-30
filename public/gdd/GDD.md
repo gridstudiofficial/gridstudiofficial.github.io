@@ -975,10 +975,14 @@ Una `partida` tiene un mapa de juego. Todos los mapas son una cuadrícula rectan
 
 Una `tile` se compone de la `base` y adicionalmente puede tener `terreno` y `propiedad`.
 
+El `base overlay` sirve para que una `tile` de agua o suelo pueda integrarse como esquina o borde con otra de agua o
+suelo. Si se crea un nuevo suelo, no es necesario crear todo un nuevo juego de tiles de bordes con el agua o viceversa.
+
 ```mermaid
 flowchart TD
     TILE["TILE"]
     TILE --> BASE["Base<br/>Siempre presente"]
+    TILE --> BASE_OVERLAY["Base Overlay<br/>Opcional"]
     TILE -.-> TERRAIN["Terreno<br/>Opcional"]
     TILE -.-> PROPERTY["Propiedad<br/>Opcional"]
     TILE -.-> PATH["Propiedad de camino"]
@@ -997,7 +1001,8 @@ flowchart TD
     SPRITE --> S6["Cruce / múltiples conexiones"]
     style TILE fill: #4f46e5, color: #fff, stroke: #312e81
     style BASE fill: #94a3b8, color: #fff, stroke: #64748b
-    style TERRAIN fill: #65a30d, color: #fff, stroke: #3f6212
+    style BASE_OVERLAY fill: #246398, color: #fff, stroke: #64748b
+    style TERRAIN fill: #65830d, color: #fff, stroke: #3f6212
     style PROPERTY fill: #d97706, color: #fff, stroke: #92400e
     style PATH fill: #dc2626, color: #fff
     style TYPE fill: #ef4444, color: #fff
