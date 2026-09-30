@@ -59,9 +59,9 @@ gitGraph
 Grid Tactics es un juego de estrategia en cuadrícula donde el o los jugadores se enfrentan a otros equipos o al entorno
 para cumplir uno o vários objetivos. Se rige por un sistema de _fatiga_ que determina la próxima entidad en actuar.
 
-Es un juego 2D con vista _top-down_.
+Es un juego 2D pixel art con vista _top-down_.
 
-El jugador puede avanzar por una serie de niveles que enseñan a jugar y demuestran diversas mecánicas y situaciones de
+El usuario puede avanzar por una serie de niveles que enseñan a jugar y demuestran diversas mecánicas y situaciones de
 juego.
 
 ### Público objetivo
@@ -117,11 +117,11 @@ El juego utiliza el motor de juego Unity.
 
 El juego es 2D con pixel art a baja resolución (16px de ancho, orientativo).
 
-Vista superior como los juegos de Game Boy Advance _Pokemon Esmeralda_ o _Advance Wars_.
+Vista superior _top down_ como los juegos de Game Boy Advance _Pokemon Esmeralda_ o _Advance Wars_.
 
 ## Estéticas y contexto de juego
 
-El jugador y sus rivales encarnan corporaciones cuyo objetivo es la explotación de recursos.
+El usuario y sus rivales encarnan corporaciones cuyo objetivo es la explotación de recursos.
 
 No existe un estado tradicional. Las corporaciones son las potencias soberanas gracias a su enorme capital y potencia
 militar. Las batallas militares sustituyen a la competencia de mercado convencional. La **_guerra corporativa_** es
@@ -132,7 +132,8 @@ literal.
 > * Corp Conflict
 > * Capital & Steel
 
-La explotación de recursos y control de rutas comerciales estratégicas es el motivador principal del conflicto.
+La explotación de recursos y control de rutas comerciales estratégicas es el motivador principal del conflicto y el
+justificante narrativo de los niveles.
 
 Además de las corporaciones, existen grupos de mercenarios independientes. Ciertos niveles pueden contar con distintos
 equipos formados por mercenarios independientes. Narrativamente, en futuros niveles estos pueden hacer equipo con
@@ -147,6 +148,8 @@ El usuario toma el papel de líder de su propia empresa/grupo mercenario y lucha
 aquellos grupos que comparten un objetivo común.
 
 ## Diagrama de navegación de usuario
+
+El siguiente diagrama muestra todas las acciones posibles del usuario según el **MLP**.
 
 ```mermaid
 flowchart TB
