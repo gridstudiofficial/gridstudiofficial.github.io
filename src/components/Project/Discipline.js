@@ -13,4 +13,5 @@ export const Discipline = Object.freeze({
 	AUTODESK3DSMAX: "3dsmax",
 	AUTODESKMAYA: "Maya",
 	ANIMATION2D: "2D Animation",
+	PHASER: "Phaser"
 });

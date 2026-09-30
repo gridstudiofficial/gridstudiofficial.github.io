@@ -1,6 +1,6 @@
 import {Project} from "../components/Project/Project.js";
 import {Discipline} from "../components/Project/Discipline.js";
-import {diego} from "./People.js";
+import {diego, maria} from "./People.js";
 
 export const projects = [
 	new Project({
@@ -31,7 +31,8 @@ export const projects = [
 			Discipline.UNITY
 		],
 		people: [
-			diego
+			diego,
+			maria
 		],
 		link: {
 			url: "https://manupoons.itch.io/please-buy-these",
@@ -56,5 +57,40 @@ export const projects = [
 			url: "https://diegourjc1.github.io/Cuoco_Coocked_GDD/",
 			text: "Project web page"
 		}
-	})
+	}),
+
+	new Project({
+		name: "The Other Side of the Abyss",
+		media: "/projects/the_other_side_of_the_abyss-preview.png",
+		description: "You walk for a long time, you follow the route your suit indicates wherever it may lead you...",
+		disciplines: [
+			Discipline.CSHARP,
+			Discipline.UNITY
+		],
+		people: [
+			diego,
+			maria
+		],
+		link: {
+			url: "https://manupoons.itch.io/the-other-side-of-the-abyss",
+			text: "Project web page"
+		}
+	}),
+
+	new Project({
+		name: "Mystery Mice",
+		media: "/projects/mystery_mice-preview.png",
+		description: "Enjoy this co-op puzzle game with a friend!!",
+		disciplines: [
+			Discipline.JS,
+			Discipline.PHASER
+		],
+		people: [
+			maria
+		],
+		link: {
+			url: "https://fpsy-art.itch.io/mystery-mice",
+			text: "Project web page"
+		}
+	}),
 ]
