@@ -20,6 +20,26 @@ export let diego = new Person({
 	]
 });
 
+export let maria = new Person({
+	id: "maria",
+	name: "María",
+	image: "people/maria.jpg",
+	disciplines: [
+		Discipline.ART2D,
+		Discipline.ART3D,
+		Discipline.ANIMATION2D,
+		Discipline.AUTODESK3DSMAX,
+		Discipline.AUTODESKMAYA
+	],
+	links: [
+		"https://www.linkedin.com/in/maria-de-andres-j/",
+		"https://github.com/MariaDeAndres",
+		"https://maria-de-andres.itch.io/",
+		"https://www.artstation.com/maria_de_andres"
+	]
+});
+
 export const people = [
-	diego
+	diego,
+	maria
 ]

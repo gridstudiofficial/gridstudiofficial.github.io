@@ -5,9 +5,16 @@
 	border: var(--accent-color) var(--border-width) solid;
 	padding: var(--padding);
 	border-radius: var(--border-radius);
-	max-width: 300px;
+	max-width: 360px;
 	display: flex;
 	flex-direction: column;
+	box-sizing: border-box;
+
+	.section-title {
+		font-size: 1.1em;
+		font-weight: bold;
+		color: color-mix(in srgb, var(--accent-color) 60%, white);
+	}
 }
 
 .person-preview__media {

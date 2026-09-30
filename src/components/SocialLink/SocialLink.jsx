@@ -1,5 +1,12 @@
 import GithubIcon from '../../assets/socials/Octicons-mark-github.svg?react';
 import LinkedinIcon from '../../assets/socials/LinkedIn_icon.svg?react';
+import TwitterIcon from '../../assets/socials/Twitter-X_icon.svg?react';
+import BlueskyIcon from '../../assets/socials/Bluesky_icon.svg?react';
+import InstagramIcon from '../../assets/socials/Instagram_icon.svg?react';
+import ItchIoIcon from '../../assets/socials/itch-io_icon.svg?react';
+import YouTubeIcon from '../../assets/socials/YouTube_icon.svg?react';
+import LinktreeIcon from '../../assets/socials/Linktree_icon.svg?react';
+
 import './SocialLink.css';
 
 const SOCIAL_NETWORKS = [
@@ -10,19 +17,23 @@ const SOCIAL_NETWORKS = [
 		size: 1.5,
 		icon: "Octicons-mark-github.svg"
 	}, {
-		id: 'twitter', name: 'Twitter / X', pattern: /twitter\.com|x\.com/i, size: 1.4,
+		id: 'twitter', name: 'Twitter / X', pattern: /twitter\.com|x\.com/i, size: 1.4, icon: "Twitter_icon.svg"
 	}, {
 		id: 'linkedin', name: 'LinkedIn', pattern: /linkedin\.com/i, size: 1.5, icon: "LinkedIn_icon.svg"
 	}, {
-		id: 'instagram', name: 'Instagram', pattern: /instagram\.com|instagr\.am/i, size: 1.5,
+		id: 'instagram', name: 'Instagram', pattern: /instagram\.com|instagr\.am/i, size: 1.5, icon: "Instagram_icon.svg"
 	}, {
-		id: 'youtube', name: 'YouTube', pattern: /youtube\.com|youtu\.be/i, size: 1.6,
+		id: 'youtube', name: 'YouTube', pattern: /youtube\.com|youtu\.be/i, size: 1.5, icon: "YouTube_icon.svg"
+	}, {
+		id: 'itchio', name: 'Itch.io', pattern: /itch.io/i, size: 1.8, icon: "itch-io_icon.svg"
+	}, {
+		id: 'bluesky', name: 'Bluesky', pattern: /bsky.app/i, size: 1.5, icon: "Bluesky_icon.svg"
+	}, {
+		id: 'linktree', name: 'Linktree', pattern: /linktr.ee/i, size: 1.5, icon: "Linktree_icon.svg"
 	}, {
 		id: 'discord', name: 'Discord', pattern: /discord\.gg|discord\.com/i, size: 1.5,
 	}, {
 		id: 'tiktok', name: 'TikTok', pattern: /tiktok\.com/i, size: 1.5,
-	}, {
-		id: 'spotify', name: 'Spotify', pattern: /spotify\.com/i, size: 1.5,
 	}, {
 		id: 'twitch', name: 'Twitch', pattern: /twitch\.tv/i, size: 1.5,
 	}, {
@@ -41,8 +52,14 @@ const SOCIAL_NETWORKS = [
 	}];
 
 const SOCIAL_ICONS = {
-	'Octicons-mark-github.svg': GithubIcon,
-	'LinkedIn_icon.svg': LinkedinIcon,
+	"Octicons-mark-github.svg": GithubIcon,
+	"LinkedIn_icon.svg": LinkedinIcon,
+	"Twitter_icon.svg": TwitterIcon,
+	"Instagram_icon.svg": InstagramIcon,
+	"YouTube_icon.svg": YouTubeIcon,
+	"itch-io_icon.svg": ItchIoIcon,
+	"Bluesky_icon.svg": BlueskyIcon,
+	"Linktree_icon.svg": LinktreeIcon
 };
 
 function detectSocialNetwork(url) {
@@ -64,17 +81,10 @@ function detectSocialNetwork(url) {
 	return matched || SOCIAL_NETWORKS.find(n => n.id === 'default');
 }
 
-export default function SocialLink({
-									   url = '', hasBackground = true, className = '', onClick, ...props
-								   }) {
+export default function SocialLink({url = ''}) {
 	const network = detectSocialNetwork(url);
 	const fontSizeEm = `${network.size || 1.5}em`;
 	const IconComponent = network.icon ? SOCIAL_ICONS[network.icon] : null;
-
-	const bgStyles = hasBackground ? {
-		backgroundColor: network.bgColor,
-		color: "#b8b8b8"
-	} : {backgroundColor: 'transparent', color: network.bgColor};
 
 	return (
 		<a
@@ -83,12 +93,7 @@ export default function SocialLink({
 			rel="noopener noreferrer"
 			aria-label={`Visit link for ${network.name}`}
 			title={network.name}
-			onClick={onClick}
-			className={`social-link ${className}`}
-			style={{
-				padding: hasBackground ? '0.25em' : '0.5em', ...bgStyles
-			}}
-			{...props}
+			className={`social-link`}
 		>
 			{IconComponent ? (
 				<IconComponent
