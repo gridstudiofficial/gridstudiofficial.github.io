@@ -1075,6 +1075,22 @@ El objetivo es que la mayor cantidad de usuarios prueben el juego y, con las fun
 otras personas sin que tengan que instalar el juego. Los niveles iniciales deben enseñar al primero a jugar para poder
 explicar brevemente al segundo.
 
+Una posible estrategia de retención para mantener el interés de los jugadores es que todos los jugadores pueden
+participar en un reto preestablecido diário y semanal. Estos muestran la puntuación personal en comparación con el resto
+de jugadores que han participado.
+
+| Hook propio                                                   | Hook por otra persona                                                     | Monetización inicial                                                                                      |
+|---------------------------------------------------------------|---------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------|
+| Por iniciaiva propoia, el usuario descarga y prueba el juego. | Por actividad social, el usuario es invitado a participar en una partida. | Consigue una pequeña oferta si consigues que n personas descarguen y prueben el juego gracias al usuario. |
+
+| Hábito propio                                                                 | Hábito social                         | Progreso                                                                     |
+|-------------------------------------------------------------------------------|---------------------------------------|------------------------------------------------------------------------------|
+| El jugador se conecta regularmente y realiza los niveles diários y semanales. | El jugador incentiva a otros a jugar. | Comprar packs de sprites para las unidades propias o sets de niveles nuevos. |
+
+| Hobby                                                                                                                                          | Consumibles                         |
+|------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------|
+| El jugador con iniciativa propia y el social se han fusionado en uno. Todos los jugadores en esta categoría ya han comprado el juego completo. | El juego no cuenta con consumibles. |
+
 # Recursos del documento
 
 * [Mermaid visual editor](https://mermaid.ai/products/visual-editor)
