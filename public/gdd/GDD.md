@@ -261,13 +261,17 @@ flowchart TB
 
 ## Mecánicas
 
+### Controles
+
+El juego solo necesita un ratón o un dedo en una pantalla táctil para usarse en su totalidad.
+
 ### Ciclo de juego
 
 Ciclo de juego de un jugador en un turno.
 
 ```mermaid
 flowchart TB
-    START(["Inicio de ronda"]) --> B["Reducir fatiga de las unidades"]
+    START(["Inicio de ronda"]) --> B["Reducir fatiga de<br>las unidades"]
     B --> C{"¿Alguna unidad<br>tiene fatiga = 0?"}
     C -- No --> B
     C -- Sí --> D["Jugador activo elige<br>una unidad disponible"]
@@ -279,7 +283,7 @@ flowchart TB
     GAIN_FATIGUE --> L{"¿Se cumple una<br>condición de victoria?"}
     L -- Sí --> M{"¿Hay varios<br>jugadores ganadores?"}
     M -- No --> N(["Victoria del jugador"])
-    M -- Sí --> O(["Victoria compartida / Empate"])
+    M -- Sí --> O(["Victoria compartida<br>o Empate"])
     L -- No --> P{"¿Quedan unidades<br>con fatiga = 0?"}
     P -- Sí --> D
     P -- No --> Q["Final de ronda"]
@@ -319,8 +323,9 @@ casilla en todas direcciones y dos más hacia su frente.
 
 ### Niebla de guerra
 
-Una `tile` puede o no ser visible. Las unidades y propiedades de un jugador aportan visibilidad. Las unidades o color
-del propietario de una propiedad no son visibles si no se tienen unidades que tengan visibilidad en esos `tiles`.
+Una `tile` puede o no ser visible. Las unidades y propiedades de un jugador aportan visibilidad según el alcance de
+visibilidad de la unidad. Las unidades o color del propietario de una propiedad no son visibles si no se tienen unidades
+que tengan visibilidad en esos `tiles`.
 
 ## Elementos de juego
 
@@ -353,6 +358,14 @@ erDiagram
 
 Una partida está compuesta por un `mapa`, `equipos`, `reglas` y al menos una `condición de victoria`.
 
+#### Nivel
+
+Un `nivel` es un tipo de partida que tiene datos predefinidos por los diseñadores del juego.
+
+Los niveles son accesibles en orden secuenciál o en grafo.
+
+Deben comenzar de manera sencilla, mapas pequeños y pocas unidades, e incrementar su dificultad.
+
 ### Equipo
 
 Una `partida` debe tener al menos un equipo. Un equipo está compuesto por al menos un `Jugador`.
@@ -368,12 +381,65 @@ Un `Jugador` siempre es miembro de un `equipo`. Puede ser humano o IA.
 
 Un usuario interactúa con el juego a través de esta clase.
 
-### Unidad
+```cs
+public abstract class Player
+{
+    public string Id { get; }
+    public Team Team { get; internal set; } = null!;
+    public bool IsDefeated { get; internal set; }
+    public int Funds { get; internal set; }
+    public UnitSpriteSet SpritePack { get; set; } = null!;
+
+    public abstract Task<IAction> ChooseAction(Unit unit, IEnumerable<IAction> options, GameState state);
+}
+
+public sealed class HumanPlayer : Player { }
+public sealed class AIPlayer : Player { }
+```
+
+### Entidad
+
+Una `entidad` es un elemento posicionable en el tablero.
+
+```cs
+public interface IPositioned { Vector2Int Position { get; } }
+```
+
+Estas pueden ser o no dañable y pueden ser o no curables
+
+```cs
+public interface IDamageable
+{
+    int CurrentHP { get; }
+    int MaxHP { get; }
+    void TakeDamage(int amount, GameState state, Unit? attacker = null);
+}
+```
+
+```cs
+public interface IHealable : IDamageable
+{
+    void Heal(int amount, GameState state);
+}
+```
+
+Si la entidad puede actuar, debe seguir el esquema de fatiga y poder encolarse.
+
+```cs
+public interface ISchedulable
+{
+    string Id { get; }
+    Player Owner { get; }
+    int Fatigue { get; }
+}
+```
+
+#### Unidad
 
 Una `unidad` es una entidad controlable por un `jugador` en el `mapa`.
 
 Un `jugador` puede tener `unidades`. Un jugador puede comenzar con unidades en el tablero si lo determina la partida o
-puede crearlas en `fábricas`.
+puede crearlas en `fábricas` si existen en el mapa.
 
 Diagrama de clase preliminar de `Unit`.
 
@@ -440,15 +506,245 @@ classDiagram
     Unit --> "0..*" IUnitComponent
 ```
 
-### Propiedad
+##### Armas
 
-Una `propiedad` es una construcción desplegada en un `mapa`. Esta puede pertenecer o no a un `jugador`.
+Las unidades disponen de una lista de `armas`. Esta lista puede estar vacía. Distintas armas tienen distinta efectividad
+según el tipo de unidad objetivo.
 
-#### Fábrica
+Un arma puede tener `munición`. Si no tiene munición, no se puede usar. Una unidad puede obtener munición de distintas
+maneras. Un arma puede tener munición infinita.
+
+Si una unidad tiene más de un arma, usa la más efectiva frente a la unidad objetiva si tiene munición.
+
+```cs
+public enum WeaponClass { SmallArms, MachineGun, Cannon, Explosive, AntiAir, Torpedo, AirToAir, AirToGround }
+
+public interface IWeapon
+{
+    string Name { get; }
+    WeaponClass Class { get; }
+    int MinRange { get; }
+    int MaxRange { get; }
+    int BaseDamage { get; }
+    int? AmmoCost { get; } // null = infinite ammo
+    bool IsUsableAgainst(IDamageable target);
+}
+```
+
+##### Componente
+
+Las unidades pueden tener distintos componentes. Estos añaden nuevas cualidades a la unidad.
+
+```cs
+public interface IUnitComponent { }
+```
+
+Un ejemplo es un tanque de combustible. Permite definir unidades que no se pueden mover al quedarse sin combustible.
+
+Añadir una política al quedarse sin combustible permite definir lo que ocurre. Por ejemplo, las unidades aéreas se
+estrellan y son eliminadas al quedarse sin combustible pero las de tierra o marítimas solo dejan de poder moverse.
+
+```cs
+public interface IFuelDepletionPolicy { void OnFuelDepleted(Unit unit, GameState state); }
+
+public sealed class DestroyOnEmptyFuel : IFuelDepletionPolicy
+{
+    public void OnFuelDepleted(Unit unit, GameState state)
+    {
+        unit.TakeDamage(unit.CurrentHP, state); // Eliminate unit
+        state.Events.Publish(new UnitFuelDepleted(unit));
+    }
+}
+
+public sealed class ImmobilizeOnEmptyFuel : IFuelDepletionPolicy
+{
+    //Do nothing: MovementBudget.For returns 0 with Current == 0
+    public void OnFuelDepleted(Unit unit, GameState state) { }
+}
+
+public sealed class FuelTank : IUnitComponent
+{
+    public int Capacity { get; }
+    public int Current { get; private set; }
+    public bool ConsumesPerTurn { get; }
+    public IFuelDepletionPolicy DepletionPolicy { get; }
+
+    public FuelTank(int capacity, bool consumesPerTurn, IFuelDepletionPolicy? depletionPolicy = null)
+    {
+        Capacity = capacity; Current = capacity; ConsumesPerTurn = consumesPerTurn;
+        DepletionPolicy = depletionPolicy ?? new ImmobilizeOnEmptyFuel(); // default for land or naval units
+    }
+
+    public bool Consume(int amount) { if (Current < amount) return false; Current -= amount; return true; }
+    public void Refill(int amount) => Current = Math.Min(Capacity, Current + amount);
+}
+```
+
+Otro módulo de ejemplo es el de carga. Este sirve para que una unidad pueda guardar otras unidades dentro según los
+filtros del componente.
+
+```cs
+public enum UnitCategory { Infantry, Mech, LightVehicle, HeavyVehicle, Aircraft, Naval }
+
+public sealed class TransportBay : IUnitComponent
+{
+    public int Capacity { get; }
+    public IReadOnlyList<UnitCategory> AllowedCargo { get; }
+    private readonly List<Unit> _cargo = new();
+    public IReadOnlyList<Unit> Cargo => _cargo;
+
+    public TransportBay(int capacity, IEnumerable<UnitCategory> allowed) { Capacity = capacity; AllowedCargo = allowed.ToList(); }
+    public bool CanLoad(Unit unit) => _cargo.Count < Capacity && AllowedCargo.Contains(unit.Definition.Category);
+    public void Load(Unit unit) => _cargo.Add(unit);
+    public Unit Unload(string unitId) { var u = _cargo.First(x => x.Id == unitId); _cargo.Remove(u); return u; }
+}
+```
+
+##### Movimiento
+
+Una unidad tiene un `perfíl de movimiento`. Este determina su capacidad de movimiento en su puntaje de avance numérico y
+el tipo de `tile` sobre los que puede pasar. Véase, un tanque no puede pasar por `tiles de montaña`.
+
+El `TerrainType` no decide quién cruza qué: solo describe qué hay físicamente en la casilla. La pregunta "¿puede este
+vehículo cruzar un bosque, a qué coste?", la responde el `IMovementProfile` de la unidad.
+
+```mermaid
+classDiagram
+    class IMovementProfile {
+        <<interface>>
+        +int GetMoveCost(TerrainType terrain)
+        +bool CanTraverse(TerrainType terrain)
+        +int MovementRange
+    }
+    class GroundMovementProfile
+    class NavalMovementProfile
+    class AirMovementProfile
+    class AmphibiousMovementProfile
+    IMovementProfile <|.. GroundMovementProfile
+    IMovementProfile <|.. NavalMovementProfile
+    IMovementProfile <|.. AirMovementProfile
+    IMovementProfile <|.. AmphibiousMovementProfile
+```
+
+Uso de un `componente` de combustible para limitar el movimiento de la unidad.
+
+```cs
+public static class MovementBudget
+{
+    public static int For(Unit unit)
+    {
+        int baseRange = unit.Movement.MovementRange;
+        var fuel = unit.GetComponent<FuelTank>();
+        return fuel is null ? baseRange : Math.Min(baseRange, fuel.Current);
+    }
+}
+```
+
+##### Acción
+
+Una unidad tiene a su disposición `acciones`. Distintas acciones pueden empezar a realizarse con N fatiga o menos. Cada
+acción añade una cierta cantidad de fatiga tras realizarse o tras realizar una secuencia de acciones. Una acción puede
+contar con un contador cooldown adicionál.
+
+Ejemplo de aplicación:
+
+```mermaid
+classDiagram
+    class IAction {
+        <<interface>>
+        +string Label
+        +string AnimationKey
+        +bool CanExecute(ActionContext ctx)
+        +void Execute(ActionContext ctx)
+        +int GetFatigueCost(Unit unit)
+    }
+    class MoveAction
+    class AttackAction
+    class ClaimAction
+    class ResupplyAction
+    class RepairAction
+    class LoadAction
+    class UnloadAction
+    class DropTroopsAction
+    class AutoDescendAction
+    class WaitAction
+    class MoveThenAction {
+        -Path movementPath -IAction innerAction
+    }
+    class ActionSequence {
+        -List~IAction~ steps
+    }
+
+    IAction <|.. MoveAction
+    IAction <|.. AttackAction
+    IAction <|.. ClaimAction
+    IAction <|.. ResupplyAction
+    IAction <|.. RepairAction
+    IAction <|.. LoadAction
+    IAction <|.. UnloadAction
+    IAction <|.. DropTroopsAction
+    IAction <|.. AutoDescendAction
+    IAction <|.. WaitAction
+    IAction <|.. MoveThenAction
+    IAction <|.. ActionSequence
+    MoveThenAction --> IAction: envuelve
+    ActionSequence --> "1..*" IAction: contiene
+```
+
+```cs
+public sealed record ActionContext(Unit Actor, GameState State, Vector2Int? Target = null, string? TargetUnitId = null);
+
+public interface IAction
+{
+    string Label { get; }
+    string AnimationKey { get; }
+    bool CanExecute(ActionContext ctx);
+    void Execute(ActionContext ctx);
+    int GetFatigueCost(Unit unit);
+}
+```
+
+#### Propiedad
+
+Una `propiedad` es una construcción desplegada en un `mapa`.
+Esta puede pertenecer o no a un `jugador`. Al igual que la unidad, tiene fatiga y componentes.
+
+Una propiedad puede cambiar de manos durante una partida.
+
+```cs
+public interface IPropertyComponent { }
+
+public sealed class Property : ICapturable, ISchedulable
+{
+    public string Id { get; }
+    public Player? Owner { get; set; } // null = neutral, cant schedule
+    public Vector2Int Position { get; internal set; }
+    public int Fatigue { get; internal set; }
+    public PropertyDefinition Definition { get; }
+    public int CaptureProgress { get; private set; }
+    public int MaxCaptureProgress => Definition.MaxCaptureProgress;
+
+    private readonly List<IPropertyComponent> _components = new();
+    public T? GetComponent<T>() where T : class, IPropertyComponent => _components.OfType<T>().FirstOrDefault();
+    public void AddComponent(IPropertyComponent c) => _components.Add(c);
+
+    public void ReduceCaptureProgress(int amount, Player capturer) => CaptureProgress = Math.Max(0, CaptureProgress - amount);
+    public void CompleteCapture(Player newOwner, GameState state)
+    {
+        var previous = Owner;
+        Owner = newOwner;
+        CaptureProgress = Definition.MaxCaptureProgress;
+        state.Events.Publish(new PropertyCaptured(this, newOwner, previous));
+    }
+}
+```
+
+##### Fábrica
 
 Una `fábrica` es una entidad en el `mapa`.
 
-Un `jugador` puede ser dueño de una `fábrica`. El jugador que la controle, puede crear unidades.
+Un `jugador` puede ser dueño de una `fábrica`. El jugador que la controle, puede crear unidades gastando los ahorros del
+jugador.
 
 Al igual que una `unidad`, una `fábrica` se pone en la cola de fatiga para actual.
 
@@ -584,7 +880,89 @@ classDiagram
     Board o-- Unit
     Scheduler --> ISchedulable
     Property --> Player
+```
 
+Ejemplo de producción y filtros de producción de una fábrica como un `componente` de propiedad.
+
+Distintos tipos de fábrica tienen a su disposición distintos filtros de producción.
+
+```cs
+public interface IProductionFilter { bool Allows(UnitDefinition def); }
+
+public sealed class CategoryProductionFilter : IProductionFilter
+{
+    private readonly HashSet<UnitCategory> _allowed;
+    public CategoryProductionFilter(params UnitCategory[] allowed) => _allowed = allowed.ToHashSet();
+    public bool Allows(UnitDefinition def) => _allowed.Contains(def.Category);
+}
+
+public sealed class WhitelistProductionFilter : IProductionFilter
+{
+    private readonly HashSet<string> _ids;
+    public WhitelistProductionFilter(params string[] unitDefIds) => _ids = unitDefIds.ToHashSet();
+    public bool Allows(UnitDefinition def) => _ids.Contains(def.Id);
+}
+```
+
+```cs
+public interface IBuildTimeStrategy { int GetBuildTime(UnitDefinition def); }
+
+public sealed class DefaultBuildTimeStrategy : IBuildTimeStrategy
+{
+    public int GetBuildTime(UnitDefinition def) => def.BuildTime;
+}
+
+public sealed class OverrideBuildTimeStrategy : IBuildTimeStrategy
+{
+    private readonly Dictionary<string, int> _overrides;
+    private readonly IBuildTimeStrategy _fallback;
+    public OverrideBuildTimeStrategy(Dictionary<string, int> overrides, IBuildTimeStrategy? fallback = null)
+    { _overrides = overrides; _fallback = fallback ?? new DefaultBuildTimeStrategy(); }
+    public int GetBuildTime(UnitDefinition def) => _overrides.TryGetValue(def.Id, out var t) ? t : _fallback.GetBuildTime(def);
+}
+```
+
+```cs
+public sealed record ProductionOrder(UnitDefinition Definition, int TurnsRemaining);
+
+public sealed class ProductionBay : IPropertyComponent
+{
+    public IProductionFilter Filter { get; }
+    public IBuildTimeStrategy TimeStrategy { get; set; }
+    public ProductionOrder? CurrentOrder { get; private set; }
+    private readonly Queue<UnitDefinition> _pending = new();
+
+    public ProductionBay(IProductionFilter filter, IBuildTimeStrategy? timeStrategy = null)
+    { Filter = filter; TimeStrategy = timeStrategy ?? new DefaultBuildTimeStrategy(); }
+
+    public bool CanBuild(UnitDefinition def) => Filter.Allows(def);
+    public void StartOrder(UnitDefinition def) => CurrentOrder = new ProductionOrder(def, TimeStrategy.GetBuildTime(def));
+    public void Enqueue(UnitDefinition def) => _pending.Enqueue(def);
+
+    public void Advance(GameState state, Property property)
+    {
+        if (CurrentOrder is null)
+        {
+            var choice = state.UI.PromptProduction(property.Owner!, Filter, state);
+            if (choice is not null) StartOrder(choice);
+            property.Fatigue += property.Definition.IdleProductionFatigue;
+            return;
+        }
+
+        var order = CurrentOrder with { TurnsRemaining = CurrentOrder.TurnsRemaining - 1 };
+        if (order.TurnsRemaining > 0) { CurrentOrder = order; property.Fatigue += property.Definition.ProductionTickFatigue; return; }
+
+        var unit = UnitFactory.Create(order.Definition);
+        CurrentOrder = null;
+        if (_pending.Count > 0) StartOrder(_pending.Dequeue());
+
+        var spot = state.Board.FindFreeAdjacentTile(property.Position, unit);
+        if (spot is not null) { state.Board.PlaceUnit(unit, spot.Value); state.Scheduler.Register(unit); }
+        else Enqueue(unit.Definition);
+
+        property.Fatigue += property.Definition.ProductionTickFatigue;
+    }
+}
 ```
 
 ### Mapa
