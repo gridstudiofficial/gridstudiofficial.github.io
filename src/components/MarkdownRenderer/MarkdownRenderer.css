@@ -103,6 +103,10 @@
 	font-size: 1.1em;
 }
 
+.markdown-renderer img {
+	width: 100%;
+}
+
 /* Blockquotes */
 .markdown-renderer blockquote {
 	margin: 16px 0;
