@@ -975,10 +975,14 @@ Una `partida` tiene un mapa de juego. Todos los mapas son una cuadrícula rectan
 
 Una `tile` se compone de la `base` y adicionalmente puede tener `terreno` y `propiedad`.
 
+El `base overlay` sirve para que una `tile` de agua o suelo pueda integrarse como esquina o borde con otra de agua o
+suelo. Si se crea un nuevo suelo, no es necesario crear todo un nuevo juego de tiles de bordes con el agua o viceversa.
+
 ```mermaid
 flowchart TD
     TILE["TILE"]
     TILE --> BASE["Base<br/>Siempre presente"]
+    TILE --> BASE_OVERLAY["Base Overlay<br/>Opcional"]
     TILE -.-> TERRAIN["Terreno<br/>Opcional"]
     TILE -.-> PROPERTY["Propiedad<br/>Opcional"]
     TILE -.-> PATH["Propiedad de camino"]
@@ -997,7 +1001,8 @@ flowchart TD
     SPRITE --> S6["Cruce / múltiples conexiones"]
     style TILE fill: #4f46e5, color: #fff, stroke: #312e81
     style BASE fill: #94a3b8, color: #fff, stroke: #64748b
-    style TERRAIN fill: #65a30d, color: #fff, stroke: #3f6212
+    style BASE_OVERLAY fill: #246398, color: #fff, stroke: #64748b
+    style TERRAIN fill: #65830d, color: #fff, stroke: #3f6212
     style PROPERTY fill: #d97706, color: #fff, stroke: #92400e
     style PATH fill: #dc2626, color: #fff
     style TYPE fill: #ef4444, color: #fff
@@ -1069,6 +1074,22 @@ Se abre la posibilidad a expandir el juego con expansiones que se compongan de n
 El objetivo es que la mayor cantidad de usuarios prueben el juego y, con las funciones pass and play, puedan jugar con
 otras personas sin que tengan que instalar el juego. Los niveles iniciales deben enseñar al primero a jugar para poder
 explicar brevemente al segundo.
+
+Una posible estrategia de retención para mantener el interés de los jugadores es que todos los jugadores pueden
+participar en un reto preestablecido diário y semanal. Estos muestran la puntuación personal en comparación con el resto
+de jugadores que han participado.
+
+| Hook propio                                                   | Hook por otra persona                                                     | Monetización inicial                                                                                      |
+|---------------------------------------------------------------|---------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------|
+| Por iniciaiva propoia, el usuario descarga y prueba el juego. | Por actividad social, el usuario es invitado a participar en una partida. | Consigue una pequeña oferta si consigues que n personas descarguen y prueben el juego gracias al usuario. |
+
+| Hábito propio                                                                 | Hábito social                         | Progreso                                                                     |
+|-------------------------------------------------------------------------------|---------------------------------------|------------------------------------------------------------------------------|
+| El jugador se conecta regularmente y realiza los niveles diários y semanales. | El jugador incentiva a otros a jugar. | Comprar packs de sprites para las unidades propias o sets de niveles nuevos. |
+
+| Hobby                                                                                                                                          | Consumibles                         |
+|------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------|
+| El jugador con iniciativa propia y el social se han fusionado en uno. Todos los jugadores en esta categoría ya han comprado el juego completo. | El juego no cuenta con consumibles. |
 
 # Recursos del documento
 
