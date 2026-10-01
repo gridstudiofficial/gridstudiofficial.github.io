@@ -9,6 +9,7 @@ export default function Navbar() {
 	return (
 		<nav className="nav-bar">
 			<div className="nav-bar-buttons">
+				<img src="public/grid_studio_logo/Grid%20Studio%20Icon.svg" alt="Logo"/>
 				<NavLink to="/" end className={({isActive}) => (isActive ? 'active-link' : '')} viewTransition>
 					{t('nav.home')}
 				</NavLink>

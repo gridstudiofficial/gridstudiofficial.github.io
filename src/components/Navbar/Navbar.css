@@ -10,6 +10,17 @@
 	position: sticky;
 	top: 0;
 	z-index: 1100;
+
+	img {
+		height: 2em;
+		display: inline-block;
+		align-self: center;
+
+		filter: drop-shadow(
+				0 0 10px
+				color-mix(in srgb, var(--accent-color), white 70%)
+		);
+	}
 }
 
 .nav-bar-buttons {
