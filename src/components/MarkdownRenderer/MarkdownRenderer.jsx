@@ -6,6 +6,8 @@ import rehypeRaw from 'rehype-raw';
 import {MermaidBlock, rehypeMermaid} from 'react-markdown-mermaid';
 import './MarkdownRenderer.css';
 import {slugify} from "../TableOfContents/slugify.js";
+import rehypeHighlight from 'rehype-highlight';
+import 'highlight.js/styles/github-dark.css';
 
 const extractText = (children) => {
 	if (typeof children === 'string') return children;
@@ -96,6 +98,11 @@ export default function MarkdownRenderer({fileName}) {
 							},
 						},
 					],
+					[rehypeHighlight,
+						{ detect: false,
+							ignoreMissing: true,
+							plainText: ['mermaid']
+						}],
 				]}
 				components={{
 					MermaidBlock,
@@ -119,6 +126,12 @@ export default function MarkdownRenderer({fileName}) {
 						const id = slugify(text);
 						return <h4 id={id} {...props}>{children}</h4>;
 					},
+
+					table: ({children, ...props}) => (
+						<div className="markdown-table-wrapper">
+							<table {...props}>{children}</table>
+						</div>
+					),
 				}}
 			>
 				{markdownText}
