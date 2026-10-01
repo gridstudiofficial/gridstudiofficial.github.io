@@ -298,10 +298,9 @@ Todas las entidades capaces de actuar se rigen por el sistema de fatiga. Cuando 
 Tanto las `unidades` como las `propiedades` se rigen por este sistema. Tras una acción, se le añadirá fatiga a la
 entidad que actuó.
 
-Caso de uso extremo: Si se quiere que un volcán erupcione de vez en cuando, este debe ser una `propiedad` que forma su
-propio `equipo`. Se encola en la lista de entidades con fatiga y su IA de juego realiza la acción de erupción cada vez
-que
-tiene la oportunidad. Esta acción le puede añadir una cantidad de fatiga aleatória en un rango.
+Caso de uso ajeno a las unidades: Si se quiere que un volcán erupcione de vez en cuando, este debe ser una `propiedad`
+que forma su propio `equipo`. Se encola en la lista de entidades con fatiga y su IA de juego realiza la acción de
+erupción cada vez que tiene la oportunidad. Esta acción puede añadirle una cantidad de fatiga aleatoria en un rango.
 
 ### Movimiento por resistencia
 
@@ -316,16 +315,16 @@ El jugador decide a qué dirección (Arriba, Abajo, Derecha, Izquierda), mira un
 
 Girar una unidad consume su recurso de capacidad de movimiento.
 
-Una unidad puede tener restricción de ataque. Véase, un tanque que solo puede atacar hacia las casillas que mira.
+Una unidad puede tener restricción de ataque. Por ejemplo, un tanque que solo puede atacar hacia las casillas que mira.
 
-La visibilidad de una unidad puede corresponder con la dirección que mira. Véase, un tanque que solo puede mirar una
-casilla en todas direcciones y dos más hacia su frente.
+La visibilidad de una unidad puede corresponder con la dirección que mira. Como ejemplo, un tanque que solo puede mirar
+una casilla en todas direcciones y dos más hacia su frente.
 
 ### Niebla de guerra
 
-Una `tile` puede o no ser visible. Las unidades y propiedades de un jugador aportan visibilidad según el alcance de
+Una `tile` puede ser, o no, visible. Las unidades y propiedades de un jugador aportan visibilidad según el alcance de
 visibilidad de la unidad. Las unidades o color del propietario de una propiedad no son visibles si no se tienen unidades
-que tengan visibilidad en esos `tiles`.
+que tengan visibilidad en esas `tiles`.
 
 ## Elementos de juego
 
@@ -360,11 +359,11 @@ Una partida está compuesta por un `mapa`, `equipos`, `reglas` y al menos una `c
 
 #### Nivel
 
-Un `nivel` es un tipo de partida que tiene datos predefinidos por los diseñadores del juego.
+Un `nivel` es una partida que tiene datos predefinidos por los diseñadores del juego.
 
 Los niveles son accesibles en orden secuenciál o en grafo.
 
-Deben comenzar de manera sencilla, mapas pequeños y pocas unidades, e incrementar su dificultad.
+Deben comenzar de manera sencilla, con mapas pequeños y pocas unidades, e incrementar su dificultad.
 
 ### Equipo
 
@@ -372,7 +371,7 @@ Una `partida` debe tener al menos un equipo. Un equipo está compuesto por al me
 
 Este esquema permite crear partidas en las que varios jugadores hacen equipo.
 
-En la lógica del juego, si se quiere tener un grupo de mónstruos ajenos hostiles al resto de equipos, estos forman su
+En la lógica del juego, si se quiere tener un grupo de mónstruos ajenos, hostiles al resto de equipos, estos forman su
 propio equipo y son controlados por un `jugador de IA`.
 
 ### Jugador
@@ -539,7 +538,7 @@ Las unidades pueden tener distintos componentes. Estos añaden nuevas cualidades
 public interface IUnitComponent { }
 ```
 
-Un ejemplo es un tanque de combustible. Permite definir unidades que no se pueden mover al quedarse sin combustible.
+Un ejemplo es un tanque de combustible. Permite crear unidades que no se pueden mover al quedarse sin combustible.
 
 Añadir una política al quedarse sin combustible permite definir lo que ocurre. Por ejemplo, las unidades aéreas se
 estrellan y son eliminadas al quedarse sin combustible pero las de tierra o marítimas solo dejan de poder moverse.
@@ -603,7 +602,7 @@ public sealed class TransportBay : IUnitComponent
 ##### Movimiento
 
 Una unidad tiene un `perfíl de movimiento`. Este determina su capacidad de movimiento en su puntaje de avance numérico y
-el tipo de `tile` sobre los que puede pasar. Véase, un tanque no puede pasar por `tiles de montaña`.
+el tipo de `tile` sobre los que puede pasar. Por ejemplo, los tanques no puede pasar por `tiles de montaña`.
 
 El `TerrainType` no decide quién cruza qué: solo describe qué hay físicamente en la casilla. La pregunta "¿puede este
 vehículo cruzar un bosque, a qué coste?", la responde el `IMovementProfile` de la unidad.
