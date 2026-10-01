@@ -119,6 +119,12 @@ export default function MarkdownRenderer({fileName}) {
 						const id = slugify(text);
 						return <h4 id={id} {...props}>{children}</h4>;
 					},
+
+					table: ({children, ...props}) => (
+						<div className="markdown-table-wrapper">
+							<table {...props}>{children}</table>
+						</div>
+					),
 				}}
 			>
 				{markdownText}
