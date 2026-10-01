@@ -5,6 +5,9 @@
 	align-items: flex-start;
 	max-width: 1400px;
 	margin: 0 auto;
+	min-width: 0;
+	width: 100%;
+	box-sizing: border-box;
 }
 
 .markdown-content-wrapper {
@@ -27,6 +30,9 @@
 	background: #27292b;
 	border-radius: 8px;
 	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+	min-width: 0;
+	width: 100%;
+	box-sizing: border-box;
 }
 
 .markdown-renderer-error {
@@ -141,8 +147,12 @@
 	overflow-x: auto;
 	margin: 16px 0;
 	border: 1px solid rgba(255, 255, 255, 0.08);
+	max-width: 100%;
 }
 
+.markdown-renderer {
+	contain: inline-size;
+}
 .markdown-renderer pre code {
 	background: transparent;
 	padding: 0;
