@@ -541,7 +541,7 @@ public interface IUnitComponent { }
 Un ejemplo es un tanque de combustible. Permite crear unidades que no se pueden mover al quedarse sin combustible.
 
 Añadir una política al quedarse sin combustible permite definir lo que ocurre. Por ejemplo, las unidades aéreas se
-estrellan y son eliminadas al quedarse sin combustible pero las de tierra o marítimas solo dejan de poder moverse.
+estrellan y son eliminadas al quedarse sin combustible, pero las de tierra o marítimas solo dejan de poder moverse.
 
 ```cs
 public interface IFuelDepletionPolicy { void OnFuelDepleted(Unit unit, GameState state); }
@@ -974,7 +974,7 @@ Una `partida` tiene un mapa de juego. Todos los mapas son una cuadrícula rectan
 
 Una `tile` se compone de la `base` y adicionalmente puede tener `terreno` y `propiedad`.
 
-El `base overlay` sirve para que una `tile` de agua o suelo pueda integrarse como esquina o borde con otra de agua o
+La `base overlay` sirve para que una `tile` de agua o suelo pueda integrarse como esquina o borde con otra de agua o
 suelo. Si se crea un nuevo suelo, no es necesario crear todo un nuevo juego de tiles de bordes con el agua o viceversa.
 
 ```mermaid
@@ -1057,6 +1057,45 @@ Condiciones OR de victoria `Equipo 2`:
 
 * Controlar cierta `propiedad`: Cuartel General `Jugador Humano 1`.
 * Llevar a cierta `unidad` a una cierta `tile`.
+
+### IA de juego
+
+Se utiliza una arquitectura mixta para la inteligencia de los personajes no jugables.
+
+Es sistema de `equipo`, `jugador` y `unidad` coordina acciones a distintos niveles.
+
+* **Nivel de `jugador`**: evalúa las opciones, el entorno y los pasos necesarios para cumplir su objetivo. Publica
+  objetivos y roles a sus unidades. Por ejemplo, _Unidad con Id:u1 capturar la ciudad con Id:c2_.
+* **Nivel de `unidad`**: según los objetivos determinados por su jugador, enumera sus opciones y elige la mejor.
+
+* Goal Oriented Action Planning: un `jugador` planea cómo cumplir su objetivo mediante la elaboration de subobjetivos
+  que cambian a lo largo de la partida.
+* Utility System: una `unidad` decide sus acciones con un sistema de utilidad. Este se ve afectado por el objetivo
+  encomendado por la IA de `jugador`.
+* Red bayesiana: un `jugador` realiza razonamientos sobre elementos que no puede ver o saber. Intenta predecir la
+  posición de las unidades rivales que sabe que existen o podrán existir en la niebla de guerra. También intenta
+  predecir los próximos objetivos de los equipos rivales. Por ejemplo, capturar una cierta ciudad o retirarse a una
+  ubicación segura.
+* Finite State Machine: ideal para entidades sencillas como vida salvaje o mercenarios.
+
+```mermaid
+flowchart TD
+    A(["Plan"]) --> B["Generar objetivos"]
+    B --> B1["Condiciones de victoria<br/>del equipo"]
+    B --> B2["Oportunistas:<br/>propiedades no propias<br/>y enemigos visibles"]
+    B --> B3["Defensa:<br/>propiedades propias y unidades con<br/>amenaza sobre el umbral"]
+    B1 --> C["Puntuar cada pareja<br/>unidad y objetivo"]
+    B2 --> C
+    B3 --> C
+    C --> D["Evaluar opciones con<br>valor numérico"]
+    D --> E["Ordenar de mayor a menor"]
+    E --> F{"¿Unidad libre<br/>y objetivo con capacidad?"}
+    F -- "Sí" --> G["Asignar Orden"]
+    F -- "No" --> H["Siguiente pareja"]
+    G --> H
+    H --> I(["Unidades sin orden<br/>deciden solas"])
+```
+
 
 ## Monetización
 
