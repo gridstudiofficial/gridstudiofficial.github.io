@@ -115,9 +115,28 @@ El juego utiliza el motor de juego Unity.
 
 ## Arte
 
-El juego es 2D con pixel art a baja resolución (16px de ancho, orientativo).
+El juego es 2D con pixel art a baja resolución. El tamaño de pantalla varía según el dispositivo, intentando mantener
+siempre 10 tiles en altura y anchura (16px de ancho por asset, orientativo). La interfaz se adhiere a los ejes.
+
+Los tiles de terreno tienen una zona resaltada en los bordes inferior y derecho, de manera que al montar el tileset, se
+genera una cuadrícula visual de un solo píxel de ancho.
 
 Vista superior _top down_ como los juegos de Game Boy Advance _Pokemon Esmeralda_ o _Advance Wars_.
+
+<img src="\gdd\imgs\screenshot_ejemplo.png"/>
+
+## Animación
+
+Todas las unidades cuentan con animaciones `idle`, `movimiento` y `ataque`. El entorno cuenta con un tipo de animación
+(`idle`) en algunos terrenos, como el río, para proporcionar una sensación de mundo vivo.
+
+Algunos NPCs se mueven libremente por el mapa y no necesariamente interactúan con los jugadores.
+
+Las animaciones de los diferentes sprites de unidades se realizan para tres de las cuatro posiciones que puede tomar esa
+unidad (arriba, abajo y lateral). Los sprites para las animaciones laterales se voltean para adoptar la dirección
+opuesta.
+
+Los edificios cuentan con animaciones estéticas de luz si están activos (ej. una ciudad es tomada por un jugador).
 
 ## Estéticas y contexto de juego
 
