@@ -57,7 +57,7 @@ gitGraph
 ## Descripción general
 
 Grid Tactics es un juego de estrategia en cuadrícula donde el o los jugadores se enfrentan a otros equipos o al entorno
-para cumplir uno o vários objetivos. Se rige por un sistema de _fatiga_ que determina la próxima entidad en actuar.
+para cumplir uno o varios objetivos. Se rige por un sistema de _fatiga_ que determina la próxima entidad en actuar.
 
 Es un juego 2D pixel art con vista _top-down_.
 
@@ -115,9 +115,28 @@ El juego utiliza el motor de juego Unity.
 
 ## Arte
 
-El juego es 2D con pixel art a baja resolución (16px de ancho, orientativo).
+El juego es 2D con pixel art a baja resolución. El tamaño de pantalla varía según el dispositivo, intentando mantener
+siempre 10 tiles en altura y anchura (16px de ancho por asset, orientativo). La interfaz se adhiere a los ejes.
+
+Los tiles de terreno tienen una zona resaltada en los bordes inferior y derecho, de manera que al montar el tileset, se
+genera una cuadrícula visual de un solo píxel de ancho.
 
 Vista superior _top down_ como los juegos de Game Boy Advance _Pokemon Esmeralda_ o _Advance Wars_.
+
+<img src="\gdd\imgs\screenshot_ejemplo.png"/>
+
+## Animación
+
+Todas las unidades cuentan con animaciones `idle`, `movimiento` y `ataque`. El entorno cuenta con un tipo de animación
+(`idle`) en algunos terrenos, como el río, para proporcionar una sensación de mundo vivo.
+
+Algunos NPCs se mueven libremente por el mapa y no necesariamente interactúan con los jugadores.
+
+Las animaciones de los diferentes sprites de unidades se realizan para tres de las cuatro posiciones que puede tomar esa
+unidad (arriba, abajo y lateral). Los sprites para las animaciones laterales se voltean para adoptar la dirección
+opuesta.
+
+Los edificios cuentan con animaciones estéticas de luz si están activos (ej. una ciudad es tomada por un jugador).
 
 ## Estéticas y contexto de juego
 
@@ -298,10 +317,9 @@ Todas las entidades capaces de actuar se rigen por el sistema de fatiga. Cuando 
 Tanto las `unidades` como las `propiedades` se rigen por este sistema. Tras una acción, se le añadirá fatiga a la
 entidad que actuó.
 
-Caso de uso extremo: Si se quiere que un volcán erupcione de vez en cuando, este debe ser una `propiedad` que forma su
-propio `equipo`. Se encola en la lista de entidades con fatiga y su IA de juego realiza la acción de erupción cada vez
-que
-tiene la oportunidad. Esta acción le puede añadir una cantidad de fatiga aleatória en un rango.
+Caso de uso ajeno a las unidades: Si se quiere que un volcán erupcione de vez en cuando, este debe ser una `propiedad`
+que forma su propio `equipo`. Se encola en la lista de entidades con fatiga y su IA de juego realiza la acción de
+erupción cada vez que tiene la oportunidad. Esta acción puede añadirle una cantidad de fatiga aleatoria en un rango.
 
 ### Movimiento por resistencia
 
@@ -316,20 +334,20 @@ El jugador decide a qué dirección (Arriba, Abajo, Derecha, Izquierda), mira un
 
 Girar una unidad consume su recurso de capacidad de movimiento.
 
-Una unidad puede tener restricción de ataque. Véase, un tanque que solo puede atacar hacia las casillas que mira.
+Una unidad puede tener restricción de ataque. Por ejemplo, un tanque que solo puede atacar hacia las casillas que mira.
 
-La visibilidad de una unidad puede corresponder con la dirección que mira. Véase, un tanque que solo puede mirar una
-casilla en todas direcciones y dos más hacia su frente.
+La visibilidad de una unidad puede corresponder con la dirección que mira. Como ejemplo, un tanque que solo puede mirar
+una casilla en todas direcciones y dos más hacia su frente.
 
 ### Niebla de guerra
 
-Una `tile` puede o no ser visible. Las unidades y propiedades de un jugador aportan visibilidad según el alcance de
+Una `tile` puede ser, o no, visible. Las unidades y propiedades de un jugador aportan visibilidad según el alcance de
 visibilidad de la unidad. Las unidades o color del propietario de una propiedad no son visibles si no se tienen unidades
-que tengan visibilidad en esos `tiles`.
+que tengan visibilidad en esas `tiles`.
 
 ## Elementos de juego
 
-El juego se rige por `partidas`. Un nivel es una partida.
+El juego funciona de manera que cada nivel es una `partida`.
 
 Los distintos elementos siguen la siguiente relación
 
@@ -360,11 +378,11 @@ Una partida está compuesta por un `mapa`, `equipos`, `reglas` y al menos una `c
 
 #### Nivel
 
-Un `nivel` es un tipo de partida que tiene datos predefinidos por los diseñadores del juego.
+Un `nivel` es una partida que tiene datos predefinidos por los diseñadores del juego.
 
-Los niveles son accesibles en orden secuenciál o en grafo.
+Los niveles son accesibles en orden secuencial o en grafo.
 
-Deben comenzar de manera sencilla, mapas pequeños y pocas unidades, e incrementar su dificultad.
+Deben comenzar de manera sencilla, con mapas pequeños y pocas unidades, e incrementar su dificultad.
 
 ### Equipo
 
@@ -372,7 +390,7 @@ Una `partida` debe tener al menos un equipo. Un equipo está compuesto por al me
 
 Este esquema permite crear partidas en las que varios jugadores hacen equipo.
 
-En la lógica del juego, si se quiere tener un grupo de mónstruos ajenos hostiles al resto de equipos, estos forman su
+En la lógica del juego, si se quiere tener un grupo de monstruos ajenos, hostiles al resto de equipos, estos forman su
 propio equipo y son controlados por un `jugador de IA`.
 
 ### Jugador
@@ -405,7 +423,7 @@ Una `entidad` es un elemento posicionable en el tablero.
 public interface IPositioned { Vector2Int Position { get; } }
 ```
 
-Estas pueden ser o no dañable y pueden ser o no curables
+Estas pueden ser dañables, o no, y pueden ser curables, o no.
 
 ```cs
 public interface IDamageable
@@ -441,7 +459,7 @@ Una `unidad` es una entidad controlable por un `jugador` en el `mapa`.
 Un `jugador` puede tener `unidades`. Un jugador puede comenzar con unidades en el tablero si lo determina la partida o
 puede crearlas en `fábricas` si existen en el mapa.
 
-Diagrama de clase preliminar de `Unit`.
+Diagrama de clase preliminar de `Unit`:
 
 ```mermaid
 classDiagram
@@ -539,10 +557,10 @@ Las unidades pueden tener distintos componentes. Estos añaden nuevas cualidades
 public interface IUnitComponent { }
 ```
 
-Un ejemplo es un tanque de combustible. Permite definir unidades que no se pueden mover al quedarse sin combustible.
+Un ejemplo es un tanque de combustible. Permite crear unidades que no se pueden mover al quedarse sin combustible.
 
 Añadir una política al quedarse sin combustible permite definir lo que ocurre. Por ejemplo, las unidades aéreas se
-estrellan y son eliminadas al quedarse sin combustible pero las de tierra o marítimas solo dejan de poder moverse.
+estrellan y son eliminadas al quedarse sin combustible, pero las de tierra o marítimas solo dejan de poder moverse.
 
 ```cs
 public interface IFuelDepletionPolicy { void OnFuelDepleted(Unit unit, GameState state); }
@@ -602,11 +620,11 @@ public sealed class TransportBay : IUnitComponent
 
 ##### Movimiento
 
-Una unidad tiene un `perfíl de movimiento`. Este determina su capacidad de movimiento en su puntaje de avance numérico y
-el tipo de `tile` sobre los que puede pasar. Véase, un tanque no puede pasar por `tiles de montaña`.
+Una unidad tiene un `perfil de movimiento`. Este determina su capacidad de movimiento en su puntaje de avance numérico y
+el tipo de `tile` sobre los que puede pasar. Por ejemplo, los tanques no puede pasar por `tiles de montaña`.
 
 El `TerrainType` no decide quién cruza qué: solo describe qué hay físicamente en la casilla. La pregunta "¿puede este
-vehículo cruzar un bosque, a qué coste?", la responde el `IMovementProfile` de la unidad.
+vehículo cruzar un bosque?¿a qué coste?", la responde el `IMovementProfile` de la unidad.
 
 ```mermaid
 classDiagram
@@ -709,7 +727,7 @@ public interface IAction
 Una `propiedad` es una construcción desplegada en un `mapa`.
 Esta puede pertenecer o no a un `jugador`. Al igual que la unidad, tiene fatiga y componentes.
 
-Una propiedad puede cambiar de manos durante una partida.
+Una propiedad puede cambiar de bando durante una partida.
 
 ```cs
 public interface IPropertyComponent { }
@@ -882,7 +900,7 @@ classDiagram
     Property --> Player
 ```
 
-Ejemplo de producción y filtros de producción de una fábrica como un `componente` de propiedad.
+Ejemplo de producción y filtros de producción de una fábrica como un `componente` de propiedad:
 
 Distintos tipos de fábrica tienen a su disposición distintos filtros de producción.
 
@@ -969,13 +987,13 @@ public sealed class ProductionBay : IPropertyComponent
 
 Un `mapa` está compuesto de `tiles` y contiene todas las `entidades` (`unidades` y `propiedades`).
 
-Una `partida` tiene un mapa de juego. Todos los mapas son una cuadrícula rectangular.
+Una `partida` contiene un mapa de juego. Todos los mapas son una cuadrícula rectangular.
 
 #### Tile
 
 Una `tile` se compone de la `base` y adicionalmente puede tener `terreno` y `propiedad`.
 
-El `base overlay` sirve para que una `tile` de agua o suelo pueda integrarse como esquina o borde con otra de agua o
+La `base overlay` sirve para que una `tile` de agua o suelo pueda integrarse como esquina o borde con otra de agua o
 suelo. Si se crea un nuevo suelo, no es necesario crear todo un nuevo juego de tiles de bordes con el agua o viceversa.
 
 ```mermaid
@@ -1059,33 +1077,73 @@ Condiciones OR de victoria `Equipo 2`:
 * Controlar cierta `propiedad`: Cuartel General `Jugador Humano 1`.
 * Llevar a cierta `unidad` a una cierta `tile`.
 
+### IA de juego
+
+Se utiliza una arquitectura mixta para la inteligencia de los personajes no jugables.
+
+Es sistema de `equipo`, `jugador` y `unidad` coordina acciones a distintos niveles.
+
+* **Nivel de `jugador`**: evalúa las opciones, el entorno y los pasos necesarios para cumplir su objetivo. Publica
+  objetivos y roles a sus unidades. Por ejemplo, _Unidad con Id:u1 capturar la ciudad con Id:c2_.
+* **Nivel de `unidad`**: según los objetivos determinados por su jugador, enumera sus opciones y elige la mejor.
+
+* Goal Oriented Action Planning: un `jugador` planea cómo cumplir su objetivo mediante la elaboración de subobjetivos
+  que cambian a lo largo de la partida.
+* Utility System: una `unidad` decide sus acciones con un sistema de utilidad. Este se ve afectado por el objetivo
+  encomendado por la IA de `jugador`.
+* Red bayesiana: un `jugador` realiza razonamientos sobre elementos que no puede ver o saber sobre ellos. Intenta
+  predecir la
+  posición de las unidades rivales que sabe que existen o podrán existir en la niebla de guerra. También intenta
+  predecir los próximos objetivos de los equipos rivales. Por ejemplo, capturar una cierta ciudad o retirarse a una
+  ubicación segura.
+* Finite State Machine: ideal para entidades sencillas como vida salvaje o mercenarios.
+
+```mermaid
+flowchart TD
+    A(["Plan"]) --> B["Generar objetivos"]
+    B --> B1["Condiciones de victoria<br/>del equipo"]
+    B --> B2["Oportunistas:<br/>propiedades no propias<br/>y enemigos visibles"]
+    B --> B3["Defensa:<br/>propiedades propias y unidades con<br/>amenaza sobre el umbral"]
+    B1 --> C["Puntuar cada pareja<br/>unidad y objetivo"]
+    B2 --> C
+    B3 --> C
+    C --> D["Evaluar opciones con<br>valor numérico"]
+    D --> E["Ordenar de mayor a menor"]
+    E --> F{"¿Unidad libre<br/>y objetivo con capacidad?"}
+    F -- " Sí " --> G["Asignar Orden"]
+    F -- " No " --> H["Siguiente pareja"]
+    G --> H
+    H --> I(["Unidades sin orden<br/>deciden solas"])
+```
+
 ## Monetización
 
 Uso de modelo _Shareware_ / _Try Before You Buy_ igual que **DOOM** en su lanzamiento original.
 
-Versión limitada del juego que permite jugar ciertos niveles iniciales. Las partidas personalizadas tienen limitaciones,
+El lanzamiento consiste en una versión limitada del juego que permite jugar ciertos niveles iniciales. Las partidas
+personalizadas tienen limitaciones,
 pero no impiden que puedan jugar hasta dos personas con pass and play. No es posible crear mapas ni importar o exportar
 partidas.
 
-Pago único para acceso completo a todas las características del juego.
+Después, se ofrece la posibilidad de un pago único para el acceso completo a todas las características del juego.
 
-Se abre la posibilidad a expandir el juego con expansiones que se compongan de nuevos sets de niveles.
+Se abre la posibilidad a expandir el juego con DLCs que se compongan de nuevos sets de niveles.
 
 El objetivo es que la mayor cantidad de usuarios prueben el juego y, con las funciones pass and play, puedan jugar con
-otras personas sin que tengan que instalar el juego. Los niveles iniciales deben enseñar al primero a jugar para poder
-explicar brevemente al segundo.
+otras personas sin que estas tengan que instalar el juego. Los niveles iniciales deben enseñar al primero a jugar para
+poder explicar brevemente al segundo.
 
 Una posible estrategia de retención para mantener el interés de los jugadores es que todos los jugadores pueden
-participar en un reto preestablecido diário y semanal. Estos muestran la puntuación personal en comparación con el resto
+participar en un reto preestablecido diario y semanal. Estos muestran la puntuación personal en comparación con el resto
 de jugadores que han participado.
 
-| Hook propio                                                   | Hook por otra persona                                                     | Monetización inicial                                                                                      |
-|---------------------------------------------------------------|---------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------|
-| Por iniciaiva propoia, el usuario descarga y prueba el juego. | Por actividad social, el usuario es invitado a participar en una partida. | Consigue una pequeña oferta si consigues que n personas descarguen y prueben el juego gracias al usuario. |
+| Hook propio                                                  | Hook por otra persona                                                     | Monetización inicial                                                                                        |
+|--------------------------------------------------------------|---------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
+| Por iniciaiva propia, el usuario descarga y prueba el juego. | Por actividad social, el usuario es invitado a participar en una partida. | Consigue una pequeña oferta si consigues que `n` personas descarguen y prueben el juego gracias al usuario. |
 
 | Hábito propio                                                                 | Hábito social                         | Progreso                                                                     |
 |-------------------------------------------------------------------------------|---------------------------------------|------------------------------------------------------------------------------|
-| El jugador se conecta regularmente y realiza los niveles diários y semanales. | El jugador incentiva a otros a jugar. | Comprar packs de sprites para las unidades propias o sets de niveles nuevos. |
+| El jugador se conecta regularmente y realiza los niveles diarios y semanales. | El jugador incentiva a otros a jugar. | Comprar packs de sprites para las unidades propias o sets de niveles nuevos. |
 
 | Hobby                                                                                                                                          | Consumibles                         |
 |------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------|
