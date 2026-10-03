@@ -57,7 +57,7 @@ gitGraph
 ## Descripción general
 
 Grid Tactics es un juego de estrategia en cuadrícula donde el o los jugadores se enfrentan a otros equipos o al entorno
-para cumplir uno o vários objetivos. Se rige por un sistema de _fatiga_ que determina la próxima entidad en actuar.
+para cumplir uno o varios objetivos. Se rige por un sistema de _fatiga_ que determina la próxima entidad en actuar.
 
 Es un juego 2D pixel art con vista _top-down_.
 
@@ -328,7 +328,7 @@ que tengan visibilidad en esas `tiles`.
 
 ## Elementos de juego
 
-El juego se rige por `partidas`. Un nivel es una partida.
+El juego funciona de manera que cada nivel es una `partida`.
 
 Los distintos elementos siguen la siguiente relación
 
@@ -361,7 +361,7 @@ Una partida está compuesta por un `mapa`, `equipos`, `reglas` y al menos una `c
 
 Un `nivel` es una partida que tiene datos predefinidos por los diseñadores del juego.
 
-Los niveles son accesibles en orden secuenciál o en grafo.
+Los niveles son accesibles en orden secuencial o en grafo.
 
 Deben comenzar de manera sencilla, con mapas pequeños y pocas unidades, e incrementar su dificultad.
 
@@ -371,7 +371,7 @@ Una `partida` debe tener al menos un equipo. Un equipo está compuesto por al me
 
 Este esquema permite crear partidas en las que varios jugadores hacen equipo.
 
-En la lógica del juego, si se quiere tener un grupo de mónstruos ajenos, hostiles al resto de equipos, estos forman su
+En la lógica del juego, si se quiere tener un grupo de monstruos ajenos, hostiles al resto de equipos, estos forman su
 propio equipo y son controlados por un `jugador de IA`.
 
 ### Jugador
@@ -404,7 +404,7 @@ Una `entidad` es un elemento posicionable en el tablero.
 public interface IPositioned { Vector2Int Position { get; } }
 ```
 
-Estas pueden ser o no dañable y pueden ser o no curables
+Estas pueden ser dañables, o no, y pueden ser curables, o no.
 
 ```cs
 public interface IDamageable
@@ -440,7 +440,7 @@ Una `unidad` es una entidad controlable por un `jugador` en el `mapa`.
 Un `jugador` puede tener `unidades`. Un jugador puede comenzar con unidades en el tablero si lo determina la partida o
 puede crearlas en `fábricas` si existen en el mapa.
 
-Diagrama de clase preliminar de `Unit`.
+Diagrama de clase preliminar de `Unit`:
 
 ```mermaid
 classDiagram
@@ -601,11 +601,11 @@ public sealed class TransportBay : IUnitComponent
 
 ##### Movimiento
 
-Una unidad tiene un `perfíl de movimiento`. Este determina su capacidad de movimiento en su puntaje de avance numérico y
+Una unidad tiene un `perfil de movimiento`. Este determina su capacidad de movimiento en su puntaje de avance numérico y
 el tipo de `tile` sobre los que puede pasar. Por ejemplo, los tanques no puede pasar por `tiles de montaña`.
 
 El `TerrainType` no decide quién cruza qué: solo describe qué hay físicamente en la casilla. La pregunta "¿puede este
-vehículo cruzar un bosque, a qué coste?", la responde el `IMovementProfile` de la unidad.
+vehículo cruzar un bosque?¿a qué coste?", la responde el `IMovementProfile` de la unidad.
 
 ```mermaid
 classDiagram
@@ -708,7 +708,7 @@ public interface IAction
 Una `propiedad` es una construcción desplegada en un `mapa`.
 Esta puede pertenecer o no a un `jugador`. Al igual que la unidad, tiene fatiga y componentes.
 
-Una propiedad puede cambiar de manos durante una partida.
+Una propiedad puede cambiar de bando durante una partida.
 
 ```cs
 public interface IPropertyComponent { }
@@ -881,7 +881,7 @@ classDiagram
     Property --> Player
 ```
 
-Ejemplo de producción y filtros de producción de una fábrica como un `componente` de propiedad.
+Ejemplo de producción y filtros de producción de una fábrica como un `componente` de propiedad:
 
 Distintos tipos de fábrica tienen a su disposición distintos filtros de producción.
 
@@ -968,7 +968,7 @@ public sealed class ProductionBay : IPropertyComponent
 
 Un `mapa` está compuesto de `tiles` y contiene todas las `entidades` (`unidades` y `propiedades`).
 
-Una `partida` tiene un mapa de juego. Todos los mapas son una cuadrícula rectangular.
+Una `partida` contiene un mapa de juego. Todos los mapas son una cuadrícula rectangular.
 
 #### Tile
 
@@ -1068,11 +1068,12 @@ Es sistema de `equipo`, `jugador` y `unidad` coordina acciones a distintos nivel
   objetivos y roles a sus unidades. Por ejemplo, _Unidad con Id:u1 capturar la ciudad con Id:c2_.
 * **Nivel de `unidad`**: según los objetivos determinados por su jugador, enumera sus opciones y elige la mejor.
 
-* Goal Oriented Action Planning: un `jugador` planea cómo cumplir su objetivo mediante la elaboration de subobjetivos
+* Goal Oriented Action Planning: un `jugador` planea cómo cumplir su objetivo mediante la elaboración de subobjetivos
   que cambian a lo largo de la partida.
 * Utility System: una `unidad` decide sus acciones con un sistema de utilidad. Este se ve afectado por el objetivo
   encomendado por la IA de `jugador`.
-* Red bayesiana: un `jugador` realiza razonamientos sobre elementos que no puede ver o saber. Intenta predecir la
+* Red bayesiana: un `jugador` realiza razonamientos sobre elementos que no puede ver o saber sobre ellos. Intenta
+  predecir la
   posición de las unidades rivales que sabe que existen o podrán existir en la niebla de guerra. También intenta
   predecir los próximos objetivos de los equipos rivales. Por ejemplo, capturar una cierta ciudad o retirarse a una
   ubicación segura.
@@ -1090,40 +1091,40 @@ flowchart TD
     C --> D["Evaluar opciones con<br>valor numérico"]
     D --> E["Ordenar de mayor a menor"]
     E --> F{"¿Unidad libre<br/>y objetivo con capacidad?"}
-    F -- "Sí" --> G["Asignar Orden"]
-    F -- "No" --> H["Siguiente pareja"]
+    F -- " Sí " --> G["Asignar Orden"]
+    F -- " No " --> H["Siguiente pareja"]
     G --> H
     H --> I(["Unidades sin orden<br/>deciden solas"])
 ```
-
 
 ## Monetización
 
 Uso de modelo _Shareware_ / _Try Before You Buy_ igual que **DOOM** en su lanzamiento original.
 
-Versión limitada del juego que permite jugar ciertos niveles iniciales. Las partidas personalizadas tienen limitaciones,
+El lanzamiento consiste en una versión limitada del juego que permite jugar ciertos niveles iniciales. Las partidas
+personalizadas tienen limitaciones,
 pero no impiden que puedan jugar hasta dos personas con pass and play. No es posible crear mapas ni importar o exportar
 partidas.
 
-Pago único para acceso completo a todas las características del juego.
+Después, se ofrece la posibilidad de un pago único para el acceso completo a todas las características del juego.
 
-Se abre la posibilidad a expandir el juego con expansiones que se compongan de nuevos sets de niveles.
+Se abre la posibilidad a expandir el juego con DLCs que se compongan de nuevos sets de niveles.
 
 El objetivo es que la mayor cantidad de usuarios prueben el juego y, con las funciones pass and play, puedan jugar con
-otras personas sin que tengan que instalar el juego. Los niveles iniciales deben enseñar al primero a jugar para poder
-explicar brevemente al segundo.
+otras personas sin que estas tengan que instalar el juego. Los niveles iniciales deben enseñar al primero a jugar para
+poder explicar brevemente al segundo.
 
 Una posible estrategia de retención para mantener el interés de los jugadores es que todos los jugadores pueden
-participar en un reto preestablecido diário y semanal. Estos muestran la puntuación personal en comparación con el resto
+participar en un reto preestablecido diario y semanal. Estos muestran la puntuación personal en comparación con el resto
 de jugadores que han participado.
 
-| Hook propio                                                   | Hook por otra persona                                                     | Monetización inicial                                                                                      |
-|---------------------------------------------------------------|---------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------|
-| Por iniciaiva propoia, el usuario descarga y prueba el juego. | Por actividad social, el usuario es invitado a participar en una partida. | Consigue una pequeña oferta si consigues que n personas descarguen y prueben el juego gracias al usuario. |
+| Hook propio                                                  | Hook por otra persona                                                     | Monetización inicial                                                                                        |
+|--------------------------------------------------------------|---------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
+| Por iniciaiva propia, el usuario descarga y prueba el juego. | Por actividad social, el usuario es invitado a participar en una partida. | Consigue una pequeña oferta si consigues que `n` personas descarguen y prueben el juego gracias al usuario. |
 
 | Hábito propio                                                                 | Hábito social                         | Progreso                                                                     |
 |-------------------------------------------------------------------------------|---------------------------------------|------------------------------------------------------------------------------|
-| El jugador se conecta regularmente y realiza los niveles diários y semanales. | El jugador incentiva a otros a jugar. | Comprar packs de sprites para las unidades propias o sets de niveles nuevos. |
+| El jugador se conecta regularmente y realiza los niveles diarios y semanales. | El jugador incentiva a otros a jugar. | Comprar packs de sprites para las unidades propias o sets de niveles nuevos. |
 
 | Hobby                                                                                                                                          | Consumibles                         |
 |------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------|
