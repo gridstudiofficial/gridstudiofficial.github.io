@@ -1116,6 +1116,56 @@ flowchart TD
     H --> I(["Unidades sin orden<br/>deciden solas"])
 ```
 
+#### Expresividad de entidad
+
+Aunque una entidad solo puede actuar en su turno, **sigue pensando y expresando qué hará cuando su fatiga llegue a 0**.
+Mediante efectos y animaciones, muestra el cambio constante de su estado y de sus propósitos a medida que cambian el
+entorno o sus necesidades, sin romper el sistema de fatiga.
+
+##### Funcionamiento
+
+El controlador de la entidad recibe una **percepción propia**, no el `GameState` completo, y actualiza su intención:
+la acción que planea ejecutar y el motivo. Al llegar su turno, comprueba con `CanExecute` que la acción
+planificada sigue siendo válida. Si no lo es, recalcula, expresa el cambio y actúa con la nueva intención.
+
+Las expresiones son un **reflejo real** del controlador de la entidad, sea una máquina de estados, un árbol de
+comportamiento u otro sistema, en ese instante. Se obtienen siempre del mismo estado interno que la entidad usa al
+actuar. No se trata de un estado cosmético aparte.
+
+##### Expresiones
+
+* **Exclamación** sobre las entidades que acaban de percatarse de la presencia de una entidad enemiga.
+* **Interrogación** sobre las entidades que sospechan de la presencia de una entidad enemiga, ya sea por razonamiento o
+  por percepciones no visuales, como el oído o la activación de una trampa. También aparece sobre una unidad que cree
+  estar siendo observada. Por ejemplo, si un rival ve una unidad propia que el jugador no ve a él por la niebla de
+  guerra, la unidad observada muestra una `?` sin revelar la posición del rival.
+* **Efectos de sudor** sobre las entidades que se sienten en apuros y pretenden huir.
+* **Efectos de enfado** sobre las entidades que tienen previsto atacar de forma inminente a una entidad enemiga.
+* **Burbuja de pensamiento** sobre las entidades que exploran su entorno en busca de algo, que puede ser otra entidad
+  o un tipo de `tile` concreto, por ejemplo, alimento.
+* **Símbolos Z** sobre una entidad que duerme y percibe su entorno con capacidades reducidas.
+
+##### Animaciones ambientales
+
+Entre turnos, las entidades pueden mostrar animaciones inactivas que dependen de su estado como comer,
+dormitar, vigilar. No cambian su posición lógica ni tienen consecuencias en la partida.
+
+##### Reglas de presentación
+
+* Las expresiones solo son visibles en `tiles` visibles para el jugador (con niebla de guerra compartida, se incluye la
+  visibilidad de su equipo).
+* Una intención de ataque se expresa con antelación suficiente para que el objetivo pueda responder antes de que la
+  entidad actúe.
+* Cada expresión tiene un tiempo mínimo de permanencia para evitar parpadeos entre estados.
+
+##### Efecto de la percepción sobre la fatiga
+
+> <span style=color:red>Esta mecánica está en duda. Debe probarse y discutirse más a fondo.</span>
+
+Un evento de percepción fuerte (ruido, alarma) puede **reducir la fatiga** de la entidad que lo percibe, de modo que
+actúe antes. Así, las distracciones se convierten en táctica sin que ninguna entidad actúe fuera de turno. Para evitar
+que se abuse de ello, puede limitarse a una reducción por ronda y entidad, con un mínimo de fatiga.
+
 ## Monetización
 
 Uso de modelo _Shareware_ / _Try Before You Buy_ igual que **DOOM** en su lanzamiento original.
