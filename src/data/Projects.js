@@ -96,7 +96,7 @@ export const projects = [
 
 	new Project({
 		name: "Volley Clash",
-		media: "/projects/VolleyClash.jpg",
+		media: "/projects/volley_clash-preview.jpg",
 		description: "An online 1v1 volleyball game to play against your friends.",
 		disciplines: [
 			Discipline.JS,
