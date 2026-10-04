@@ -42,7 +42,7 @@ export let maria = new Person({
 export let alvaro = new Person({
 	id: "alvaro",
 	name: "Álvaro",
-	image: "people/maria.jpg",
+	image: "people/alvaro.jpg",
 	disciplines: [
 		Discipline.HTML,
 		Discipline.CSS,

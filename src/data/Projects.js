@@ -1,6 +1,6 @@
 import {Project} from "../components/Project/Project.js";
 import {Discipline} from "../components/Project/Discipline.js";
-import {diego, maria} from "./People.js";
+import {diego, maria, alvaro} from "./People.js";
 
 export const projects = [
 	new Project({
@@ -90,6 +90,23 @@ export const projects = [
 		],
 		link: {
 			url: "https://fpsy-art.itch.io/mystery-mice",
+			text: "Project web page"
+		}
+	}),
+
+	new Project({
+		name: "Volley Clash",
+		media: "/projects/VolleyClash.jpg",
+		description: "An online 1v1 volleyball game to play against your friends.",
+		disciplines: [
+			Discipline.JS,
+			Discipline.PHASER
+		],
+		people: [
+			alvaro
+		],
+		link: {
+			url: "https://github.com/Minhxia/jer-volleyclash-sunsetarcade",
 			text: "Project web page"
 		}
 	}),
