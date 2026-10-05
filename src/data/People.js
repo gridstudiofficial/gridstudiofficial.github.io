@@ -39,6 +39,22 @@ export let maria = new Person({
 	]
 });
 
+export let alvaro = new Person({
+	id: "alvaro",
+	name: "Álvaro",
+	image: "people/alvaro.jpg",
+	disciplines: [
+		Discipline.HTML,
+		Discipline.CSS,
+		Discipline.JS,
+		Discipline.JAVA,
+		Discipline.CSHARP
+	],
+	links: [
+		"https://github.com/Alvaro-Ibanez"
+	]
+});
+
 export let jose = new Person({
 	id: "jose",
 	name: "José",
@@ -63,14 +79,14 @@ export let cristian = new Person({
 		Discipline.JAVA,
 		Discipline.C,
 		Discipline.CSHARP,
-        Discipline.UNITY
+		Discipline.UNITY
 	]
 });
 
 export const people = [
 	diego,
 	maria,
+	alvaro,
 	jose,
 	cristian
 ]
-
