@@ -39,6 +39,22 @@ export let maria = new Person({
 	]
 });
 
+export let jose = new Person({
+	id: "jose",
+	name: "José",
+	image: "people/jose.jpg",
+	disciplines: [
+		Discipline.ART2D,
+		Discipline.ANIMATION2D,
+		Discipline.C,
+		Discipline.CSHARP,
+		Discipline.Unity
+	],
+	links: [
+		"https://github.com/Pepiur"
+	]
+});
+
 export const people = [
 	diego,
 	maria

@@ -1,6 +1,6 @@
 import {Project} from "../components/Project/Project.js";
 import {Discipline} from "../components/Project/Discipline.js";
-import {diego, maria} from "./People.js";
+import {diego, maria, jose} from "./People.js";
 
 export const projects = [
 	new Project({
@@ -91,6 +91,21 @@ export const projects = [
 		link: {
 			url: "https://fpsy-art.itch.io/mystery-mice",
 			text: "Project web page"
+		}
+	}),
+
+		new Project({
+		name: "Hanabi Tanks",
+		media: "/projects/HanabiTanks.png",
+		description: "A 1v1 with cardboard tanks.",
+		disciplines: [
+			Discipline.JS,
+			Discipline.PHASER
+		],
+		people: [
+			jose
+		],
+		link: {
 		}
 	}),
 ]
