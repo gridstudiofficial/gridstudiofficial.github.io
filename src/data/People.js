@@ -57,5 +57,6 @@ export let jose = new Person({
 
 export const people = [
 	diego,
-	maria
+	maria,
+	jose
 ]
