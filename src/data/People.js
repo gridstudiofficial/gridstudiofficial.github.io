@@ -48,7 +48,7 @@ export let jose = new Person({
 		Discipline.ANIMATION2D,
 		Discipline.C,
 		Discipline.CSHARP,
-		Discipline.Unity
+		Discipline.UNITY
 	],
 	links: [
 		"https://github.com/Pepiur"
