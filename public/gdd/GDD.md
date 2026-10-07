@@ -125,7 +125,7 @@ Vista superior _top down_ como los juegos de Game Boy Advance _Pokemon Esmeralda
 
 <img src="\gdd\imgs\screenshot_ejemplo.png"/>
 
-## Animación
+### Animación
 
 Todas las unidades cuentan con animaciones `idle`, `movimiento` y `ataque`. El entorno cuenta con un tipo de animación
 (`idle`) en algunos terrenos, como el río, para proporcionar una sensación de mundo vivo.
@@ -137,6 +137,21 @@ unidad (arriba, abajo y lateral). Los sprites para las animaciones laterales se 
 opuesta.
 
 Los edificios cuentan con animaciones estéticas de luz si están activos (ej. una ciudad es tomada por un jugador).
+
+### Interfaces
+
+La interfaz de juego consta de tres elementos principales. Cada uno de ellos se muestra en la plantilla de diagrama.
+
+<img src="\gdd\imgs\Match UI squeme.png"/>
+
+<img src="\gdd\imgs\Match UI prototype.png"/>
+
+Cada uno de los elementos, está adherido a una esquina de la pantalla. Se recolocan y acomodan para no pisarse entre
+ellos.
+
+<img src="\gdd\imgs\Match UI prototype small.png"/>
+
+Sobre navegación en **Diagrama de navegación de usuario**.
 
 ## Estéticas y contexto de juego
 
