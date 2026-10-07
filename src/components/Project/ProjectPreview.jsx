@@ -1,9 +1,10 @@
 import {Link} from 'react-router-dom';
 import "./ProjectPreview.css";
+import {useTranslation} from "react-i18next";
 
 export function ProjectPreview({project}) {
 	const isVideo = /\.(mp4|webm|ogg)$/i.test(project.media);
-
+	const {t} = useTranslation('projects');
 	return (
 		<article className="project-preview">
 			<div className="project-preview__media">
@@ -26,7 +27,7 @@ export function ProjectPreview({project}) {
 			<div className="project-preview__content">
 				<h2>{project.name}</h2>
 
-				<p>{project.description}</p>
+				<p>{t(project.descriptionKey)}</p>
 
 				{project.disciplines.length > 0 && (
 					<ul className="project-preview__disciplines">
@@ -56,7 +57,7 @@ export function ProjectPreview({project}) {
 							target="_blank"
 							rel="noopener noreferrer"
 						>
-							{project.link.text}
+							{t('linkText')}
 						</a>
 					</div>
 				)}

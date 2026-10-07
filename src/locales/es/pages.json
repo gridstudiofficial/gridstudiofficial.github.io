@@ -1,0 +1,21 @@
+{
+  "home": {
+    "title": "Grid Tactics",
+    "description": "Grid Tactics es un juego de estrategia en el que asumes el papel de un comandante del ejército. ¡Participa en feroces batallas que pondrán a prueba todo tu valor!"
+  },
+  "docs": {
+    "title": "Sobre el juego",
+    "intro": "Texto de ejemplo.",
+    "gddTitle": "Documento de diseño del juego",
+    "gddIntro": "El siguiente apartado contiene una versión actualizada de nuestro <bold>documento de diseño del juego</bold>."
+  },
+  "portfolio": {
+    "title": "Portfolio"
+  },
+  "social": {
+    "title": "Redes sociales",
+    "intro": "Descubre qué hace el equipo.",
+    "peopleTitle": "Personas",
+    "peopleIntro": "Contacta con cada miembro del equipo."
+  }
+}

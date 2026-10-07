@@ -1,0 +1,20 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "docs": "Documentación",
+    "portfolio": "Portfolio",
+    "social": "Comunidad"
+  },
+  "footer": {
+    "text": "Todo el contenido pertenece a Grid Studio."
+  },
+  "toc": {
+    "toc": "Índice de contenidos",
+    "hide_index": "Ocultar índice",
+    "show_index": "Mostrar índice"
+  },
+  "markdown": {
+    "loading": "Cargando documento...",
+    "error": "No se pudo encontrar el documento en {{path}}"
+  }
+}

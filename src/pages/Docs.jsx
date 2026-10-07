@@ -1,19 +1,15 @@
-import {useTranslation} from 'react-i18next';
+import {Trans, useTranslation} from 'react-i18next';
 import MarkdownRenderer from "../components/MarkdownRenderer/MarkdownRenderer.jsx";
 
 export default function Docs() {
-	const {t} = useTranslation();
+	const {t} = useTranslation('pages');
 
 	return (
 		<div id="docs">
-			<h1>About the game</h1>
-			<p>
-				Dummy text.
-			</p>
-			<h2>Game Design Document</h2>
-			<p>
-				The next segment contains an updated version of our <b>Game Design Document</b>.
-			</p>
+			<h1>{t('docs.title')}</h1>
+			<p>{t('docs.intro')}</p>
+			<h2>{t('docs.gddTitle')}</h2>
+			<p><Trans ns="pages" i18nKey="docs.gddIntro" components={{bold: <b/>}}/></p>
 			<MarkdownRenderer fileName={"./gdd/GDD.md"}/>
 			<MarkdownRenderer fileName={"./gdd/Levels.md"}/>
 		</div>

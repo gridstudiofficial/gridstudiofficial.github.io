@@ -1,0 +1,21 @@
+{
+  "home": {
+    "title": "Grid Tactics",
+    "description": "Grid Tactics is a strategy game where you take the role of an army commander. Take part in fierce battles that will test all your might!"
+  },
+  "docs": {
+    "title": "About the game",
+    "intro": "Dummy text.",
+    "gddTitle": "Game Design Document",
+    "gddIntro": "The next segment contains an updated version of our <bold>Game Design Document</bold>."
+  },
+  "portfolio": {
+    "title": "Portfolio"
+  },
+  "social": {
+    "title": "Socials",
+    "intro": "Check out what the team is up to.",
+    "peopleTitle": "People",
+    "peopleIntro": "Reach out for specific members."
+  }
+}

@@ -6,7 +6,7 @@ export const projects = [
 	new Project({
 		name: "MIPS 32 Visual Editor",
 		media: "/projects/mips32-preview.png",
-		description: "A visual editor for MIPS32 microprocessor. Able to edit wiring and alter components.",
+		descriptionKey: "mips32.description",
 		disciplines: [
 			Discipline.HTML,
 			Discipline.CSS,
@@ -25,7 +25,7 @@ export const projects = [
 	new Project({
 		name: "Please, buy these",
 		media: "/projects/please_buy_these-preview.gif",
-		description: "A game where what you say is determined by your bullet hell skills.",
+		descriptionKey: "pleaseBuyThese.description",
 		disciplines: [
 			Discipline.CSHARP,
 			Discipline.UNITY
@@ -43,7 +43,7 @@ export const projects = [
 	new Project({
 		name: "Cuoco Cooked",
 		media: "/projects/cuoco_cooked-preview.png",
-		description: "Website with a set of custom tools in React to make a wiki like Game Design Document for a concept game. Cuoco Cooked is a concept 2D fighting game.",
+		descriptionKey: "cuocoCooked.description",
 		disciplines: [
 			Discipline.HTML,
 			Discipline.CSS,
@@ -62,7 +62,7 @@ export const projects = [
 	new Project({
 		name: "The Other Side of the Abyss",
 		media: "/projects/the_other_side_of_the_abyss-preview.png",
-		description: "You walk for a long time, you follow the route your suit indicates wherever it may lead you...",
+		descriptionKey: "theOtherSideOfTheAbyss.description",
 		disciplines: [
 			Discipline.CSHARP,
 			Discipline.UNITY
@@ -80,7 +80,7 @@ export const projects = [
 	new Project({
 		name: "Mystery Mice",
 		media: "/projects/mystery_mice-preview.png",
-		description: "Enjoy this co-op puzzle game with a friend!!",
+		descriptionKey: "mysteryMice.description",
 		disciplines: [
 			Discipline.JS,
 			Discipline.PHASER
@@ -97,7 +97,7 @@ export const projects = [
 	new Project({
 		name: "Hanabi Tanks",
 		media: "/projects/HanabiTanks.png",
-		description: "A 1v1 with cardboard tanks.",
+		descriptionKey: "hanabiTanks.description",
 		disciplines: [
 			Discipline.JS,
 			Discipline.PHASER
@@ -112,7 +112,7 @@ export const projects = [
 	new Project({
 		name: "Volley Clash",
 		media: "/projects/volley_clash-preview.jpg",
-		description: "An online 1v1 volleyball game to play against your friends.",
+		descriptionKey: "volleyClash.description",
 		disciplines: [
 			Discipline.JS,
 			Discipline.PHASER

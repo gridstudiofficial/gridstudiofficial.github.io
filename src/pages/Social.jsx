@@ -4,19 +4,15 @@ import {people} from "../data/People.js";
 import StudioSocials from "../components/StudioSocials/StudioSocials.jsx";
 
 export default function Social() {
-	const {t} = useTranslation();
+	const {t} = useTranslation('pages');
 
 	return (
 		<div id="socials">
-			<h1>Socials</h1>
-			<p>
-				Check out what the team is up to.
-			</p>
+			<h1>{t('social.title')}</h1>
+			<p>{t('social.intro')}</p>
 			<StudioSocials/>
-			<h2>People</h2>
-			<p>
-				Reach out for specific members.
-			</p>
+			<h2>{t('social.peopleTitle')}</h2>
+			<p>{t('social.peopleIntro')}</p>
 			<PeopleGrid people={people}/>
 		</div>
 	);
