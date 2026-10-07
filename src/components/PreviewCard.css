@@ -1,0 +1,64 @@
+:root {
+	--preview-padding: 14px;
+	--preview-border-radius: 20px;
+}
+
+.person-preview,
+.project-preview {
+	min-width: 0;
+	box-sizing: border-box;
+	border: var(--accent-color) var(--border-width) solid;
+	border-radius: var(--preview-border-radius);
+	padding: var(--preview-padding);
+	display: flex;
+	flex-direction: column;
+	transition: transform 250ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.person-preview__disciplines li,
+.project-preview__disciplines li,
+.project-preview__people li {
+	padding: 0.25rem 0.6rem;
+	border: 2px solid currentColor;
+	border-radius: 999px;
+}
+
+.person-preview__media img,
+.project-preview__media img,
+.project-preview__media video {
+	transition: transform 260ms ease;
+}
+
+.person-preview__media img {
+	transition: filter 260ms ease;
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+	.person-preview:hover,
+	.project-preview:hover {
+		transform: translateY(-3px);
+	}
+
+	.project-preview:hover .project-preview__media img,
+	.project-preview:hover .project-preview__media video {
+		transform: scale(1.035);
+	}
+
+	.person-preview:hover .person-preview__media img {
+		filter: brightness(1.02);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.person-preview,
+	.project-preview,
+	.person-preview__media img,
+	.project-preview__media img,
+	.project-preview__media video {
+		transition: none;
+	}
+
+	.person-preview__media img {
+		filter: none;
+	}
+}

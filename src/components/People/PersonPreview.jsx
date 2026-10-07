@@ -1,3 +1,4 @@
+import "../PreviewCard.css";
 import "./PersonPreview.css";
 import SocialLink from "../SocialLink/SocialLink.jsx";
 import {useTranslation} from "react-i18next";

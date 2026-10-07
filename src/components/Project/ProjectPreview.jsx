@@ -1,4 +1,5 @@
 import {Link} from 'react-router-dom';
+import "../PreviewCard.css";
 import "./ProjectPreview.css";
 import {useTranslation} from "react-i18next";
 
@@ -49,7 +50,7 @@ export function ProjectPreview({project}) {
 						))}
 					</ul>
 				)}
-				{project.link && (
+				{project.link?.url && (
 					<div className="project-preview__links">
 						<a
 							className="link"
