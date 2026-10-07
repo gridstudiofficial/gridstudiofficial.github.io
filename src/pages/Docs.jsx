@@ -15,6 +15,7 @@ export default function Docs() {
 				The next segment contains an updated version of our <b>Game Design Document</b>.
 			</p>
 			<MarkdownRenderer fileName={"./gdd/GDD.md"}/>
+			<MarkdownRenderer fileName={"./gdd/Levels.md"}/>
 		</div>
 	);
 }
