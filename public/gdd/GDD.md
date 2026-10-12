@@ -154,6 +154,8 @@ Vista superior _top down_ como los juegos de Game Boy Advance _Pokemon Esmeralda
 
 <img src="\gdd\imgs\screenshot_ejemplo.png"/>
 
+<img src="\gdd\imgs\art_doc.png"/>
+
 ### Animación
 
 Todas las unidades cuentan con animaciones `idle`, `movimiento` y `acción`. El entorno cuenta con un tipo de animación
