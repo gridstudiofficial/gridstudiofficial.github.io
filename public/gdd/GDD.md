@@ -113,6 +113,35 @@ El juego utiliza el motor de juego Unity.
   para simplificar la interacción con ratón y pantalla táctil.
 * El sistema de carpetas de Unity es semántico.
 
+## Planificación del desarrollo
+
+```mermaid
+gantt
+    title Planificación de proyecto
+    dateFormat YYYY-MM-DD
+    axisFormat %d/%m
+
+    section Alpha
+        Definir proyecto: a1, 2026-09-12, 10d
+        Recopilar requisitos: a2, after a1, 10d
+        Desarrollo de web de proyecto: a3, after a1, 15d
+        Desarrollo de alpha: a4, after a1, 20d
+        Definir GDD: a5, after a1, 8d
+        Rúbrica de arte: a6, after a1, 14d
+        Entrega Alpha: milestone, 2026-10-13, 0d
+
+    section Beta
+        Desarrollo de juego: b1, 2026-10-13, 6.5w
+        Creación de arte: b2, 2026-10-13, 5w
+        Entrega Beta: milestone, 2026-12-1, 0d
+
+    section Release
+        Pulido de juego: c1, 2026-12-1, 4.5w
+        Creación de vfx: c2, 2026-12-1, 3w
+        Creación de sfx: c3, after c2, 2w
+        Entrega Beta: milestone, 2027-1-10, 0d
+```
+
 ## Arte
 
 El juego es 2D con pixel art a baja resolución. El tamaño de pantalla varía según el dispositivo, intentando mantener
