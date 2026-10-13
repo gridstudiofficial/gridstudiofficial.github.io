@@ -17,8 +17,7 @@
 		align-self: center;
 
 		filter: drop-shadow(
-				0 0 10px
-				color-mix(in srgb, var(--accent-color), white 70%)
+				0 0 10px color-mix(in srgb, var(--accent-color), white 70%)
 		);
 	}
 }

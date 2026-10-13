@@ -99,7 +99,8 @@ export default function MarkdownRenderer({fileName}) {
 						},
 					],
 					[rehypeHighlight,
-						{ detect: false,
+						{
+							detect: false,
 							ignoreMissing: true,
 							plainText: ['mermaid']
 						}],

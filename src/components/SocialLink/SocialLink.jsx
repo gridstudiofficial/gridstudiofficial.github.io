@@ -21,7 +21,11 @@ const SOCIAL_NETWORKS = [
 	}, {
 		id: 'linkedin', name: 'LinkedIn', pattern: /linkedin\.com/i, size: 1.5, icon: "LinkedIn_icon.svg"
 	}, {
-		id: 'instagram', name: 'Instagram', pattern: /instagram\.com|instagr\.am/i, size: 1.5, icon: "Instagram_icon.svg"
+		id: 'instagram',
+		name: 'Instagram',
+		pattern: /instagram\.com|instagr\.am/i,
+		size: 1.5,
+		icon: "Instagram_icon.svg"
 	}, {
 		id: 'youtube', name: 'YouTube', pattern: /youtube\.com|youtu\.be/i, size: 1.5, icon: "YouTube_icon.svg"
 	}, {

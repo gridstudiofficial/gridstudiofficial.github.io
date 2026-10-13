@@ -1,6 +1,6 @@
 import {Project} from "../components/Project/Project.js";
 import {Discipline} from "../components/Project/Discipline.js";
-import {diego, maria, alvaro, jose} from "./People.js";
+import {alvaro, diego, jose, maria} from "./People.js";
 
 export const projects = [
 	new Project({
@@ -105,8 +105,7 @@ export const projects = [
 		people: [
 			jose
 		],
-		link: {
-		}
+		link: {}
 	}),
 
 	new Project({

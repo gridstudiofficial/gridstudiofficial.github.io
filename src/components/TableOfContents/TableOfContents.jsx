@@ -1,12 +1,10 @@
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import {useEffect, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import './TableOfContents.css';
 import {slugify} from "./slugify.js";
 
-
-
-export default function TableOfContents({ containerRef }) {
-	const { t } = useTranslation();
+export default function TableOfContents({containerRef}) {
+	const {t} = useTranslation();
 	const [headings, setHeadings] = useState([]);
 	const [activeId, setActiveId] = useState('');
 	const [isTocVisible, setIsTocVisible] = useState(false);
@@ -89,7 +87,7 @@ export default function TableOfContents({ containerRef }) {
 				const el = document.getElementById(targetId);
 				if (el) {
 					setTimeout(() => {
-						el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+						el.scrollIntoView({behavior: 'smooth', block: 'start'});
 						setActiveId(targetId);
 					}, 150);
 				}
@@ -101,7 +99,7 @@ export default function TableOfContents({ containerRef }) {
 		e.preventDefault();
 		const el = document.getElementById(id);
 		if (el) {
-			el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+			el.scrollIntoView({behavior: 'smooth', block: 'start'});
 			setActiveId(id);
 			const basePath = window.location.hash.split('#')[1] || window.location.pathname;
 			const cleanPath = basePath.split('?')[0];
@@ -147,7 +145,7 @@ export default function TableOfContents({ containerRef }) {
 								return (
 									<li
 										key={h.id}
-										style={{ paddingLeft: `${indentLevel * 12}px` }}
+										style={{paddingLeft: `${indentLevel * 12}px`}}
 										className={isActive ? 'active' : ''}
 									>
 										<a

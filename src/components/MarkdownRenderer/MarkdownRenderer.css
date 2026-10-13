@@ -154,6 +154,7 @@
 .markdown-renderer {
 	contain: inline-size;
 }
+
 .markdown-renderer pre code {
 	background: transparent;
 	padding: 0;
@@ -169,6 +170,7 @@
 	scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
 
 	/* Chrome / Edge / Safari */
+
 	&::-webkit-scrollbar {
 		height: 5px;
 		width: 5px;

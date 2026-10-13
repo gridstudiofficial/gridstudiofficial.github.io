@@ -21,7 +21,7 @@ export function GridTacticsFirstImpression() {
 
 			<h2>{t('home.title')}</h2>
 			<p>{t('home.description')}</p>
-			<p><Link to={'/docs'}>{t('nav.docs', { ns: "common" })}</Link></p>
+			<p><Link to={'/docs'}>{t('nav.docs', {ns: "common"})}</Link></p>
 		</>
 	)
 }
