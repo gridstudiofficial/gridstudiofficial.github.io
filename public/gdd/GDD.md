@@ -113,6 +113,35 @@ El juego utiliza el motor de juego Unity.
   para simplificar la interacción con ratón y pantalla táctil.
 * El sistema de carpetas de Unity es semántico.
 
+## Planificación del desarrollo
+
+```mermaid
+gantt
+    title Planificación de proyecto
+    dateFormat YYYY-MM-DD
+    axisFormat %d/%m
+
+    section Alpha
+        Definir proyecto: a1, 2026-09-12, 10d
+        Recopilar requisitos: a2, after a1, 10d
+        Desarrollo de web de proyecto: a3, after a1, 15d
+        Desarrollo de alpha: a4, after a1, 20d
+        Definir GDD: a5, after a1, 8d
+        Rúbrica de arte: a6, after a1, 14d
+        Entrega Alpha: milestone, 2026-10-13, 0d
+
+    section Beta
+        Desarrollo de juego: b1, 2026-10-13, 6.5w
+        Creación de arte: b2, 2026-10-13, 5w
+        Entrega Beta: milestone, 2026-12-1, 0d
+
+    section Release
+        Pulido de juego: c1, 2026-12-1, 4.5w
+        Creación de vfx: c2, 2026-12-1, 3w
+        Creación de sfx: c3, after c2, 2w
+        Entrega Beta: milestone, 2027-1-10, 0d
+```
+
 ## Arte
 
 El juego es 2D con pixel art a baja resolución. El tamaño de pantalla varía según el dispositivo, intentando mantener
@@ -125,18 +154,35 @@ Vista superior _top down_ como los juegos de Game Boy Advance _Pokemon Esmeralda
 
 <img src="\gdd\imgs\screenshot_ejemplo.png"/>
 
-## Animación
+<img src="\gdd\imgs\art_doc.png"/>
 
-Todas las unidades cuentan con animaciones `idle`, `movimiento` y `ataque`. El entorno cuenta con un tipo de animación
+### Animación
+
+Todas las unidades cuentan con animaciones `idle`, `movimiento` y `acción`. El entorno cuenta con un tipo de animación
 (`idle`) en algunos terrenos, como el río, para proporcionar una sensación de mundo vivo.
-
-Algunos NPCs se mueven libremente por el mapa y no necesariamente interactúan con los jugadores.
 
 Las animaciones de los diferentes sprites de unidades se realizan para tres de las cuatro posiciones que puede tomar esa
 unidad (arriba, abajo y lateral). Los sprites para las animaciones laterales se voltean para adoptar la dirección
-opuesta.
+opuesta. Cada ciclo de animaciones (idle y movimiento) cuenta con 3 sprites que se muestran dos veces, la segunda al
+revés para crear un ciclo de 6 sprites.
 
-Los edificios cuentan con animaciones estéticas de luz si están activos (ej. una ciudad es tomada por un jugador).
+Los edificios cuentan con animaciones estéticas de luz, humo u otros.
+
+### Interfaces
+
+La interfaz de juego durante la partida consta de tres elementos principales. Cada uno de ellos se muestra en la
+plantilla de diagrama.
+
+<img src="\gdd\imgs\Match UI squeme.png"/>
+
+<img src="\gdd\imgs\Match UI prototype.png"/>
+
+Cada uno de los elementos, está adherido a una esquina de la pantalla. Se recolocan y acomodan para no pisarse entre
+ellos.
+
+<img src="\gdd\imgs\Match UI prototype small.png"/>
+
+Sobre navegación en **Diagrama de navegación de usuario**.
 
 ## Estéticas y contexto de juego
 
@@ -441,7 +487,8 @@ public interface IHealable : IDamageable
 }
 ```
 
-Si la entidad puede actuar, debe seguir el esquema de fatiga y poder encolarse.
+Si la entidad puede actuar, debe seguir el esquema de fatiga y poder encolarse en la lista de entidades que pueden
+realizar una acción.
 
 ```cs
 public interface ISchedulable
@@ -532,6 +579,8 @@ según el tipo de unidad objetivo.
 Un arma puede tener `munición`. Si no tiene munición, no se puede usar. Una unidad puede obtener munición de distintas
 maneras. Un arma puede tener munición infinita.
 
+Un arma puede tener munición ilimitada.
+
 Si una unidad tiene más de un arma, usa la más efectiva frente a la unidad objetiva si tiene munición.
 
 ```cs
@@ -557,7 +606,8 @@ Las unidades pueden tener distintos componentes. Estos añaden nuevas cualidades
 public interface IUnitComponent { }
 ```
 
-Un ejemplo es un tanque de combustible. Permite crear unidades que no se pueden mover al quedarse sin combustible.
+Un ejemplo es un tanque de combustible. Permite crear unidades que gastan combustible para moverse o también gastan
+mientras existan en cada turno. No se pueden mover al quedarse sin combustible.
 
 Añadir una política al quedarse sin combustible permite definir lo que ocurre. Por ejemplo, las unidades aéreas se
 estrellan y son eliminadas al quedarse sin combustible, pero las de tierra o marítimas solo dejan de poder moverse.
@@ -618,13 +668,27 @@ public sealed class TransportBay : IUnitComponent
 }
 ```
 
+Uso de un `componente` de combustible para limitar el movimiento de la unidad.
+
+```cs
+public static class MovementBudget
+{
+    public static int For(Unit unit)
+    {
+        int baseRange = unit.Movement.MovementRange;
+        var fuel = unit.GetComponent<FuelTank>();
+        return fuel is null ? baseRange : Math.Min(baseRange, fuel.Current);
+    }
+}
+```
+
 ##### Movimiento
 
 Una unidad tiene un `perfil de movimiento`. Este determina su capacidad de movimiento en su puntaje de avance numérico y
 el tipo de `tile` sobre los que puede pasar. Por ejemplo, los tanques no puede pasar por `tiles de montaña`.
 
 El `TerrainType` no decide quién cruza qué: solo describe qué hay físicamente en la casilla. La pregunta "¿puede este
-vehículo cruzar un bosque?¿a qué coste?", la responde el `IMovementProfile` de la unidad.
+vehículo cruzar un bosque? ¿A qué coste?", la responde el `IMovementProfile` de la unidad.
 
 ```mermaid
 classDiagram
@@ -644,24 +708,11 @@ classDiagram
     IMovementProfile <|.. AmphibiousMovementProfile
 ```
 
-Uso de un `componente` de combustible para limitar el movimiento de la unidad.
-
-```cs
-public static class MovementBudget
-{
-    public static int For(Unit unit)
-    {
-        int baseRange = unit.Movement.MovementRange;
-        var fuel = unit.GetComponent<FuelTank>();
-        return fuel is null ? baseRange : Math.Min(baseRange, fuel.Current);
-    }
-}
-```
-
 ##### Acción
 
-Una unidad tiene a su disposición `acciones`. Distintas acciones pueden empezar a realizarse con N fatiga o menos. Cada
-acción añade una cierta cantidad de fatiga tras realizarse o tras realizar una secuencia de acciones. Una acción puede
+Una unidad tiene a su disposición `acciones`. Distintas acciones pueden empezar a realizarse con cero fatiga. Cada
+acción añade una cierta cantidad de fatiga tras realizarse o tras realizar una secuencia de acciones. Una secuencia de
+acciones puede ser mover y acción de la unidad para permitir mover y actuar en un mismo turno. Una acción puede
 contar con un contador cooldown adicionál.
 
 Ejemplo de aplicación:
@@ -727,7 +778,10 @@ public interface IAction
 Una `propiedad` es una construcción desplegada en un `mapa`.
 Esta puede pertenecer o no a un `jugador`. Al igual que la unidad, tiene fatiga y componentes.
 
-Una propiedad puede cambiar de bando durante una partida.
+Una propiedad puede cambiar de bando durante una partida al ser capturada por unidades humanas.
+
+Una captura tarda más de un turno, la unidad capturadora reduce los puntos de captura hasta llegar a cero en los turnos
+que necesite.
 
 ```cs
 public interface IPropertyComponent { }
@@ -759,7 +813,7 @@ public sealed class Property : ICapturable, ISchedulable
 
 ##### Fábrica
 
-Una `fábrica` es una entidad en el `mapa`.
+Una `fábrica` es una propiedad en el `mapa`.
 
 Un `jugador` puede ser dueño de una `fábrica`. El jugador que la controle, puede crear unidades gastando los ahorros del
 jugador.
@@ -902,7 +956,8 @@ classDiagram
 
 Ejemplo de producción y filtros de producción de una fábrica como un `componente` de propiedad:
 
-Distintos tipos de fábrica tienen a su disposición distintos filtros de producción.
+Distintos tipos de fábrica tienen a su disposición distintos filtros de producción. Por ejemplo, un aeropuerto solo
+produce unidades aéreas.
 
 ```cs
 public interface IProductionFilter { bool Allows(UnitDefinition def); }
@@ -995,6 +1050,18 @@ Una `tile` se compone de la `base` y adicionalmente puede tener `terreno` y `pro
 
 La `base overlay` sirve para que una `tile` de agua o suelo pueda integrarse como esquina o borde con otra de agua o
 suelo. Si se crea un nuevo suelo, no es necesario crear todo un nuevo juego de tiles de bordes con el agua o viceversa.
+
+Una `tile` tiene dos propiedades:
+
+* **Resistencia**: cuanto le cuesta a una unidad moverse por ella.
+* **Defensa**: cuánto se reducen los ataques enemigos por estar en la casilla.
+
+Las distintas capas de la `tile` pueden sumar o restar a estas propiedades. De base, una cuadrícula tiene resistencia 1
+y defensa 0. Una carretera tiene -1 en resistencia y 0 en defensa. El total en una casilla con una carretería es 0 en
+ambos valores.
+
+Según el tipo de unidad, puede que no sea capaz de colocarse sobre ciertos tipos de casillas. Un vehículo con ruedas de
+tracción no puede colocarse sobre una casilla con montaña.
 
 ```mermaid
 flowchart TD
@@ -1166,6 +1233,14 @@ Un evento de percepción fuerte (ruido, alarma) puede **reducir la fatiga** de l
 actúe antes. Así, las distracciones se convierten en táctica sin que ninguna entidad actúe fuera de turno. Para evitar
 que se abuse de ello, puede limitarse a una reducción por ronda y entidad, con un mínimo de fatiga.
 
+## Guardado y persistencia
+
+Una partida se serializa de forma completa. Iniciar un nivel es cargar en la escena de partida los datos predefinidos de
+ese nivel para que se construya.
+
+Guardar partida es serializar toda la partida en memoria. Una partida prefabricada y el guardado de una partida son, en
+términos de lógica, lo mismo.
+
 ## Monetización
 
 Uso de modelo _Shareware_ / _Try Before You Buy_ igual que **DOOM** en su lanzamiento original.
@@ -1186,6 +1261,10 @@ poder explicar brevemente al segundo.
 Una posible estrategia de retención para mantener el interés de los jugadores es que todos los jugadores pueden
 participar en un reto preestablecido diario y semanal. Estos muestran la puntuación personal en comparación con el resto
 de jugadores que han participado.
+
+El público principal son los usuarios de dispositivos móviles. Por tanto, el pago único para el acceso completo al juego
+debe ser una barrera pequeña, menor a 5 €. El rango de precio con el que se publican juegos premium en dispositivos
+móviles. Las expansiones de niveles deben tener precios que se ajusten a la cantidad y calidad de contenido que incluye.
 
 | Hook propio                                                  | Hook por otra persona                                                     | Monetización inicial                                                                                        |
 |--------------------------------------------------------------|---------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|

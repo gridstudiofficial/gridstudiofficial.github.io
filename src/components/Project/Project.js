@@ -1,8 +1,8 @@
 export class Project {
-	constructor({name, media, description, disciplines = [], people = [], link = null}) {
+	constructor({name, media, descriptionKey, disciplines = [], people = [], link = null}) {
 		this.name = name;
 		this.media = media;
-		this.description = description;
+		this.descriptionKey = descriptionKey;
 		this.disciplines = disciplines;
 		this.people = people;
 		this.link = link;

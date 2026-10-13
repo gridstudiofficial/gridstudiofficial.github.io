@@ -1,6 +1,10 @@
 import "./GridTacticsFirstImpression.css"
+import {useTranslation} from "react-i18next";
+import {Link} from "react-router-dom";
 
 export function GridTacticsFirstImpression() {
+	const {t} = useTranslation('pages');
+
 	return (
 		<>
 			<img
@@ -15,11 +19,9 @@ export function GridTacticsFirstImpression() {
 				className="logo logo-mobile"
 			/>
 
-			<h2>Grid Tactics</h2>
-			<p>
-				Grid Tactics is a strategy game were you take the role of an army commander.
-				Take part in dire battles that will test all of your might!
-			</p>
+			<h2>{t('home.title')}</h2>
+			<p>{t('home.description')}</p>
+			<p><Link to={'/docs'}>{t('nav.docs', {ns: "common"})}</Link></p>
 		</>
 	)
 }

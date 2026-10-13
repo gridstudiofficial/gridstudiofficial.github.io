@@ -1,0 +1,24 @@
+{
+  "linkText": "Página del proyecto",
+  "mips32": {
+    "description": "Un editor visual para el microprocesador MIPS32. Permite editar el cableado y modificar los componentes."
+  },
+  "pleaseBuyThese": {
+    "description": "Un juego en el que tus habilidades en los juegos de disparos bullet hell determinan lo que dices."
+  },
+  "cuocoCooked": {
+    "description": "Sitio web con herramientas personalizadas en React para crear un documento de diseño de juego (GDD) tipo wiki para un juego conceptual. Cuoco Cooked es un juego de lucha 2D conceptual."
+  },
+  "theOtherSideOfTheAbyss": {
+    "description": "Caminas durante mucho tiempo y sigues la ruta que te indica tu traje, te lleve adonde te lleve..."
+  },
+  "mysteryMice": {
+    "description": "¡Disfruta de este juego de puzles cooperativo con un amigo!"
+  },
+  "hanabiTanks": {
+    "description": "Un duelo 1 contra 1 con tanques de cartón."
+  },
+  "volleyClash": {
+    "description": "Un juego de voleibol en línea para que juegues contra tus amigos en partidas 1 contra 1."
+  }
+}

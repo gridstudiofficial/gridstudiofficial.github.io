@@ -83,10 +83,23 @@ export let cristian = new Person({
 	]
 });
 
+export let mario = new Person({
+	id: "mario",
+	name: "Mario",
+	image: "people/mario.jpg",
+	disciplines: [
+		Discipline.JAVA,
+		Discipline.C,
+		Discipline.CSHARP,
+		Discipline.UNITY
+	]
+});
+
 export const people = [
 	diego,
 	maria,
 	alvaro,
 	jose,
-	cristian
+	cristian,
+	mario
 ]

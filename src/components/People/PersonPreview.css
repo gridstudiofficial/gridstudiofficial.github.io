@@ -1,14 +1,5 @@
 .person-preview {
-	--padding: 14px;
-	--border-radius: 20px;
-	min-width: 0;
-	border: var(--accent-color) var(--border-width) solid;
-	padding: var(--padding);
-	border-radius: var(--border-radius);
 	max-width: 360px;
-	display: flex;
-	flex-direction: column;
-	box-sizing: border-box;
 
 	.section-title {
 		font-size: 1.1em;
@@ -21,7 +12,7 @@
 	width: 100%;
 	aspect-ratio: 1;
 	overflow: hidden;
-	border-radius: calc(var(--border-radius) - var(--padding));
+	border-radius: calc(var(--preview-border-radius) - var(--preview-padding));
 }
 
 .person-preview__media img {
@@ -56,47 +47,4 @@
 	padding: 0;
 	margin: 0;
 	list-style: none;
-}
-
-.person-preview__disciplines li {
-	padding: 0.25rem 0.6rem;
-	border: 2px solid currentColor;
-	border-radius: 999px;
-}
-
-.project-preview__links {
-	a {
-		position: relative;
-		color: var(--accent-color);
-		text-decoration: none;
-		transition: color 0.2s ease;
-	}
-
-	a::after {
-		content: '';
-		position: absolute;
-		left: 0;
-		bottom: -2px;
-		width: 100%;
-		height: 1.5px;
-		background-color: var(--accent-color);
-		transform: scaleX(0);
-		transform-origin: right;
-		transition: transform 0.25s ease;
-	}
-
-	a:hover {
-		color: #ffffff;
-	}
-
-	a:hover::after {
-		transform: scaleX(1);
-		transform-origin: left;
-	}
-}
-
-@media (max-width: 700px) {
-	.person-grid {
-		grid-template-columns: 1fr;
-	}
 }

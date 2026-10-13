@@ -1,0 +1,24 @@
+{
+  "linkText": "Project page",
+  "mips32": {
+    "description": "A visual editor for MIPS32 microprocessor. Able to edit wiring and alter components."
+  },
+  "pleaseBuyThese": {
+    "description": "A game where what you say is determined by your bullet hell skills."
+  },
+  "cuocoCooked": {
+    "description": "Website with a set of custom tools in React to make a wiki like Game Design Document for a concept game. Cuoco Cooked is a concept 2D fighting game."
+  },
+  "theOtherSideOfTheAbyss": {
+    "description": "You walk for a long time, you follow the route your suit indicates wherever it may lead you..."
+  },
+  "mysteryMice": {
+    "description": "Enjoy this co-op puzzle game with a friend!!"
+  },
+  "hanabiTanks": {
+    "description": "A 1v1 with cardboard tanks."
+  },
+  "volleyClash": {
+    "description": "An online 1v1 volleyball game to play against your friends."
+  }
+}
