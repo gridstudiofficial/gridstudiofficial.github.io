@@ -28,7 +28,7 @@ export function PersonPreview({person}) {
 						</ul>
 					</>
 				)}
-				{person.disciplines.length > 0 && (
+				{person.links.length > 0 && (
 					<>
 						<p className={"section-title"}>{t('links')}</p>
 						<ul className="person-preview__disciplines">

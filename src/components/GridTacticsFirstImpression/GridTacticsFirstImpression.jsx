@@ -1,5 +1,6 @@
 import "./GridTacticsFirstImpression.css"
 import {useTranslation} from "react-i18next";
+import {Link} from "react-router-dom";
 
 export function GridTacticsFirstImpression() {
 	const {t} = useTranslation('pages');
@@ -20,6 +21,7 @@ export function GridTacticsFirstImpression() {
 
 			<h2>{t('home.title')}</h2>
 			<p>{t('home.description')}</p>
+			<p><Link to={'/docs'}>{t('nav.docs', { ns: "common" })}</Link></p>
 		</>
 	)
 }
