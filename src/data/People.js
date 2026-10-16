@@ -74,7 +74,7 @@ export let jose = new Person({
 export let cristian = new Person({
 	id: "cristian",
 	name: "Cristian",
-	image: "people/Cristian.png",
+	image: "people/cristian.png",
 	disciplines: [
 		Discipline.JAVA,
 		Discipline.C,
