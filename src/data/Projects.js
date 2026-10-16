@@ -96,7 +96,7 @@ export const projects = [
 
 	new Project({
 		name: "Hanabi Tanks",
-		media: "/projects/HanabiTanks.png",
+		media: "/projects/hanabi_tanks-preview.png",
 		descriptionKey: "hanabiTanks.description",
 		disciplines: [
 			Discipline.JS,
