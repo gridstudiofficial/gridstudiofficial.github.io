@@ -104,8 +104,7 @@ export const projects = [
 		],
 		people: [
 			jose
-		],
-		link: {}
+		]
 	}),
 
 	new Project({
