@@ -3,7 +3,11 @@
     "home": "Inicio",
     "docs": "Documentación",
     "portfolio": "Portfolio",
-    "social": "Comunidad"
+    "social": "Comunidad",
+    "about": "Sobre nuestro juego",
+    "marketing": "Marketing",
+    "programming": "Programación"
+
   },
   "footer": {
     "text": "Todo el contenido pertenece a Grid Studio."

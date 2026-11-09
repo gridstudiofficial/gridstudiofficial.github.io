@@ -22,6 +22,15 @@ export default function Navbar() {
 				<NavLink to="/social" className={({isActive}) => (isActive ? 'active-link' : '')} viewTransition>
 					{t('nav.social')}
 				</NavLink>
+				<NavLink to="/marketing" className={({isActive}) => (isActive ? 'active-link' : '')} viewTransition>
+					{t('nav.marketing')}
+				</NavLink>
+				<NavLink to="/about" className={({isActive}) => (isActive ? 'active-link' : '')} viewTransition>
+					{t('nav.about')}
+				</NavLink>
+				<NavLink to="/programming" className={({isActive}) => (isActive ? 'active-link' : '')} viewTransition>
+					{t('nav.programming')}
+				</NavLink>
 			</div>
 			<LanguageSelector/>
 		</nav>

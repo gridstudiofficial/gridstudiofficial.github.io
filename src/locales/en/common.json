@@ -3,7 +3,10 @@
     "home": "Home",
     "docs": "Documentation",
     "portfolio": "Portfolio",
-    "social": "Community"
+    "social": "Community",
+    "about": "About our game",
+    "marketing": "Marketing",
+    "programming": "Programming"
   },
   "footer": {
     "text": "All content owned by Grid Studio."
