@@ -17,5 +17,17 @@
     "intro": "Descubre qué hace el equipo.",
     "peopleTitle": "Personas",
     "peopleIntro": "Contacta con cada miembro del equipo."
+  },
+  "about": {
+    "title": "Nuestro juego",
+    "intro": "Esta página contiene información sobre nuestro juego."
+  },
+  "marketing": {
+    "title": "Marketing",
+    "intro": "Esta página contiene información sobre nuestra estrategia de marketing."
+  },
+  "programming": {
+    "title": "Programación",
+    "intro": "Esta página contiene información sobre nuestra estrategia de programación."
   }
 }

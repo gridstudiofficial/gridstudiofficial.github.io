@@ -17,5 +17,17 @@
     "intro": "Check out what the team is up to.",
     "peopleTitle": "People",
     "peopleIntro": "Reach out for specific members."
+  },
+  "about": {
+    "title": "Our game",
+    "intro": "This page contains information about our game."
+  },
+  "marketing": {
+    "title": "Marketing",
+    "intro": "This page contains information about our marketing strategy."  
+  },
+  "programming": {
+    "title": "Programming",
+    "intro": "This page contains information about our programming strategy."
   }
 }

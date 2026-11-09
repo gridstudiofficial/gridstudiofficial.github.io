@@ -7,6 +7,9 @@ import Navbar from './components/Navbar/Navbar.jsx';
 import Footer from './components/Footer/Footer.jsx';
 import PageLayout from './components/PageLayout/PageLayout.jsx';
 import './App.css';
+import About from './pages/About.jsx';
+import Marketing from './pages/Marketing.jsx';
+import Programming from './pages/Programming.jsx';
 
 function Layout() {
 	return (
@@ -32,6 +35,9 @@ const router = createHashRouter([
 			{path: '/docs', element: <Docs/>},
 			{path: '/social', element: <Social/>},
 			{path: '/portfolio', element: <Portfolio/>},
+			{path: '/about', element: <About/>},
+			{path: '/marketing', element: <Marketing/>},
+			{path: '/programming', element: <Programming/>},
 		],
 	},
 ]);
