@@ -2,7 +2,7 @@
 
 ## Sobre este document
 
-Este es el **Documento de Diseño de Juego** de **Grid Tactics**. El control de versiones de este documento tiene rama
+Este es el **Documento de Diseño de Juego** de **Capital and steel**. El control de versiones de este documento tiene rama
 propia en el repositorio de la web del juego.
 
 El control de versiones de la web sigue el siguiente esquema:
@@ -52,11 +52,11 @@ gitGraph
 >
 > El GDD se modifica únicamente en la rama `gdd`.
 
-# Grid Tactics
+# Capital and steel
 
 ## Descripción general
 
-Grid Tactics es un juego de estrategia en cuadrícula donde el o los jugadores se enfrentan a otros equipos o al entorno
+Capital and Steel es un juego de estrategia en cuadrícula donde el o los jugadores se enfrentan a otros equipos o al entorno
 para cumplir uno o varios objetivos. Se rige por un sistema de _fatiga_ que determina la próxima entidad en actuar.
 
 Es un juego 2D pixel art con vista _top-down_.
@@ -359,6 +359,8 @@ flowchart TB
 
 ### Fatiga
 
+> <span style=color:red>Esta mecánica está en duda. Debe probarse y discutirse más a fondo</span>
+
 Todas las entidades capaces de actuar se rigen por el sistema de fatiga. Cuando una entidad tiene fatiga 0 puede actuar.
 Tanto las `unidades` como las `propiedades` se rigen por este sistema. Tras una acción, se le añadirá fatiga a la
 entidad que actuó.
@@ -445,66 +447,17 @@ Un `Jugador` siempre es miembro de un `equipo`. Puede ser humano o IA.
 
 Un usuario interactúa con el juego a través de esta clase.
 
-```cs
-public abstract class Player
-{
-    public string Id { get; }
-    public Team Team { get; internal set; } = null!;
-    public bool IsDefeated { get; internal set; }
-    public int Funds { get; internal set; }
-    public UnitSpriteSet SpritePack { get; set; } = null!;
-
-    public abstract Task<IAction> ChooseAction(Unit unit, IEnumerable<IAction> options, GameState state);
-}
-
-public sealed class HumanPlayer : Player { }
-public sealed class AIPlayer : Player { }
-```
-
 ### Entidad
 
-Una `entidad` es un elemento posicionable en el tablero.
+Una `entidad` es un elemento posicionable en el tablero. Estas pueden ser dañables, o no, y pueden ser curables, o no.
 
-```cs
-public interface IPositioned { Vector2Int Position { get; } }
-```
-
-Estas pueden ser dañables, o no, y pueden ser curables, o no.
-
-```cs
-public interface IDamageable
-{
-    int CurrentHP { get; }
-    int MaxHP { get; }
-    void TakeDamage(int amount, GameState state, Unit? attacker = null);
-}
-```
-
-```cs
-public interface IHealable : IDamageable
-{
-    void Heal(int amount, GameState state);
-}
-```
-
-Si la entidad puede actuar, debe seguir el esquema de fatiga y poder encolarse en la lista de entidades que pueden
-realizar una acción.
-
-```cs
-public interface ISchedulable
-{
-    string Id { get; }
-    Player Owner { get; }
-    int Fatigue { get; }
-}
-```
+Si la entidad puede actuar, debe seguir el esquema de fatiga y poder encolarse en la lista de entidades que pueden realizar una acción.
 
 #### Unidad
 
 Una `unidad` es una entidad controlable por un `jugador` en el `mapa`.
 
-Un `jugador` puede tener `unidades`. Un jugador puede comenzar con unidades en el tablero si lo determina la partida o
-puede crearlas en `fábricas` si existen en el mapa.
+Un `jugador` puede tener `unidades`. Un jugador puede comenzar con unidades en el tablero si lo determina la partida o puede crearlas en `fábricas` si existen en el mapa.
 
 Diagrama de clase preliminar de `Unit`:
 
@@ -573,30 +526,13 @@ classDiagram
 
 ##### Armas
 
-Las unidades disponen de una lista de `armas`. Esta lista puede estar vacía. Distintas armas tienen distinta efectividad
-según el tipo de unidad objetivo.
+Las unidades disponen de una lista de `armas`. Esta lista puede estar vacía. Distintas armas tienen distinta efectividad según el tipo de unidad objetivo.
 
-Un arma puede tener `munición`. Si no tiene munición, no se puede usar. Una unidad puede obtener munición de distintas
-maneras. Un arma puede tener munición infinita.
+Un arma puede tener `munición`. Si no tiene munición, no se puede usar. Una unidad puede obtener munición de distintas maneras. Un arma puede tener munición infinita.
 
 Un arma puede tener munición ilimitada.
 
 Si una unidad tiene más de un arma, usa la más efectiva frente a la unidad objetiva si tiene munición.
-
-```cs
-public enum WeaponClass { SmallArms, MachineGun, Cannon, Explosive, AntiAir, Torpedo, AirToAir, AirToGround }
-
-public interface IWeapon
-{
-    string Name { get; }
-    WeaponClass Class { get; }
-    int MinRange { get; }
-    int MaxRange { get; }
-    int BaseDamage { get; }
-    int? AmmoCost { get; } // null = infinite ammo
-    bool IsUsableAgainst(IDamageable target);
-}
-```
 
 ##### Componente
 
@@ -710,10 +646,7 @@ classDiagram
 
 ##### Acción
 
-Una unidad tiene a su disposición `acciones`. Distintas acciones pueden empezar a realizarse con cero fatiga. Cada
-acción añade una cierta cantidad de fatiga tras realizarse o tras realizar una secuencia de acciones. Una secuencia de
-acciones puede ser mover y acción de la unidad para permitir mover y actuar en un mismo turno. Una acción puede
-contar con un contador cooldown adicionál.
+Una unidad tiene a su disposición `acciones`. Distintas acciones pueden empezar a realizarse con cero fatiga. Cada acción añade una cierta cantidad de fatiga tras realizarse o tras realizar una secuencia de acciones. Una secuencia de acciones puede ser mover y acción de la unidad para permitir mover y actuar en un mismo turno. Una acción puede contar con un contador cooldown adicionál.
 
 Ejemplo de aplicación:
 
@@ -760,19 +693,6 @@ classDiagram
     ActionSequence --> "1..*" IAction: contiene
 ```
 
-```cs
-public sealed record ActionContext(Unit Actor, GameState State, Vector2Int? Target = null, string? TargetUnitId = null);
-
-public interface IAction
-{
-    string Label { get; }
-    string AnimationKey { get; }
-    bool CanExecute(ActionContext ctx);
-    void Execute(ActionContext ctx);
-    int GetFatigueCost(Unit unit);
-}
-```
-
 #### Propiedad
 
 Una `propiedad` es una construcción desplegada en un `mapa`.
@@ -782,34 +702,6 @@ Una propiedad puede cambiar de bando durante una partida al ser capturada por un
 
 Una captura tarda más de un turno, la unidad capturadora reduce los puntos de captura hasta llegar a cero en los turnos
 que necesite.
-
-```cs
-public interface IPropertyComponent { }
-
-public sealed class Property : ICapturable, ISchedulable
-{
-    public string Id { get; }
-    public Player? Owner { get; set; } // null = neutral, cant schedule
-    public Vector2Int Position { get; internal set; }
-    public int Fatigue { get; internal set; }
-    public PropertyDefinition Definition { get; }
-    public int CaptureProgress { get; private set; }
-    public int MaxCaptureProgress => Definition.MaxCaptureProgress;
-
-    private readonly List<IPropertyComponent> _components = new();
-    public T? GetComponent<T>() where T : class, IPropertyComponent => _components.OfType<T>().FirstOrDefault();
-    public void AddComponent(IPropertyComponent c) => _components.Add(c);
-
-    public void ReduceCaptureProgress(int amount, Player capturer) => CaptureProgress = Math.Max(0, CaptureProgress - amount);
-    public void CompleteCapture(Player newOwner, GameState state)
-    {
-        var previous = Owner;
-        Owner = newOwner;
-        CaptureProgress = Definition.MaxCaptureProgress;
-        state.Events.Publish(new PropertyCaptured(this, newOwner, previous));
-    }
-}
-```
 
 ##### Fábrica
 
@@ -954,91 +846,7 @@ classDiagram
     Property --> Player
 ```
 
-Ejemplo de producción y filtros de producción de una fábrica como un `componente` de propiedad:
-
-Distintos tipos de fábrica tienen a su disposición distintos filtros de producción. Por ejemplo, un aeropuerto solo
-produce unidades aéreas.
-
-```cs
-public interface IProductionFilter { bool Allows(UnitDefinition def); }
-
-public sealed class CategoryProductionFilter : IProductionFilter
-{
-    private readonly HashSet<UnitCategory> _allowed;
-    public CategoryProductionFilter(params UnitCategory[] allowed) => _allowed = allowed.ToHashSet();
-    public bool Allows(UnitDefinition def) => _allowed.Contains(def.Category);
-}
-
-public sealed class WhitelistProductionFilter : IProductionFilter
-{
-    private readonly HashSet<string> _ids;
-    public WhitelistProductionFilter(params string[] unitDefIds) => _ids = unitDefIds.ToHashSet();
-    public bool Allows(UnitDefinition def) => _ids.Contains(def.Id);
-}
-```
-
-```cs
-public interface IBuildTimeStrategy { int GetBuildTime(UnitDefinition def); }
-
-public sealed class DefaultBuildTimeStrategy : IBuildTimeStrategy
-{
-    public int GetBuildTime(UnitDefinition def) => def.BuildTime;
-}
-
-public sealed class OverrideBuildTimeStrategy : IBuildTimeStrategy
-{
-    private readonly Dictionary<string, int> _overrides;
-    private readonly IBuildTimeStrategy _fallback;
-    public OverrideBuildTimeStrategy(Dictionary<string, int> overrides, IBuildTimeStrategy? fallback = null)
-    { _overrides = overrides; _fallback = fallback ?? new DefaultBuildTimeStrategy(); }
-    public int GetBuildTime(UnitDefinition def) => _overrides.TryGetValue(def.Id, out var t) ? t : _fallback.GetBuildTime(def);
-}
-```
-
-```cs
-public sealed record ProductionOrder(UnitDefinition Definition, int TurnsRemaining);
-
-public sealed class ProductionBay : IPropertyComponent
-{
-    public IProductionFilter Filter { get; }
-    public IBuildTimeStrategy TimeStrategy { get; set; }
-    public ProductionOrder? CurrentOrder { get; private set; }
-    private readonly Queue<UnitDefinition> _pending = new();
-
-    public ProductionBay(IProductionFilter filter, IBuildTimeStrategy? timeStrategy = null)
-    { Filter = filter; TimeStrategy = timeStrategy ?? new DefaultBuildTimeStrategy(); }
-
-    public bool CanBuild(UnitDefinition def) => Filter.Allows(def);
-    public void StartOrder(UnitDefinition def) => CurrentOrder = new ProductionOrder(def, TimeStrategy.GetBuildTime(def));
-    public void Enqueue(UnitDefinition def) => _pending.Enqueue(def);
-
-    public void Advance(GameState state, Property property)
-    {
-        if (CurrentOrder is null)
-        {
-            var choice = state.UI.PromptProduction(property.Owner!, Filter, state);
-            if (choice is not null) StartOrder(choice);
-            property.Fatigue += property.Definition.IdleProductionFatigue;
-            return;
-        }
-
-        var order = CurrentOrder with { TurnsRemaining = CurrentOrder.TurnsRemaining - 1 };
-        if (order.TurnsRemaining > 0) { CurrentOrder = order; property.Fatigue += property.Definition.ProductionTickFatigue; return; }
-
-        var unit = UnitFactory.Create(order.Definition);
-        CurrentOrder = null;
-        if (_pending.Count > 0) StartOrder(_pending.Dequeue());
-
-        var spot = state.Board.FindFreeAdjacentTile(property.Position, unit);
-        if (spot is not null) { state.Board.PlaceUnit(unit, spot.Value); state.Scheduler.Register(unit); }
-        else Enqueue(unit.Definition);
-
-        property.Fatigue += property.Definition.ProductionTickFatigue;
-    }
-}
-```
-
-### Mapa
+#### Mapa
 
 Un `mapa` está compuesto de `tiles` y contiene todas las `entidades` (`unidades` y `propiedades`).
 
