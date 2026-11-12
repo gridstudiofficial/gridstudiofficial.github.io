@@ -1,6 +1,8 @@
 {
   "home": {
     "title": "Capital & Steel",
+    "socialTitle": "Socials",
+    "socialIntro": "Check out what the team is up to.",
     "description": "Capital & Steel is a strategy game where you take the role of an army commander. Take part in fierce battles that will test all your might!"
   },
   "docs": {
@@ -10,13 +12,9 @@
     "gddIntro": "The next segment contains an updated version of our <bold>Game Design Document</bold>."
   },
   "portfolio": {
-    "title": "Portfolio"
-  },
-  "social": {
-    "title": "Socials",
-    "intro": "Check out what the team is up to.",
     "peopleTitle": "People",
-    "peopleIntro": "Reach out for specific members."
+    "peopleIntro": "Reach out for specific members.",
+    "title": "Portfolio"
   },
   "about": {
     "title": "Our game",
