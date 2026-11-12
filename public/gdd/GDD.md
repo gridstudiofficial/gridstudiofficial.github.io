@@ -534,6 +534,90 @@ Un arma puede tener munición ilimitada.
 
 Si una unidad tiene más de un arma, usa la más efectiva frente a la unidad objetiva si tiene munición.
 
+##### Componente
+
+Las unidades pueden tener distintos componentes. Estos añaden nuevas cualidades a la unidad.
+
+```cs
+public interface IUnitComponent { }
+```
+
+Un ejemplo es un tanque de combustible. Permite crear unidades que gastan combustible para moverse o también gastan
+mientras existan en cada turno. No se pueden mover al quedarse sin combustible.
+
+Añadir una política al quedarse sin combustible permite definir lo que ocurre. Por ejemplo, las unidades aéreas se
+estrellan y son eliminadas al quedarse sin combustible, pero las de tierra o marítimas solo dejan de poder moverse.
+
+```cs
+public interface IFuelDepletionPolicy { void OnFuelDepleted(Unit unit, GameState state); }
+
+public sealed class DestroyOnEmptyFuel : IFuelDepletionPolicy
+{
+    public void OnFuelDepleted(Unit unit, GameState state)
+    {
+        unit.TakeDamage(unit.CurrentHP, state); // Eliminate unit
+        state.Events.Publish(new UnitFuelDepleted(unit));
+    }
+}
+
+public sealed class ImmobilizeOnEmptyFuel : IFuelDepletionPolicy
+{
+    //Do nothing: MovementBudget.For returns 0 with Current == 0
+    public void OnFuelDepleted(Unit unit, GameState state) { }
+}
+
+public sealed class FuelTank : IUnitComponent
+{
+    public int Capacity { get; }
+    public int Current { get; private set; }
+    public bool ConsumesPerTurn { get; }
+    public IFuelDepletionPolicy DepletionPolicy { get; }
+
+    public FuelTank(int capacity, bool consumesPerTurn, IFuelDepletionPolicy? depletionPolicy = null)
+    {
+        Capacity = capacity; Current = capacity; ConsumesPerTurn = consumesPerTurn;
+        DepletionPolicy = depletionPolicy ?? new ImmobilizeOnEmptyFuel(); // default for land or naval units
+    }
+
+    public bool Consume(int amount) { if (Current < amount) return false; Current -= amount; return true; }
+    public void Refill(int amount) => Current = Math.Min(Capacity, Current + amount);
+}
+```
+
+Otro módulo de ejemplo es el de carga. Este sirve para que una unidad pueda guardar otras unidades dentro según los
+filtros del componente.
+
+```cs
+public enum UnitCategory { Infantry, Mech, LightVehicle, HeavyVehicle, Aircraft, Naval }
+
+public sealed class TransportBay : IUnitComponent
+{
+    public int Capacity { get; }
+    public IReadOnlyList<UnitCategory> AllowedCargo { get; }
+    private readonly List<Unit> _cargo = new();
+    public IReadOnlyList<Unit> Cargo => _cargo;
+
+    public TransportBay(int capacity, IEnumerable<UnitCategory> allowed) { Capacity = capacity; AllowedCargo = allowed.ToList(); }
+    public bool CanLoad(Unit unit) => _cargo.Count < Capacity && AllowedCargo.Contains(unit.Definition.Category);
+    public void Load(Unit unit) => _cargo.Add(unit);
+    public Unit Unload(string unitId) { var u = _cargo.First(x => x.Id == unitId); _cargo.Remove(u); return u; }
+}
+```
+
+Uso de un `componente` de combustible para limitar el movimiento de la unidad.
+
+```cs
+public static class MovementBudget
+{
+    public static int For(Unit unit)
+    {
+        int baseRange = unit.Movement.MovementRange;
+        var fuel = unit.GetComponent<FuelTank>();
+        return fuel is null ? baseRange : Math.Min(baseRange, fuel.Current);
+    }
+}
+```
+
 ##### Movimiento
 
 Una unidad tiene un `perfil de movimiento`. Este determina su capacidad de movimiento en su puntaje de avance numérico y
