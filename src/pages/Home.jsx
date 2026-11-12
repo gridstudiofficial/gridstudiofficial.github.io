@@ -1,6 +1,5 @@
 import {GridTacticsFirstImpression} from "../components/GridTacticsFirstImpression/GridTacticsFirstImpression.jsx";
 
-
 export default function Home() {
 	return (
 		<div id="center">
