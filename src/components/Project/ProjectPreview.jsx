@@ -43,7 +43,7 @@ export function ProjectPreview({project}) {
 					<ul className="project-preview__people">
 						{project.people.map((person) => (
 							<li key={person.id || person.name}>
-								<Link to={`/portfolio#${person.id}`}>
+								<Link to={`/social#${person.id}`}>
 									{person.name}
 								</Link>
 							</li>
