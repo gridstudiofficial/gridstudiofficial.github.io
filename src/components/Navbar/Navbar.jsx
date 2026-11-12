@@ -19,9 +19,6 @@ export default function Navbar() {
 				<NavLink to="/portfolio" className={({isActive}) => (isActive ? 'active-link' : '')} viewTransition>
 					{t('nav.portfolio')}
 				</NavLink>
-				<NavLink to="/social" className={({isActive}) => (isActive ? 'active-link' : '')} viewTransition>
-					{t('nav.social')}
-				</NavLink>
 				<NavLink to="/marketing" className={({isActive}) => (isActive ? 'active-link' : '')} viewTransition>
 					{t('nav.marketing')}
 				</NavLink>
