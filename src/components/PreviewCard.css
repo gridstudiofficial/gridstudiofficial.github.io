@@ -3,7 +3,7 @@
 	--preview-border-radius: 20px;
 }
 
-.person-preview,
+
 .project-preview {
 	min-width: 0;
 	box-sizing: border-box;
@@ -34,7 +34,6 @@
 }
 
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
-	.person-preview:hover,
 	.project-preview:hover {
 		transform: translateY(-3px);
 	}
@@ -44,9 +43,7 @@
 		transform: scale(1.035);
 	}
 
-	.person-preview:hover .person-preview__media img {
-		filter: brightness(1.02);
-	}
+
 }
 
 @media (prefers-reduced-motion: reduce) {

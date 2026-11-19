@@ -61,3 +61,10 @@ main {
 	white-space: nowrap;
 	border: 0;
 }
+
+
+/* Color de los títulos de Portfolio */
+#portfolio > h1,
+#portfolio section > h1 {
+	color: var(--accent-color);
+}
