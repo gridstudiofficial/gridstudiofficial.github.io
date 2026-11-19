@@ -31,10 +31,10 @@ const router = createHashRouter([
 		element: <Layout/>,
 		children: [
 			{path: '/', element: <Home/>},
+			{path: '/about', element: <About/>},
 			{path: '/docs', element: <Docs/>},
 			{path: '/social', element: <Navigate to="/" replace/>},
 			{path: '/portfolio', element: <Portfolio/>},
-			{path: '/about', element: <About/>},
 			{path: '/marketing', element: <Marketing/>},
 			{path: '/programming', element: <Programming/>},
 		],

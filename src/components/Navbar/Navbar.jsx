@@ -13,17 +13,14 @@ export default function Navbar() {
 				<NavLink to="/" end className={({isActive}) => (isActive ? 'active-link' : '')} viewTransition>
 					{t('nav.home')}
 				</NavLink>
-				{/*<NavLink to="/docs" className={({isActive}) => (isActive ? 'active-link' : '')} viewTransition>
-					{t('nav.docs')}
-				</NavLink>*/}
+				<NavLink to="/about" className={({isActive}) => (isActive ? 'active-link' : '')} viewTransition>
+					{t('nav.about')}
+				</NavLink>
 				<NavLink to="/portfolio" className={({isActive}) => (isActive ? 'active-link' : '')} viewTransition>
 					{t('nav.portfolio')}
 				</NavLink>
 				<NavLink to="/marketing" className={({isActive}) => (isActive ? 'active-link' : '')} viewTransition>
 					{t('nav.marketing')}
-				</NavLink>
-				<NavLink to="/about" className={({isActive}) => (isActive ? 'active-link' : '')} viewTransition>
-					{t('nav.about')}
 				</NavLink>
 				<NavLink to="/programming" className={({isActive}) => (isActive ? 'active-link' : '')} viewTransition>
 					{t('nav.programming')}
