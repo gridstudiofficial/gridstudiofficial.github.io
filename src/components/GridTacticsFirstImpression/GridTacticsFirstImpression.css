@@ -1,23 +1,482 @@
-.logo {
-	filter: drop-shadow(
-			0 0 10px color-mix(in srgb, var(--accent-color), white 70%)
-	);
-}
+/* ================================
+   REDES SOCIALES
+================================ */
 
 .home-socials {
-	margin-bottom: 3rem;
+	margin-bottom: 1.5rem;
+	animation: home-appear 0.7s ease-out both;
+}
+
+.home-socials a {
+	display: inline-flex;
+	align-items: center;
+	transition:
+			transform 250ms ease,
+			filter 250ms ease,
+			opacity 250ms ease;
+}
+
+.home-socials a:hover {
+	transform: translateY(-3px) scale(1.05);
+	filter: brightness(1.2);
+}
+
+
+/* ================================
+   LOGO
+================================ */
+
+.logo {
+	display: block;
+	width: min(100%, 1050px);
+	height: auto;
+	margin: 0 auto;
+
+	filter: drop-shadow(
+			0 0 16px color-mix(in srgb, var(--accent-color), white 65%)
+	);
+
+	animation: logo-appear 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+	animation-delay: 0.15s;
+
+	transition: filter 300ms ease;
+}
+
+.logo:hover {
+	filter: drop-shadow(
+			0 0 22px color-mix(in srgb, var(--accent-color), white 45%)
+	);
 }
 
 .logo-mobile {
 	display: none;
 }
 
+
+/* ================================
+   ANIMACIONES DE ENTRADA
+================================ */
+
+@keyframes logo-appear {
+	from {
+		opacity: 0;
+		transform: translateY(25px) scale(0.96);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+	}
+}
+
+@keyframes home-appear {
+	from {
+		opacity: 0;
+		transform: translateY(15px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes home-title-appear {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+
+/* ================================
+   PRESENTACIÓN PRINCIPAL
+================================ */
+
+.home-hero {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	padding: 0 0 3rem;
+}
+
+.home-hero__content {
+	width: 100%;
+	max-width: 750px;
+	margin: 0.5rem auto 0;
+	padding: 0 1rem;
+	box-sizing: border-box;
+
+	animation: home-appear 0.8s ease-out both;
+	animation-delay: 0.35s;
+}
+
+
+/* ================================
+   TÍTULO
+================================ */
+
+.home-hero__content h2 {
+	font-size: clamp(2.2rem, 5vw, 3.8rem);
+	font-weight: 800;
+	margin-bottom: 1rem;
+	color: var(--accent-color);
+	letter-spacing: -1px;
+
+	text-shadow:
+			0 0 20px color-mix(
+					in srgb,
+					var(--accent-color),
+					transparent 85%
+			);
+
+	animation: home-title-appear 0.8s ease-out both;
+	animation-delay: 0.45s;
+
+	transition: text-shadow 300ms ease;
+}
+
+.home-hero__content h2:hover {
+	text-shadow:
+			0 0 8px rgba(170, 155, 255, 0.45),
+			0 0 18px rgba(130, 110, 255, 0.30),
+			0 0 30px rgba(100, 108, 255, 0.18);
+}
+
+
+/* ================================
+   DESCRIPCIÓN
+================================ */
+
+.home-hero__content p {
+	font-size: clamp(1rem, 1.5vw, 1.2rem);
+	line-height: 1.8;
+	max-width: 650px;
+	margin: 0 auto 2rem;
+}
+
+
+/* ================================
+   BOTONES
+================================ */
+
+.home-hero__buttons {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 1rem;
+}
+
+.home-button {
+	display: inline-block;
+	padding: 0.9rem 1.7rem;
+	border-radius: 12px;
+	text-decoration: none;
+	font-weight: 700;
+
+	background-color: transparent;
+	color: var(--accent-color);
+	border: 2px solid var(--accent-color);
+
+	transition:
+			transform 250ms ease,
+			background-color 250ms ease,
+			box-shadow 250ms ease,
+			color 250ms ease,
+			border-color 250ms ease;
+}
+
+.home-button:hover {
+	transform: translateY(-4px);
+	background-color: var(--accent-color);
+	color: white;
+
+	box-shadow: 0 0 25px
+	color-mix(in srgb, var(--accent-color), transparent 45%);
+}
+
+.home-button:active {
+	transform: translateY(-1px) scale(0.97);
+}
+
+
+/* ================================
+   BOTÓN PORTFOLIO
+================================ */
+
+.home-button--primary {
+	background-color: transparent;
+	color: var(--accent-color);
+	border: 2px solid var(--accent-color);
+	box-shadow: none;
+}
+
+.home-button--primary:hover {
+	background-color: var(--accent-color);
+	color: white;
+
+	box-shadow: 0 0 28px
+	color-mix(in srgb, var(--accent-color), transparent 40%);
+}
+
+
+/* ================================
+   BOTÓN DOCUMENTACIÓN
+================================ */
+
+.home-button--secondary {
+	background-color: transparent;
+	color: var(--accent-color);
+	border: 2px solid var(--accent-color);
+}
+
+.home-button--secondary:hover {
+	background-color: var(--accent-color);
+	color: white;
+
+	box-shadow: 0 0 28px
+	color-mix(in srgb, var(--accent-color), transparent 40%);
+}
+
+
+/* ================================
+   RESPONSIVE
+================================ */
+
 @media (max-width: 730px) {
+
 	.logo-wide {
 		display: none;
 	}
 
 	.logo-mobile {
 		display: block;
+		width: min(80%, 450px);
+		margin: 1rem auto;
+	}
+
+	.home-socials {
+		margin-bottom: 1.5rem;
+	}
+
+	.home-hero {
+		padding: 0 0 2rem;
+	}
+
+	.home-hero__content {
+		margin-top: 1rem;
+		padding: 0 1rem;
+	}
+
+	.home-hero__content h2 {
+		font-size: clamp(2rem, 8vw, 3rem);
+	}
+
+	.home-hero__content p {
+		font-size: 1rem;
+		line-height: 1.7;
+	}
+
+	.home-hero__buttons {
+		flex-direction: column;
+		width: 100%;
+	}
+
+	.home-button {
+		width: 100%;
+		box-sizing: border-box;
+	}
+}
+
+
+/* ================================
+   ACCESIBILIDAD
+================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+	.logo,
+	.home-socials,
+	.home-hero__content,
+	.home-hero__content h2 {
+		animation: none;
+	}
+
+	.logo,
+	.home-socials a,
+	.home-button,
+	.home-hero__content h2 {
+		transition: none;
+	}
+
+	.home-button:hover,
+	.home-socials a:hover {
+		transform: none;
+	}
+}
+
+/* Aparición */
+
+@keyframes scroll-indicator-appear {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
+}
+
+
+/* Movimiento de la flecha */
+
+@keyframes scroll-arrow {
+	0%,
+	100% {
+		transform: rotate(45deg) translate(0, 0);
+		opacity: 0.5;
+	}
+
+	50% {
+		transform: rotate(45deg) translate(4px, 4px);
+		opacity: 1;
+	}
+}
+
+
+/* Accesibilidad */
+
+@media (prefers-reduced-motion: reduce) {
+	.home-scroll-indicator,
+	.home-scroll-indicator span {
+		animation: none;
+	}
+}
+
+/* =========================================
+   TITULO CON TANQUES
+========================================= */
+
+.home-hero__title-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 1.5rem;
+	width: 100%;
+	margin-bottom: 1rem;
+}
+
+.home-hero__title-container h2 {
+	margin: 0;
+	font-size: clamp(2.2rem, 5vw, 3.8rem);
+	font-weight: 800;
+	color: var(--accent-color);
+	letter-spacing: -1px;
+}
+
+
+/* =========================================
+   TANQUES PIXEL ART
+========================================= */
+
+.home-tank {
+	position: relative;
+	width: 64px;
+	height: 64px;
+	flex-shrink: 0;
+	image-rendering: pixelated;
+}
+
+.home-tank img {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	image-rendering: pixelated;
+	opacity: 0;
+}
+
+
+/* =========================================
+   ANIMACIÓN IDLE - TANQUES
+========================================= */
+
+.home-tank img {
+	opacity: 0;
+	animation: tank-idle 0.8s infinite steps(1);
+}
+
+.home-tank img:nth-child(1) {
+	animation-delay: 0s;
+}
+
+.home-tank img:nth-child(2) {
+	animation-delay: -0.6s;
+}
+
+.home-tank img:nth-child(3) {
+	animation-delay: -0.4s;
+}
+
+.home-tank img:nth-child(4) {
+	animation-delay: -0.2s;
+}
+
+@keyframes tank-idle {
+	0% {
+		opacity: 1;
+	}
+
+	25% {
+		opacity: 0;
+	}
+
+	50% {
+		opacity: 0;
+	}
+
+	75% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+
+/* =========================================
+   TANQUE VERDE MIRANDO HACIA LA IZQUIERDA
+========================================= */
+
+.home-tank--red {
+	transform: scaleX(-1);
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 730px) {
+	.home-hero__title-container {
+		gap: 0.5rem;
+	}
+
+	.home-tank {
+		width: 40px;
+		height: 40px;
+	}
+
+	.home-hero__title-container h2 {
+		font-size: clamp(1.7rem, 6vw, 2.5rem);
 	}
 }

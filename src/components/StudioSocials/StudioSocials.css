@@ -1,5 +1,98 @@
+/* =========================================
+   REDES SOCIALES
+========================================= */
+
 .studio-socials {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 0.75rem;
+	align-items: center;
+	gap: 1rem;
+}
+
+
+/* =========================================
+   ESTILO GENERAL DE LOS ENLACES
+========================================= */
+
+.studio-socials a {
+	display: inline-flex;
+	align-items: center;
+
+	transition:
+			transform 250ms ease,
+			filter 250ms ease,
+			opacity 250ms ease;
+}
+
+
+/* =========================================
+   LINKTREE
+========================================= */
+
+.studio-socials a[href*="linktr.ee"]:hover {
+	transform: translateY(-3px);
+	filter:
+			drop-shadow(0 0 5px rgba(46, 213, 115, 0.45))
+			brightness(1.15);
+}
+
+
+/* =========================================
+   YOUTUBE
+========================================= */
+
+.studio-socials a[href*="youtube.com"]:hover {
+	transform: translateY(-3px);
+	filter:
+			drop-shadow(0 0 6px rgba(255, 0, 0, 0.45))
+			brightness(1.15);
+}
+
+
+/* =========================================
+   ITCH.IO
+========================================= */
+
+.studio-socials a[href*="itch.io"]:hover {
+	transform: translateY(-3px);
+	filter:
+			drop-shadow(0 0 6px rgba(255, 255, 255, 0.35))
+			brightness(1.2);
+}
+
+
+/* =========================================
+   BLUESKY
+========================================= */
+
+.studio-socials a[href*="bsky.app"]:hover {
+	transform: translateY(-3px);
+	filter:
+			drop-shadow(0 0 6px rgba(0, 133, 255, 0.5))
+			brightness(1.15);
+}
+
+
+/* =========================================
+   EFECTO AL PULSAR
+========================================= */
+
+.studio-socials a:active {
+	transform: translateY(-1px) scale(0.96);
+}
+
+
+/* =========================================
+   ACCESIBILIDAD
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+	.studio-socials a {
+		transition: none;
+	}
+
+	.studio-socials a:hover,
+	.studio-socials a:active {
+		transform: none;
+	}
 }
