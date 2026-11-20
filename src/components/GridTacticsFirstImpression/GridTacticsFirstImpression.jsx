@@ -53,6 +53,8 @@ export function GridTacticsFirstImpression() {
 							Portfolio
 						</Link>
 
+
+
 						<Link to="/docs" className="home-button home-button--secondary">
 							{t('nav.docs', { ns: "common" })}
 						</Link>
