@@ -134,11 +134,18 @@ export default function About() {
                 </div>
 
                 <div className="about-screenshot-container">
-                    <img
-                        className="about-screenshot"
-                        src={pantallaInicio}
-                        alt="Pantalla de inicio de Capital and Steel"
-                    />
+                    <a
+                        href="https://gridstudio.itch.io/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="about-screenshot-link"
+                    >
+                        <img
+                            className="about-screenshot"
+                            src={pantallaInicio}
+                            alt="Jugar a Capital & Steel en itch.io"
+                        />
+                    </a>
                 </div>
             </section>
 

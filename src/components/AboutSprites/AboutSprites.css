@@ -73,6 +73,35 @@
     animation: sprite-float 3.5s ease-in-out infinite;
 }
 
+.about-sprite-red.red-soldier-2 {
+    left: 5vw;
+    top: 280px;
+    width: 72px;
+    height: 72px;
+}
+
+.about-sprite-red.red-soldier-3 {
+    left: 7vw;
+    top: 500px;
+    width: 72px;
+    height: 72px;
+}
+
+/* SOLDADOS VERDES */
+.about-sprite-green.green-soldier-2 {
+    right: 5vw;
+    top: 280px;
+    width: 72px;
+    height: 72px;
+}
+
+.about-sprite-green.green-soldier-3 {
+    right: 8vw;
+    top: 500px;
+    width: 72px;
+    height: 72px;
+}
+
 @keyframes sprite-float {
     0%, 100% {
         transform: translateY(0);
@@ -80,5 +109,120 @@
 
     50% {
         transform: translateY(-5px);
+    }
+}
+
+
+
+/* =========================
+   HEAVY TANKS
+========================= */
+
+.about-sprite-heavy-green {
+    position: absolute;
+    right: 1vw;
+    top: 950px;
+    width: 100px;
+    height: 100px;
+    animation: sprite-float 3.2s ease-in-out infinite;
+}
+
+.about-sprite-heavy-red {
+    position: absolute;
+    left: 1vw;
+    top: 950px;
+    width: 100px;
+    height: 100px;
+    animation: sprite-float 3.7s ease-in-out infinite;
+}
+
+.about-sprite-heavy-red.heavy-red-extra {
+    left: 8vw;
+    top: 750px;
+    right: auto;
+    width: 100px;
+    height: 100px;
+}
+
+.about-sprite-heavy-green.heavy-green-extra {
+    right: 8vw;
+    top: 750px;
+    left: auto;
+    width: 100px;
+    height: 100px;
+}
+/* Girar el personaje rojo */
+
+
+.about-sprite-heavy-red {
+    animation: sprite-float-red 3.7s ease-in-out infinite;
+}
+
+@keyframes sprite-float-red {
+    0%, 100% {
+        transform: scaleX(-1) translateY(0);
+    }
+
+    50% {
+        transform: scaleX(-1) translateY(-5px);
+    }
+}
+/* =========================
+   TANQUES
+========================= */
+
+.about-tank {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    animation: sprite-float 3s ease-in-out infinite;
+}
+
+/* Tanques rojos - izquierda */
+.tank-red-1 {
+    left: 5%;
+    top: 1350px;
+}
+
+.tank-red-2 {
+    left: 5%;
+    top: 1510px;
+}
+
+.tank-red-3 {
+    left: 5%;
+    top: 1670px;
+}
+
+/* Tanques verdes - derecha */
+.tank-green-1 {
+    right: 5%;
+    top: 1350px;
+}
+
+.tank-green-2 {
+    right: 5%;
+    top: 1510px;
+}
+
+.tank-green-3 {
+    right: 5%;
+    top: 1670px;
+}
+
+/* Girar los tanques rojos sin perder la animación */
+.tank-red-1,
+.tank-red-2,
+.tank-red-3 {
+    animation-name: sprite-float-red;
+}
+
+@keyframes sprite-float-red {
+    0%, 100% {
+        transform: scaleX(-1) translateY(0);
+    }
+
+    50% {
+        transform: scaleX(-1) translateY(-5px);
     }
 }

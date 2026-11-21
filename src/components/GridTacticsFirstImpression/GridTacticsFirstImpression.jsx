@@ -53,6 +53,10 @@ export function GridTacticsFirstImpression() {
 							Portfolio
 						</Link>
 
+						<Link to="/about" className="home-button home-button--primary">
+							Descubre nuestro juego
+						</Link>
+
 
 
 						<Link to="/docs" className="home-button home-button--secondary">

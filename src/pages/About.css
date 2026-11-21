@@ -191,6 +191,20 @@
 	height: auto;
 	border-radius: 0.7rem;
 }
+.about-screenshot-link {
+	display: block;
+	cursor: pointer;
+}
+
+.about-screenshot-link img {
+	transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+.about-screenshot-link:hover img {
+	transform: scale(1.02);
+	filter: brightness(1.08);
+}
+
 
 /* =========================================
    EASTER EGG
