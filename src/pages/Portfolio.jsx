@@ -12,10 +12,13 @@ export default function Portfolio() {
 			<h1>{t('portfolio.title')}</h1>
 			<ProjectGrid projects={projects}/>
 			<section>
-				<h2>{t('portfolio.peopleTitle')}</h2>
+				<h1>{t('portfolio.peopleTitle')}</h1>
 				<p>{t('portfolio.peopleIntro')}</p>
 				<PeopleGrid people={people}/>
 			</section>
 		</div>
 	);
 }
+
+
+

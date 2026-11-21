@@ -1,0 +1,450 @@
+
+/* =========================
+   PÁGINA DE MARKETING
+========================= */
+
+.marketing-page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 60px 32px 100px;
+    color: #e8e8ec;
+}
+
+/* =========================
+   CABECERA
+========================= */
+
+.marketing-hero {
+    text-align: center;
+    padding: 40px 20px 90px;
+}
+
+.marketing-eyebrow {
+    display: inline-block;
+    color: #6c63ff;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+}
+
+.marketing-hero h1 {
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 900;
+    margin: 0 0 25px;
+    letter-spacing: -3px;
+}
+
+.marketing-hero-description {
+    color: #7168ff;
+    font-size: clamp(1.3rem, 3vw, 2rem);
+    font-weight: 700;
+    max-width: 850px;
+    margin: 0 auto 30px;
+    line-height: 1.4;
+}
+
+.marketing-hero-intro {
+    max-width: 750px;
+    margin: 0 auto;
+    color: #c3c3cc;
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+/* =========================
+   TÍTULOS DE SECCIÓN
+========================= */
+
+.marketing-section-heading {
+    text-align: center;
+    margin-bottom: 45px;
+}
+
+.marketing-section-heading h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    margin: 0 0 20px;
+}
+
+.marketing-section-heading > p {
+    max-width: 750px;
+    margin: 0 auto;
+    color: #bdbdc8;
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+
+/* =========================
+   ESTRATEGIA
+========================= */
+
+.marketing-strategy {
+    margin-bottom: 100px;
+}
+
+.marketing-strategy-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 25px;
+}
+
+.marketing-card {
+    position: relative;
+    overflow: hidden;
+    padding: 35px;
+    border-radius: 24px;
+    border: 1px solid rgba(110, 100, 255, 0.2);
+    background: rgba(255, 255, 255, 0.035);
+    transition:
+            transform 0.3s ease,
+            border-color 0.3s ease,
+            background 0.3s ease;
+}
+
+.marketing-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(110, 100, 255, 0.55);
+    background: rgba(110, 100, 255, 0.06);
+}
+
+.marketing-card-primary {
+    background:
+            linear-gradient(
+                    135deg,
+                    rgba(105, 95, 255, 0.13),
+                    rgba(255, 255, 255, 0.025)
+            );
+}
+
+.marketing-card-number {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    color: rgba(120, 110, 255, 0.25);
+    font-size: 3rem;
+    font-weight: 900;
+}
+.marketing-card-number img {
+    width: 55px;
+    height: 55px;
+    object-fit: contain;
+}
+
+.marketing-card-icon {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.marketing-card h3 {
+    font-size: 1.7rem;
+    margin: 0 0 15px;
+}
+
+.marketing-card p {
+    color: #c1c1cb;
+    line-height: 1.8;
+    margin-bottom: 25px;
+}
+
+.marketing-card-tag {
+    display: inline-block;
+    padding: 8px 13px;
+    border-radius: 30px;
+    color: #8d86ff;
+    background: rgba(108, 99, 255, 0.12);
+    border: 1px solid rgba(108, 99, 255, 0.2);
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+/* =========================
+   PÚBLICO OBJETIVO
+========================= */
+
+.marketing-audience {
+    margin-bottom: 100px;
+}
+
+.marketing-audience-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.marketing-audience-card {
+    padding: 30px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    transition:
+            transform 0.3s ease,
+            border-color 0.3s ease;
+}
+
+.marketing-audience-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(108, 99, 255, 0.4);
+}
+
+.marketing-audience-symbol {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 55px;
+    height: 55px;
+    border-radius: 15px;
+    margin: 0 auto 22px;
+    background: rgba(108, 99, 255, 0.13);
+    color: #827bff;
+    font-size: 1.7rem;
+}
+
+.marketing-audience-card {
+    text-align: center;
+}
+
+.marketing-audience-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 12px;
+}
+
+.marketing-audience-card p {
+    color: #bdbdc8;
+    line-height: 1.7;
+    margin: 0;
+}
+
+/* =========================
+   CANALES
+========================= */
+
+.marketing-channels {
+    margin-bottom: 100px;
+}
+
+.marketing-channel-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.marketing-channel {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    padding: 25px 30px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    transition:
+            transform 0.3s ease,
+            border-color 0.3s ease;
+}
+
+.marketing-channel:hover {
+    transform: translateX(5px);
+    border-color: rgba(108, 99, 255, 0.4);
+}
+
+/* LOGOS DE LOS CANALES */
+.marketing-channel-icon {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+
+    width: 60px;
+    height: 60px;
+
+    background: transparent;
+    border-radius: 0;
+    overflow: visible;
+}
+
+/* Logos de redes y plataformas */
+.marketing-channel-icon img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+}
+
+/* Logo de Grid Studio */
+.marketing-channel-icon .company-logo {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+}
+/* Twitter/X y Reddit un poco más grandes */
+.marketing-channel-icon img[src*="twitter"],
+.marketing-channel-icon img[src*="reddit"] {
+    width: 58px;
+    height: 58px;
+}
+
+.marketing-channel-content {
+    flex: 1;
+}
+
+.marketing-channel-content h3 {
+    font-size: 1.3rem;
+    margin: 0 0 8px;
+}
+
+.marketing-channel-content p {
+    color: #bdbdc8;
+    line-height: 1.7;
+    margin: 0;
+}
+
+.marketing-channel-label {
+    flex-shrink: 0;
+    color: #817aff;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* =========================
+   OBJETIVO FINAL
+========================= */
+
+.marketing-final {
+    position: relative;
+    overflow: hidden;
+    padding: 65px 40px;
+    border-radius: 25px;
+    text-align: center;
+    border: 1px solid rgba(108, 99, 255, 0.25);
+    background:
+            radial-gradient(
+                    circle at top,
+                    rgba(108, 99, 255, 0.12),
+                    transparent 70%
+            ),
+            rgba(255, 255, 255, 0.025);
+}
+
+.marketing-final h2 {
+    max-width: 750px;
+    margin: 0 auto 25px;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+}
+
+.marketing-final > p {
+    max-width: 750px;
+    margin: 0 auto;
+    color: #c1c1cb;
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+.marketing-final-keywords {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 35px;
+}
+
+.marketing-final-keywords span {
+    padding: 10px 18px;
+    border-radius: 30px;
+    color: #8b84ff;
+    font-weight: 700;
+    font-size: 0.85rem;
+    background: rgba(108, 99, 255, 0.1);
+    border: 1px solid rgba(108, 99, 255, 0.2);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 800px) {
+    .marketing-page {
+        padding: 40px 22px 80px;
+    }
+
+    .marketing-hero {
+        padding: 30px 10px 65px;
+    }
+
+    .marketing-strategy-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .marketing-audience-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .marketing-strategy,
+    .marketing-audience,
+    .marketing-channels {
+        margin-bottom: 75px;
+    }
+
+    .marketing-channel {
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .marketing-channel-label {
+        margin-left: 85px;
+    }
+}
+
+@media (max-width: 500px) {
+    .marketing-page {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .marketing-card {
+        padding: 25px;
+    }
+
+    .marketing-channel {
+        padding: 20px;
+        gap: 18px;
+    }
+
+    .marketing-channel-icon {
+        width: 50px;
+        height: 50px;
+    }
+
+    .marketing-channel-content {
+        min-width: 0;
+        width: calc(100% - 70px);
+    }
+
+    .marketing-channel-label {
+        margin-left: 68px;
+    }
+
+    .marketing-final {
+        padding: 45px 25px;
+    }
+}
+
+/* =========================
+   ACCESIBILIDAD
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+    .marketing-card,
+    .marketing-audience-card,
+    .marketing-channel {
+        transition: none;
+    }
+
+    .marketing-card:hover,
+    .marketing-audience-card:hover,
+    .marketing-channel:hover {
+        transform: none;
+    }
+}

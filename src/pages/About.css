@@ -1,10 +1,214 @@
+
+/* =========================================
+   ABOUT - GENERAL
+========================================= */
+
+.about-page {
+	width: min(1100px, 100%);
+	margin: 0 auto;
+	padding: 2rem 1.5rem 5rem;
+	box-sizing: border-box;
+	position: relative;
+	overflow: hidden;
+}
+
+/* =========================================
+   HERO
+========================================= */
+
+.about-hero {
+	text-align: center;
+	padding: 3rem 1rem 5rem;
+	max-width: 850px;
+	margin: 0 auto;
+}
+
+.about-eyebrow {
+	display: inline-block;
+	color: var(--accent-color);
+	font-size: 0.8rem;
+	font-weight: 800;
+	letter-spacing: 0.2em;
+	text-transform: uppercase;
+	margin-bottom: 1rem;
+}
+
+.about-hero h1 {
+	font-size: clamp(2.8rem, 7vw, 5rem);
+	font-weight: 900;
+	margin: 0;
+	color: var(--font-color);
+	letter-spacing: -0.04em;
+}
+
+.about-hero-description {
+	font-size: clamp(1.2rem, 3vw, 1.8rem);
+	font-weight: 700;
+	color: var(--accent-color);
+	margin: 1.5rem 0;
+}
+
+.about-intro {
+	max-width: 700px;
+	margin: 0 auto;
+	font-size: 1.1rem;
+	line-height: 1.8;
+	opacity: 0.85;
+}
+
+/* =========================================
+   LORE
+========================================= */
+
+.about-lore {
+	position: relative;
+	padding: 3rem;
+	margin-bottom: 5rem;
+	border: 1px solid rgba(120, 110, 255, 0.2);
+	border-radius: 1.5rem;
+	background: rgba(255, 255, 255, 0.025);
+	overflow: hidden;
+}
+
+.about-lore::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 4px;
+	height: 100%;
+	background: var(--accent-color);
+}
+
+.about-section-heading {
+	text-align: center;
+	margin-bottom: 2.5rem;
+}
+
+.about-section-heading h2 {
+	font-size: clamp(1.8rem, 4vw, 2.8rem);
+	margin: 0;
+	font-weight: 800;
+}
+
+.about-lore-content {
+	max-width: 850px;
+	margin: 0 auto;
+}
+
+.about-lore-content p {
+	font-size: 1.1rem;
+	line-height: 1.9;
+	opacity: 0.85;
+	margin-bottom: 1.5rem;
+}
+
+.about-lore-ending {
+	color: var(--accent-color);
+	font-weight: 700;
+	font-size: 1.2rem !important;
+	text-align: center;
+	margin-top: 2.5rem !important;
+}
+
+/* =========================================
+   FEATURES
+========================================= */
+
+.about-features {
+	margin-bottom: 6rem;
+}
+
+.about-feature-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 1.5rem;
+}
+
+.about-feature-card {
+	position: relative;
+	padding: 2rem;
+	border: 1px solid rgba(120, 110, 255, 0.2);
+	border-radius: 1.2rem;
+	background: rgba(255, 255, 255, 0.025);
+	transition:
+			transform 0.25s ease,
+			border-color 0.25s ease,
+			background 0.25s ease;
+	overflow: hidden;
+}
+
+.about-feature-card:hover {
+	transform: translateY(-6px);
+	border-color: var(--accent-color);
+	background: rgba(120, 110, 255, 0.06);
+}
+
+.about-feature-number {
+	display: block;
+	font-size: 2.5rem;
+	font-weight: 900;
+	color: var(--accent-color);
+	opacity: 0.35;
+	margin-bottom: 1rem;
+}
+
+.about-feature-card h3 {
+	font-size: 1.35rem;
+	margin: 0 0 1rem;
+}
+
+.about-feature-card p {
+	line-height: 1.7;
+	opacity: 0.75;
+	margin: 0;
+}
+
+/* =========================================
+   GAME SCREENSHOT
+========================================= */
+
+.about-game-preview {
+	margin-bottom: 4rem;
+}
+
+.about-screenshot-container {
+	position: relative;
+	padding: 0.75rem;
+	border-radius: 1.2rem;
+	border: 1px solid rgba(120, 110, 255, 0.35);
+	background: rgba(255, 255, 255, 0.03);
+	box-shadow:
+			0 0 30px rgba(100, 90, 255, 0.08),
+			0 15px 40px rgba(0, 0, 0, 0.25);
+	overflow: hidden;
+}
+
 .about-screenshot {
 	display: block;
 	width: 100%;
-	max-width: 900px;
+	max-width: 100%;
 	height: auto;
-	margin: 1.5rem auto;
+	border-radius: 0.7rem;
 }
+.about-screenshot-link {
+	display: block;
+	cursor: pointer;
+}
+
+.about-screenshot-link img {
+	transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+.about-screenshot-link:hover img {
+	transform: scale(1.02);
+	filter: brightness(1.08);
+}
+
+
+/* =========================================
+   EASTER EGG
+========================================= */
 
 .about-secret-overlay {
 	position: fixed;
@@ -78,7 +282,55 @@
 	}
 }
 
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 800px) {
+	.about-feature-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.about-feature-card {
+		padding: 1.5rem;
+	}
+
+	.about-lore {
+		padding: 2rem;
+	}
+
+	.about-hero {
+		padding: 2rem 0.5rem 3rem;
+	}
+}
+
+@media (max-width: 500px) {
+	.about-page {
+		padding: 1rem 1rem 3rem;
+	}
+
+	.about-lore {
+		padding: 1.5rem;
+	}
+
+	.about-lore-content p {
+		font-size: 1rem;
+	}
+
+	.about-screenshot-container {
+		padding: 0.4rem;
+	}
+
+	.about-feature-card {
+		padding: 1.25rem;
+	}
+}
+
 @media (prefers-reduced-motion: reduce) {
+	.about-feature-card {
+		transition: none;
+	}
+
 	.about-secret-arrow-line,
 	.about-secret-arrowhead,
 	.about-secret-link {
